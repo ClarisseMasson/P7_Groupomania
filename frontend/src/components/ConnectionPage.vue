@@ -19,7 +19,7 @@
     }
 </script>
 
-<style lang="scss">
+<style scoped lang="scss">
 
     /*J'importe ma palette de couleur définie dans sass*/
     @import "../assets/colors.scss";
