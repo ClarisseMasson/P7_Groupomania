@@ -1,21 +1,31 @@
 ﻿<template>
-    <div id="navbar">
+    <div id="navbar" ref="container">
         <img src="../assets/images/icon_logo.svg" alt="logo Groupomania" id="logo" />
         <div id="menu">
             <router-link to="/home"><img src="../assets/images/icon_home.svg" alt="icone pour aller à la page d'accueil" id="home" /></router-link>
             <router-link to="/favorite"><img src="../assets/images/icon_favorite.svg" alt="icone pour accéder à ses favoris" id="favorite" /></router-link>
             <router-link to="/profile"><img src="../assets/images/icon_profile.svg" alt="lien pour ses favoris" id="profile" /></router-link>
-            <router-link to="/home/create" id="creation"><img src="../assets/images/icon_plus.svg" alt="lien pour créer un post" id="plus" />Créer!</router-link>
+            <a v-on:click="showCreateForm()" id="creation"><img src="../assets/images/icon_plus.svg" alt="lien pour créer un post" id="plus" />Créer!</a>
         </div>
 </div>
 </template>
 
 <script>
+    import Vue from 'vue'
+    import Lightbox from './Lightbox.vue'
 
     export default {
         name: 'Navbar',
         components: {
 
+        },
+        methods: {
+            showCreateForm() {
+            var ComponentClass = Vue.extend(Lightbox)
+            var instance = new ComponentClass()
+            instance.$mount() // pass nothing
+            this.$refs.container.appendChild(instance.$el)
+            }
         }
     }
 </script>

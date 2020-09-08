@@ -7,7 +7,10 @@ const helmet = require('helmet');
 
 //on importe les routes
 const sauceRoutes = require('./routes/sauce');
-const userRoutes = require('./routes/user');
+const accountRoutes = require('./routes/account');
+const postRoutes = require('./routes/post');
+
+
 
 //on récupère le mot de passe depuis les variables d'environnement système (données stockées localement sur mon ordinateur)
 const mongoPassword = process.env.MONGO_PASSWORD;
@@ -43,6 +46,12 @@ app.use('/images', express.static(path.join(__dirname, 'images')));
 
 //pour enregistrer les routes
 app.use('/api/sauces', sauceRoutes);
-app.use('/api/auth', userRoutes);
+app.use('/api/account', accountRoutes);
+app.use('/api/post', postRoutes);
+
+
 
 module.exports = app;
+
+
+ 

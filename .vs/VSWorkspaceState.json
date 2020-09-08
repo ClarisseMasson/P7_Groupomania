@@ -4,13 +4,13 @@
     "\\backend",
     "\\backend\\controllers",
     "\\backend\\middleware",
+    "\\backend\\models",
     "\\backend\\routes",
     "\\frontend",
-    "\\frontend\\public",
     "\\frontend\\src",
-    "\\frontend\\src\\assets\\images",
-    "\\frontend\\src\\router"
+    "\\frontend\\src\\router",
+    "\\frontend\\src\\views"
   ],
-  "SelectedNode": "\\backend\\routes\\user.js",
+  "SelectedNode": "\\frontend\\src\\components\\ConnectionPage.vue",
   "PreviewInSolutionExplorer": false
 }
