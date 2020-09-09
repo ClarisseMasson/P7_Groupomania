@@ -4,26 +4,35 @@
         <div id="menu">
             <router-link to="/home"><img src="../assets/images/icon_home.svg" alt="icone pour aller à la page d'accueil" id="home" /></router-link>
             <router-link to="/favorite"><img src="../assets/images/icon_favorite.svg" alt="icone pour accéder à ses favoris" id="favorite" /></router-link>
-            <router-link to="/profile"><img src="../assets/images/icon_profile.svg" alt="lien pour ses favoris" id="profile" /></router-link>
+            <v-popover   offset="15">
+                <img src="../assets/images/icon_profile.svg" alt="lien pour ses favoris" id="profile" />
+                <AccountMenu slot="popover"/>
+            </v-popover>
             <a id="creation" @click="showModal = true"><img src="../assets/images/icon_plus.svg" alt="lien pour créer un post" id="plus" />Créer!</a>
             <Lightbox v-if="showModal" @close="showModal = false"></Lightbox>
         </div>
-</menu>
+ 
+    </menu>
 </template>
 
 <script>
     import Vue from 'vue'
     import Lightbox from './Lightbox.vue'
+    import AccountMenu from './AccountMenu.vue'
+
+
 
     export default {
         name: 'Navbar',
         components: {
-            Lightbox
+            Lightbox,
+            AccountMenu
+          
         },
         data() {
             return {
-                showModal: false
-            }
+                showModal: false,
+            }        
         },
         methods: {
             showCreateForm() {
@@ -72,7 +81,7 @@
 
     #menu img{
         display: block;
-        height : 1.1em;
+        height : 1.7rem;
         margin-left: 0.5em;
         align-self:center;
     }
@@ -94,6 +103,4 @@
         letter-spacing:0.02em;
         color: $white;
     }
-
-
 </style>

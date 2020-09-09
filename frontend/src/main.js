@@ -4,6 +4,10 @@ import router from './router'
 
 Vue.config.productionTip = false
 
+import VTooltip from 'v-tooltip'
+
+Vue.use(VTooltip)
+
 new Vue({
   router,
   render: h => h(App)

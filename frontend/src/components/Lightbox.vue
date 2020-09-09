@@ -37,6 +37,7 @@
         justify-content: center;
         align-items: center;
         background-color: rgba($dark-blue, 0.9);
+        z-index: 10;
     }
 
     #form {

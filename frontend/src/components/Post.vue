@@ -38,10 +38,12 @@
         <!--<button v-if="showModify">modify</button>
     <button v-if="showDelete" v-on:click="deletePost">supprimer</button>-->
     </div>
+
 </template>
 
 <script>
     const axios = require('axios');
+
 
     export default {
         name: 'Post.vue',
@@ -97,12 +99,19 @@
 
     @import "../assets/colors.scss";
 
+
     * {
         font-family: 'Poppins', sans-serif;
     }
     
     a {
         cursor: pointer;
+
+
+        &:hover{
+                           filter: brightness(0.60);
+
+               }
     }
 
     h1{
@@ -137,7 +146,7 @@
         display: flex;
         justify-content: space-between;
         align-items: flex-start;
-        padding-top: 1em;
+        padding-top: 1.5em;
     }
 
     #author {
@@ -169,8 +178,8 @@
 
 
     #photo_profile {
-        width : 3em;
-        height: 3em;
+        width : 2.5em;
+        height: 2.5em;
         border-radius: 50%;
         margin-right: 0.5em;
     }
@@ -183,7 +192,8 @@
         display: flex;
         justify-content: space-between;
         align-items: flex-start;
-        margin-top: 0.5rem;
+        margin-top: 0.8rem;
+        padding-bottom: 0.8em;
     }
 
     #bottom_part img{
