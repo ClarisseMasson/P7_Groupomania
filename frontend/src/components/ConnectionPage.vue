@@ -39,7 +39,11 @@
     /*J'importe ma palette de couleur définie dans sass*/
     @import "../assets/colors.scss";
 
-
+    a:link 
+    { 
+     text-decoration:none; 
+    } 
+    
     #page {
         /*ici on met vh pour lui dire que le pourcentage se fait par rapport au viewport et non par rapport à l'element parent*/
         min-height: 100vh;
@@ -79,7 +83,7 @@
     }
 
 
-    p, span, span a, #message_error, #error_mail{
+    p, span, span a, #message_error, #error_mail {
         font-size: 1.1em;
         font-family: 'Poppins', sans-serif;
         font-weight: 500;

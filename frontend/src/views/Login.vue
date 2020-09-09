@@ -54,7 +54,7 @@
                         sessionStorage.setItem("accountId", response.data.accountId);
                         sessionStorage.setItem("token", response.data.token);
                         sessionStorage.setItem("isAdmin", response.data.isAdmin);
-                        this.$router.push('/profile')
+                        this.$router.push('/home')
 
                   })
                     .catch(error => {
@@ -76,6 +76,11 @@
 
     /*J'importe ma palette de couleur définie dans sass*/
     @import "../assets/colors.scss";
+
+    a, button {
+        cursor: pointer;
+    }
+
 
     form {
         margin-top: 2.5em;

@@ -104,6 +104,10 @@
     /*J'importe ma palette de couleur définie dans sass*/
     @import "../assets/colors.scss";
 
+    button {
+        cursor: pointer;
+    }
+
     form {
         margin-top: 2.5em;
         display: flex;

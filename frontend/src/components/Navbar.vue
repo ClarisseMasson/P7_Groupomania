@@ -1,13 +1,14 @@
 ﻿<template>
-    <div id="navbar" ref="container">
+    <menu id="navbar" ref="container">
         <img src="../assets/images/icon_logo.svg" alt="logo Groupomania" id="logo" />
         <div id="menu">
             <router-link to="/home"><img src="../assets/images/icon_home.svg" alt="icone pour aller à la page d'accueil" id="home" /></router-link>
             <router-link to="/favorite"><img src="../assets/images/icon_favorite.svg" alt="icone pour accéder à ses favoris" id="favorite" /></router-link>
             <router-link to="/profile"><img src="../assets/images/icon_profile.svg" alt="lien pour ses favoris" id="profile" /></router-link>
-            <a v-on:click="showCreateForm()" id="creation"><img src="../assets/images/icon_plus.svg" alt="lien pour créer un post" id="plus" />Créer!</a>
+            <a id="creation" @click="showModal = true"><img src="../assets/images/icon_plus.svg" alt="lien pour créer un post" id="plus" />Créer!</a>
+            <Lightbox v-if="showModal" @close="showModal = false"></Lightbox>
         </div>
-</div>
+</menu>
 </template>
 
 <script>
@@ -17,7 +18,12 @@
     export default {
         name: 'Navbar',
         components: {
-
+            Lightbox
+        },
+        data() {
+            return {
+                showModal: false
+            }
         },
         methods: {
             showCreateForm() {
@@ -30,10 +36,14 @@
     }
 </script>
 
-<style lang="scss">
+<style scoped lang="scss">
 
     /*J'importe ma palette de couleur définie dans sass*/
     @import "../assets/colors.scss";
+
+    a {
+        cursor: pointer;
+    }
 
     #navbar {
         /*ici on met vh pour lui dire que le pourcentage se fait par rapport au viewport et non par rapport à l'element parent*/
@@ -62,8 +72,8 @@
 
     #menu img{
         display: block;
-        height : 1.5em;
-        margin-left: 0.7em;
+        height : 1.1em;
+        margin-left: 0.5em;
         align-self:center;
     }
 
@@ -72,15 +82,16 @@
     }
         
     #creation {
+        margin-left: 0.22em;
         display:flex;
         flex-direction: row;
     }
 
     a {
         text-decoration: none;
-        font-size: 1.1em;
-        font-family: 'Poppins', sans-serif;
-        font-weight: lighter;
+        font-size: 1.5em;
+        font-family: 'Fjalla One', sans-serif;
+        letter-spacing:0.02em;
         color: $white;
     }
 
