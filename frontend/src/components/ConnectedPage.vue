@@ -3,7 +3,9 @@
         <!--ici notre barre de navigation pour toutes les pages lorsque nous sommes connectés-->
         <Navbar></Navbar>
         <!--ici le contenu dynamique des pages lorsque nous sommes connectés-->
-        <slot></slot>
+        <div id="container_page">
+            <slot></slot>
+        </div>
     </div>
 </template>
 
@@ -35,6 +37,15 @@
         display: flex;
         flex-direction: column;
         align-items: center;
+        background-color: $background-grey;
+
+    }
+
+    #container_page {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        width: 100%;
     }
 
 </style>

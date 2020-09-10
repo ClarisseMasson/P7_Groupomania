@@ -1,26 +1,23 @@
 ﻿<template>
     <ConnectedPage>
-        <div id="container_page">
-            <div id="container_post">
-                <div id="shortcut_buttons">
-                    <router-link to="/profile" id="my_profile"><img src="../assets/images/icon_profile.svg" alt="lien direct à son profil" id="plus" />Mon Profil</router-link>
-                    <a id="my_creation" @click="showModal = true"><img src="../assets/images/icon_plus.svg" alt="lien direct créer un post" id="plus" />Je veux créer un POST !</a>
-                    <Lightbox v-if="showModal" @close="showModal = false"></Lightbox>
-                </div>
-                <Post v-for="post in posts"
-                      :authorId="post.account.id"
-                      :authorFirstname="post.account.firstname"
-                      :authorName="post.account.name"
-                      :title="post.title"
-                      :description="post.description"
-                      :fileUrl="post.fileUrl"
-                      :fileType="post.fileType"
-                      :date="post.updatedAt"
-                      :id="post.id"
-                      :key="post.id" class="post" />
+        <div id="container_post">
+            <div id="shortcut_buttons">
+                <router-link to="/profile" id="my_profile"><img src="../assets/images/icon_profile.svg" alt="lien direct à son profil" id="plus" />Mon Profil</router-link>
+                <a id="my_creation" @click="showModal = true"><img src="../assets/images/icon_plus.svg" alt="lien direct créer un post" id="plus" />Je veux créer un POST !</a>
+                <Lightbox v-if="showModal" @close="showModal = false"></Lightbox>
             </div>
-        </div>
-        
+            <Post v-for="post in posts"
+                    :authorId="post.account.id"
+                    :authorFirstname="post.account.firstname"
+                    :authorName="post.account.name"
+                    :title="post.title"
+                    :description="post.description"
+                    :fileUrl="post.fileUrl"
+                    :fileType="post.fileType"
+                    :date="post.updatedAt"
+                    :id="post.id"
+                    :key="post.id" class="post" />
+        </div>      
     </ConnectedPage>
 </template>
 
@@ -66,14 +63,6 @@
 <style scoped lang="scss">
 
     @import "../assets/colors.scss";
-
-    #container_page {
-        display: flex;
-        flex-direction: column;
-        align-items: center;
-        width: 100%;
-        background-color: $background-grey;
-    }
 
     #container_post {
         width: 32%;
