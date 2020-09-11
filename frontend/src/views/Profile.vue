@@ -73,9 +73,7 @@
                 isModifying: false
             };
         },
-        props: {
-            id: { type: Number }
-        },
+
         mounted() {
             const accountId = this.$route.params.id;
             //const accountId = sessionStorage.getItem('accountId');
@@ -84,15 +82,8 @@
                 .then(response => (this.account = response.data))
         },
         computed: {
-
             showDelete() {
                 return (this.isMyAccount() || sessionStorage.getItem("isAdmin") == "true") && !this.isModifying;
-            },
-            showModify() {
-                return this.isMyAccount();
-            },
-            showLogout() {
-                return this.isMyAccount();
             }
         },
         methods: {

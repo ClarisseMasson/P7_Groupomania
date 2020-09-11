@@ -80,7 +80,7 @@
                             sessionStorage.setItem("accountId", response.data.accountId);
                             sessionStorage.setItem("token", response.data.token);
                             sessionStorage.setItem("isAdmin", response.data.isAdmin);
-                            this.$router.push('/profile')
+                            this.$router.push('/profile/' + response.data.accountId)
                         })
                     })
                     .catch(error => {

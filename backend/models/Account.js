@@ -13,7 +13,6 @@ module.exports = (sequelize) => {
 		email: {
 			allowNull: false,
 			type: DataTypes.STRING,
-			unique: true
 		},
 		password: {
 			allowNull: false,
@@ -43,5 +42,8 @@ module.exports = (sequelize) => {
 			allowNull: false,
 			type: DataTypes.BOOLEAN
 		}
-	});
+	},
+		//on définie l'index autrement que unique: true à cause du bug sur la librairie sequelize https://github.com/sequelize/sequelize/issues/9653
+		{ indexes: [{ unique: true, fields: ['email'] }] }
+	);
 };

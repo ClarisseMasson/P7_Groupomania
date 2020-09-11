@@ -2,16 +2,15 @@
   "ExpandedNodes": [
     "",
     "\\backend",
-    "\\backend\\controllers",
     "\\backend\\models",
+    "\\backend\\routes",
     "\\frontend",
     "\\frontend\\src",
     "\\frontend\\src\\assets",
-    "\\frontend\\src\\assets\\images",
     "\\frontend\\src\\components",
     "\\frontend\\src\\router",
     "\\frontend\\src\\views"
   ],
-  "SelectedNode": "\\frontend\\src\\views\\SignUp.vue",
+  "SelectedNode": "\\backend\\controllers\\comment.js",
   "PreviewInSolutionExplorer": false
 }

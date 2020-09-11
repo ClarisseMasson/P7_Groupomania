@@ -4,7 +4,7 @@
             <div id="shortcut_buttons">
                 <router-link :to="pathToMyProfile" id="my_profile"><img src="../assets/images/icon_profile.svg" alt="lien direct à son profil" id="plus" />Mon Profil</router-link>
                 <a id="my_creation" @click="showModal = true"><img src="../assets/images/icon_plus.svg" alt="lien direct créer un post" id="plus" />Je veux créer un POST !</a>
-                <Lightbox v-if="showModal" @close="showModal = false"></Lightbox>
+                <Lightbox v-if="showModal" @close="showModal = false"><CreatePost></CreatePost></Lightbox>
             </div>
             <Post v-for="post in posts"
                   :author="post.account"
@@ -25,6 +25,7 @@
     import ConnectedPage from '@/components/ConnectedPage.vue'
     import Post from '@/components/Post.vue'
     import Lightbox from '@/components/Lightbox.vue'
+    import CreatePost from '@/components/CreatePost.vue'
 
 
     const axios = require('axios');
@@ -34,7 +35,8 @@
         components: {
             ConnectedPage,
             Post,
-            Lightbox
+            Lightbox,
+            CreatePost
         },
         data() {
             return {

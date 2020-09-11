@@ -9,7 +9,7 @@
                 <AccountMenu slot="popover"/>
             </v-popover>
             <a id="creation" @click="showModal = true"><img src="../assets/images/icon_plus.svg" alt="lien pour créer un post" id="plus" />Créer!</a>
-            <Lightbox v-if="showModal" @close="showModal = false"></Lightbox>
+            <Lightbox v-if="showModal" @close="showModal = false"><CreatePost></CreatePost></Lightbox>
         </div>
  
     </menu>
@@ -19,6 +19,7 @@
     import Vue from 'vue'
     import Lightbox from './Lightbox.vue'
     import AccountMenu from './AccountMenu.vue'
+    import CreatePost from './CreatePost.vue'
 
 
 
@@ -26,7 +27,8 @@
         name: 'Navbar',
         components: {
             Lightbox,
-            AccountMenu
+            AccountMenu,
+            CreatePost
           
         },
         data() {

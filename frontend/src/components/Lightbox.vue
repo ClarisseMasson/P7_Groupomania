@@ -12,7 +12,6 @@
     export default {
         name: 'Lightbox',
         components: {
-            
         }
     }
 </script>
@@ -41,7 +40,7 @@
     }
 
     #form {
-        width: 50%;
+        width: 28%;
         height: 20vh;
         background: $white;
     }
