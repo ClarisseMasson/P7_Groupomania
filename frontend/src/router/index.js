@@ -26,8 +26,9 @@ const routes = [
         component: SignUp
     },
     {
-        path: '/profile',
+        path: '/profile/:id',
         name: 'Profile',
+        props: true,
         component: Profile
     }
 ]

@@ -100,6 +100,33 @@ exports.login = (req, res, next) => {
         .catch(error => res.status(500).json({ error }));
 };
 
+exports.updateProfile = (req, res, next) => {
+    models.account.findOne({ where: { id: req.params.id } })
+        .then(accountInDB => {
+            accountInDB.firstname = req.body.firstname;
+            accountInDB.name = req.body.name;
+            accountInDB.job = req.body.job;
+            accountInDB.email = req.body.email;
+            accountInDB.phone = req.body.phone;
+
+            accountInDB.save()
+                .then(() => res.status(200).json(accountInDB))
+                .catch(error => res.status(500).json({ error }));
+        })
+        .catch(error => res.status(500).json({ error }));
+};
+
+
+exports.deleteProfile = (req, res, next) => {
+    models.account.findOne({ where: { id: req.params.id } })
+        .then(account => {
+            account.destroy()
+                .then(() => res.status(200).json({ message: 'Compte supprimé !' }))
+                .catch(error => res.status(404).json({ error }));
+        })
+        .catch(error => res.status(500).json({ error }));
+};
+
 function passwordValidation(password) {
     if (password.length >= 8 && password != password.toLowerCase() && /\d/.test(password)) {
         return true;
@@ -110,7 +137,7 @@ function passwordValidation(password) {
 };
 
 exports.getOneProfile = (req, res, next) => {
-    //nous utilisons la méthode find() dans trouver un compte dans notre modèle sequelize, en excluant les mots de passe
+    //nous utilisons la méthode findOne() dans trouver un compte dans notre modèle sequelize, en excluant les mots de passe
     models.account.findOne({ where: { id: req.params.id }, attributes: {exclude: ["password","loginAttempt"]} })
         .then(account => {
             res.status(200).json(account)

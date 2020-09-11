@@ -11,6 +11,10 @@ const accountCtrl = require('../controllers/account');
 router.post('/signup', accountCtrl.signup);
 router.post('/login', accountCtrl.login);
 router.get('/profile/:id', accountCtrl.getOneProfile);
+router.delete('/profile/:id', accountCtrl.deleteProfile);
+router.put('/profile/:id', accountCtrl.updateProfile);
+
+
 
 
 //on exporte le router pour qu'on puisse l'importer dans app.js

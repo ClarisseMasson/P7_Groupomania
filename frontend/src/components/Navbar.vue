@@ -50,7 +50,7 @@
     /*J'importe ma palette de couleur définie dans sass*/
     @import "../assets/colors.scss";
 
-    a {
+    #profile {
         cursor: pointer;
     }
 
@@ -97,6 +97,7 @@
     }
 
     a {
+        cursor: pointer;
         text-decoration: none;
         font-size: 1.5em;
         font-family: 'Fjalla One', sans-serif;

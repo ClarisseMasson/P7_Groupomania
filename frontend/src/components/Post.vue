@@ -1,13 +1,13 @@
-<template>
+﻿<template>
     <div class="post" v-if="!isDeleted">
         <section id="top_part">
-            <a id="author">
+            <router-link :to="pathToProfile" id="author">
                 <img src="../assets/images/photo_profile.jpg" alt="photo profil" id="photo_profile" />
                 <div id="author_description">
-                    <p>{{authorName}} {{authorFirstname}}</p>
-                    <sub>{{date}}</sub>
+                    <p>{{name}} {{firstname}}</p>
+                    <sub>{{moment}}</sub>
                 </div>
-            </a>
+            </router-link>
             <div id="edit_post">
                 <a id="modify_post" v-if="showModify" v-on:click="modifyPost">
                     <img src="../assets/images/icon_modify.svg" alt="icon pour modifier son post" id="modify_post" />
@@ -44,6 +44,7 @@
 <script>
     const axios = require('axios');
 
+    import moment from 'moment'
 
     export default {
         name: 'Post.vue',
@@ -51,13 +52,13 @@
 
         },
         props: {
-            authorName: { type: String },
-            authorFirstname: { type: String},
+            author: {
+                type: Object
+           },
             title: { type: String },
             description: { type: String },
             fileUrl: { type: String },
             date: { type: String },
-            authorId: { type: Number },
             fileType: { type: String },
             id: {type: Number}
         },
@@ -65,6 +66,14 @@
             return { isDeleted: false, isModified: false };
         },
         computed: {
+            pathToProfile() {
+                if (this.author) {
+                    return "/profile/" + this.author.id;
+                }
+                else {
+                    return "";
+                }
+            },
             showImage() {
                 return this.fileType && this.fileType.split("/")[0] == "image";
             },
@@ -72,10 +81,29 @@
                 return this.fileType && this.fileType.split("/")[0] == "video";
             },
             showDelete() {
-                return this.authorId == sessionStorage.getItem("accountId") || sessionStorage.getItem("isAdmin") == "true";
+                return (this.author && this.author.id == sessionStorage.getItem("accountId") ) || sessionStorage.getItem("isAdmin") == "true";
             },
             showModify() {
-                return this.authorId == sessionStorage.getItem("accountId");
+                return (this.author && this.author.id == sessionStorage.getItem("accountId"));
+            },
+            name() {
+                if (this.author && this.author.name) {
+                    return this.author.name;
+                }
+                else {
+                    return 'Ancien employé';
+                }
+            },
+            firstname() {
+                if (this.author && this.author.firstname) {
+                    return this.author.firstname;
+                }
+                else {
+                    return '';
+                }
+            },
+            moment() {
+                return moment(this.date, "YYYY-MM-DD hh:mm:ssZ" ).calendar();
             }
         },
         methods: {
@@ -105,6 +133,7 @@
     }
     
     a {
+        text-decoration: none;
         cursor: pointer;
 
 
@@ -139,6 +168,7 @@
 
     #top_part p{
         font-weight: bold;
+        padding-left: 0;
         padding-bottom: 0rem;
     }
 
@@ -156,6 +186,7 @@
 
     
     #author_description {
+        width: 100%;
         display: flex;
         flex-direction: column;
         justify-content: center;

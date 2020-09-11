@@ -18,7 +18,13 @@
         name: 'ConnectedPage',
         components: {
             Navbar
-        }
+        },
+        // Avant d'afficher la page vérifier si on est connecté et si on ne l'est pas on est renvoyé vers login
+        beforeCreate() {
+            if (sessionStorage.getItem("accountId") === null || sessionStorage.getItem("token") === null ) {
+                this.$router.push("/login");
+            }
+        },
     }
 </script>
 

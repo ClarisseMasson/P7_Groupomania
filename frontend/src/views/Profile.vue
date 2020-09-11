@@ -1,37 +1,54 @@
-<template>
+ï»¿<template>
     <ConnectedPage>
         <article id="page_profile">
             <section id="top_part">
-                <router-link to="/home" id="return_home"><img src="../assets/images/icon_return.svg" alt="retour à la page Home" /></router-link>
-                <h1>Mon profil</h1>
+                <router-link to="/home" id="return_home"><img src="../assets/images/icon_return.svg" alt="retour Ã  la page Home" /></router-link>
+                <h1><span v-if="isMyAccount()">Mon </span>profil</h1>
             </section>
             <div id="container_profile">
                 <img src="../assets/images/profile_fond.jpg" alt="image de fond" />
                 <div id="nom_prenom_poste">
-                    <h2>{{account.firstname}} <span>{{account.name}}</span></h2>
-                    <h3>{{account.job}}</h3>
+                    <h2 v-if="!isModifying">
+                        {{account.firstname}}
+                        <span>{{account.name}}</span>
+                    </h2>
+                    <h2 v-if="isModifying">
+                        <input v-model="accountUpdate.firstname" />
+                        <input v-model="accountUpdate.name" />
+                    </h2>
+
+                    <h3 v-if="!isModifying">{{account.job}}</h3>
+                    <h3 v-if="isModifying">
+                        Job : <input v-model="accountUpdate.job" />
+                    </h3>
                 </div>
                 <address>
                     <div class="address-composent">
                         <h4>Email :</h4>
-                        <p>{{account.email}}</p>
+                        <p v-if="!isModifying">{{account.email}}</p>
+                        <input v-if="isModifying" v-model="accountUpdate.email" />
                     </div>
                     <div class="address-composent">
                         <h4>Telephone :</h4>
-                        <p>{{account.phone}}</p>
+                        <p v-if="!isModifying">{{account.phone}}</p>
+                        <input v-if="isModifying" v-model="accountUpdate.phone" />
                     </div>
                 </address>
-                <button>Supprimer mon compte</button>
+                <button v-if="showDelete" v-on:click="deleteProfile">Supprimer mon compte</button>
             </div>
             <div id="profile">
                 <div id="edit_profile">
-                    <!--<ça ne marche pas>-->
-                    <a id="modify_profile" v-on:click="modifyProfile">
-                        <img src="../assets/images/icon_modify_white.svg" alt="modifier son profil" />
-                    </a>
-                    <a id="modify_profile" v-on:click="deleteProfile">
-                        <img src="../assets/images/icon_logout_white.svg" alt="supprimer son profil" />
-                    </a>
+                    <div>
+                        <button v-if="isModifying" v-on:click="updateProfile">Sauvegarder</button>
+                    </div>
+                    <div v-if="isMyAccount()">
+                        <a id="modify_profile" v-on:click="toggleFormProfile">
+                            <img src="../assets/images/icon_modify_white.svg" alt="modifier son profil" />
+                        </a>
+                        <a id="logout_profile" v-on:click="logoutProfile">
+                            <img src="../assets/images/icon_logout_white.svg" alt="supprimer son profil" />
+                        </a>
+                    </div>
                 </div>
                 <img src="../assets/images/photo_profile.jpg" alt="photo de profil" id="photo_profile"/>
             </div>
@@ -51,16 +68,17 @@
         },
         data() {
             return {
-                account: null,
-                isDeleted: false,
-                isModified: false
+                account: {},
+                accountUpdate: {},
+                isModifying: false
             };
         },
         props: {
-            id: {type: Number}
+            id: { type: Number }
         },
         mounted() {
-            const accountId = sessionStorage.getItem('accountId');
+            const accountId = this.$route.params.id;
+            //const accountId = sessionStorage.getItem('accountId');
             axios
                 .get('http://localhost:3000/api/account/profile/' + accountId)
                 .then(response => (this.account = response.data))
@@ -68,27 +86,60 @@
         computed: {
 
             showDelete() {
-                return this.account.id == sessionStorage.getItem("accountId") || sessionStorage.getItem("isAdmin") == "true";
+                return (this.isMyAccount() || sessionStorage.getItem("isAdmin") == "true") && !this.isModifying;
             },
             showModify() {
-                return this.account.id == sessionStorage.getItem("accountId");
+                return this.isMyAccount();
             },
             showLogout() {
-                return this.account.id == sessionStorage.getItem("accountId");
+                return this.isMyAccount();
             }
         },
         methods: {
             deleteProfile() {
-                axios.delete('http://localhost:3000/api/account/' + this.id)
+                axios.delete('http://localhost:3000/api/account/profile/' + this.account.id)
                     .then(() => {
-                        this.isDeleted = true;
+                        this.returnToLogin();
                     })
             },
-            modifyProfile() {
-                axios.put('http://localhost:3000/api/account/' + this.id)
-                    .then(() => {
-                        this.isModified = true;
-                    })
+            toggleFormProfile() {
+
+                this.isModifying = !this.isModifying;
+                this.accountUpdate.id = this.account.id;
+                this.accountUpdate.firstname = this.account.firstname;
+                this.accountUpdate.name = this.account.name;
+                this.accountUpdate.job = this.account.job;
+                this.accountUpdate.email = this.account.email;
+                this.accountUpdate.phone = this.account.phone;
+
+            },
+            updateProfile() {
+                if (this.updateFormIsValid()) {
+                    axios.put('http://localhost:3000/api/account/profile/' + this.account.id, this.accountUpdate)
+                        .then(() => {
+                            this.isModifying = false;
+                            this.$router.go();
+                        })
+                }
+                else {
+                    window.alert("Le formulaire n'est pas valide");
+                }
+            },
+            logoutProfile() {
+                this.returnToLogin();
+            },
+            returnToLogin() {
+                sessionStorage.clear();
+                this.$router.push('/login');
+            },
+            updateFormIsValid() {
+                const regex = /^[a-zA-Z0-9._-]+@[a-z0-9._-]{2,}\.[a-z]{2,4}$/;
+                return regex.test(this.accountUpdate.email)
+                    && this.accountUpdate.name.length > 1
+                    && this.accountUpdate.firstname.length > 1;
+            },
+            isMyAccount() {
+                return this.account.id == sessionStorage.getItem("accountId");
             }
         }
     }
@@ -97,6 +148,16 @@
 <style scoped lang="scss">
 
     @import "../assets/colors.scss";
+
+    input {
+        max-width: 30%;
+        border: none;
+        border: 0.1rem solid $text-light-grey;
+        border-radius: 0.4rem;
+        padding: 1%;
+        background-color: $white;
+
+    }
 
     h1 {
         font-family: 'Fjalla One', sans-serif;
@@ -111,11 +172,18 @@
         font-size: 2.4em;
         color: $dark-blue;
         letter-spacing: 0.1em;
-        line-height: 1em;
+        line-height: 1.2em;
 
         span {
             text-transform: uppercase;         
         }
+
+        input {
+            font-family: 'Fjalla One', sans-serif;
+            font-size: 1em;
+            color: $dark-blue;
+            letter-spacing: 0.1em;
+    }
     }
 
     h3 {
@@ -187,16 +255,39 @@
 
     #edit_profile {
         width: 100%;
+        min-height: 3em;
         display: flex;
-        justify-content: flex-end;
-
+        justify-content: space-between;
+        align-items: flex-start;
         img {
             width: 1.5em;
             margin-left: 0.7em;
         }
 
+        div {
+            display: 50%;
+        }
+
         a {
             cursor: pointer;
+        }
+
+        button {
+        cursor: pointer;
+        width: auto;
+        font-size: 1em;
+        align-self: flex-start;
+        background-color: transparent;
+        border: 0.15em solid $white;
+        color: $white;
+        margin-bottom: 0;
+        transition: 0.1s ease-in;
+        opacity: 0.8;
+        &:hover
+
+    {
+        opacity: 1;
+    }
         }
     }
 
@@ -204,7 +295,7 @@
         width: 35%;
         border-radius: 50%;
         border: 0.5em solid $white;
-        margin-top: 4em;
+        margin-top: 3em;
     }
 
     #nom_prenom_poste {
