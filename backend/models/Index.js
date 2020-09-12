@@ -16,7 +16,9 @@ const sequelize = new Sequelize('groupomania', 'root', sqlPassword, {
 const modelDefiners = [
 	require('./Account.js'),
 	require('./Post.js'),
-	require('./Comment.js')
+	require('./Comment.js'),
+	require('./Like.js')
+
 	// Add more models here...
 	// require('./models/item'),
 ];

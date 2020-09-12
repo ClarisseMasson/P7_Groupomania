@@ -113,7 +113,6 @@
     }
 
     .post {
-        width: 100%;
         background-color: $white;
         border-radius: 0.2em;
         margin-bottom: 1em;

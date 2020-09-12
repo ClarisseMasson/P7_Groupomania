@@ -21,22 +21,20 @@
         <p>{{description}}</p>
         <img :src="fileUrl" v-if="showImage" />
         <video controls v-if="showVideo"><source :src="fileUrl" :type="fileType" /></video>
-        <section id="bottom_part">
-            <div id="like">
-                <a id="like_post">
-                    <img src="../assets/images/icon_like.svg" alt="liker le post" id="modify_post" />
+        <slot>
+            <section id="bottom_part">
+                <a id="like_post" v-on:click="toggleLike()">
+                    <img src="../assets/images/icon_like.svg" alt="liker le post" v-if="!isLiked" />
+                    <img src="../assets/images/icon_liked.svg" alt="le post est liké" v-if="isLiked" />
+                    <p>{{likes.length}} {{likeMessage}}</p>
                 </a>
-                <a id="unlike_post">
-                    <img src="../assets/images/icon_dislike.svg" alt="ne pas aimer le post" id="delete_post" />
-                </a>
-            </div>
-            <a id="comment">
-                <img src="../assets/images/icon_comment.svg" alt="icon pour supprimer son post" id="delete_post" />
-                <p>Commentez</p>
-            </a>
-        </section>
-        <!--<button v-if="showModify">modify</button>
-    <button v-if="showDelete" v-on:click="deletePost">supprimer</button>-->
+                <router-link :to="pathToComments" id="comment">
+                    <img src="../assets/images/icon_comment.svg" alt="icon pour supprimer son post" id="delete_post" />
+                    <p>Commentez</p>
+                </router-link>
+            </section>
+        </slot>
+
     </div>
 
 </template>
@@ -54,16 +52,20 @@
         props: {
             author: {
                 type: Object
-           },
+            },
             title: { type: String },
             description: { type: String },
             fileUrl: { type: String },
             date: { type: String },
             fileType: { type: String },
-            id: {type: Number}
+            id: { type: Number },
         },
         data() {
-            return { isDeleted: false, isModified: false };
+            return {
+                isDeleted: false,
+                isModified: false,
+                likes: []
+            };
         },
         computed: {
             pathToProfile() {
@@ -74,6 +76,9 @@
                     return "";
                 }
             },
+            pathToComments() {
+                return "/post/" + this.id + "/comments/" ;
+             },
             showImage() {
                 return this.fileType && this.fileType.split("/")[0] == "image";
             },
@@ -81,7 +86,7 @@
                 return this.fileType && this.fileType.split("/")[0] == "video";
             },
             showDelete() {
-                return (this.author && this.author.id == sessionStorage.getItem("accountId") ) || sessionStorage.getItem("isAdmin") == "true";
+                return (this.author && this.author.id == sessionStorage.getItem("accountId")) || sessionStorage.getItem("isAdmin") == "true";
             },
             showModify() {
                 return (this.author && this.author.id == sessionStorage.getItem("accountId"));
@@ -103,8 +108,32 @@
                 }
             },
             moment() {
-                return moment(this.date, "YYYY-MM-DD hh:mm:ssZ" ).calendar();
+                return moment(this.date, "YYYY-MM-DD hh:mm:ssZ").calendar();
+            },
+            isLiked() {
+                let mylikes = this.likes.filter(like => like.accountId == sessionStorage.getItem("accountId"))
+                if (mylikes.length >= 1) {
+                    return true;
+                }
+                else {
+                    return false;
+                }
+            },
+            likeMessage() {
+                if (this.likes.length <= 0) {
+                    return ""
+                } else if (this.likes.length == 1) {
+                    return "groupomaniac a aimé"
+                } else {
+                    return "groupomaniac ont aimés"
+                }
             }
+        },
+        created() {
+            axios.get('http://localhost:3000/api/post/' + this.id + '/like')
+                .then(resp => {
+                    this.likes = resp.data;
+                })
         },
         methods: {
             deletePost() {
@@ -118,8 +147,29 @@
                     .then(() => {
                         this.isModified = true;
                     })
+            },
+            toggleLike() {
+                let myAccountId = sessionStorage.getItem('accountId');
+                if (this.isLiked == false) {
+
+                    axios.post('http://localhost:3000/api/post/' + this.id + '/like', {
+                        accountId: myAccountId
+                    })
+                        .then(() => {
+                            this.likes.push({ accountId: myAccountId, postId: this.id });
+                        })
+
+                } else {
+                    axios.put('http://localhost:3000/api/post/' + this.id + '/like', {
+                        accountId: myAccountId
+                    })
+                        .then(() => {
+                            //je garde tout les likes qui ne sont pas les miens
+                            this.likes = this.likes.filter(like => like.accountId != myAccountId);
+                        })
+                }
             }
-        }
+        },
     }
 </script>
 
@@ -131,48 +181,49 @@
     * {
         font-family: 'Poppins', sans-serif;
     }
-    
+
     a {
         text-decoration: none;
         cursor: pointer;
+        &:hover
 
-
-        &:hover{
-                           filter: brightness(0.60);
-
-               }
+    {
+        filter: brightness(0.60);
     }
 
-    h1{
+    }
+
+    h1 {
         font-size: 1.8em;
         color: $dark-blue;
     }
-    
+
     p {
         font-size: 1em;
         color: $text-grey;
-        text-align: justify;
+        /*text-align: justify;*/
         line-height: 1.5em;
     }
 
-    sub{
+    sub {
         font-size: 0.9em;
         color: $text-sub-grey;
     }
 
-    #top_part, h1, p, #bottom_part{
+    #top_part, h1, p, #bottom_part {
         padding-left: 2%;
         padding-right: 2%;
         padding-bottom: 0.5rem;
     }
 
-    #top_part p{
-        font-weight: bold;
-        padding-left: 0;
-        padding-bottom: 0rem;
-    }
+        #top_part p {
+            font-weight: bold;
+            padding-left: 0;
+            padding-bottom: 0rem;
+        }
 
     #top_part {
+        width: 100%;
         display: flex;
         justify-content: space-between;
         align-items: flex-start;
@@ -184,7 +235,7 @@
         width: 70%;
     }
 
-    
+
     #author_description {
         width: 100%;
         display: flex;
@@ -196,20 +247,22 @@
     #edit_post {
         display: flex;
         justify-content: flex-end;
+        img
 
-        img {
-            width: 1.5em;
-            margin-left: 0.7em;
-        }
+    {
+        width: 1.5em;
+        margin-left: 0.7em;
+    }
 
-        a {
-            cursor: pointer;
-        }
+    a {
+        cursor: pointer;
+    }
+
     }
 
 
     #photo_profile {
-        width : 2.5em;
+        width: 2.5em;
         height: 2.5em;
         border-radius: 50%;
         margin-right: 0.5em;
@@ -227,25 +280,36 @@
         padding-bottom: 0.8em;
     }
 
-    #bottom_part img{
-        width: 1.5em;
+        #bottom_part img {
+            width: 1.5em;
+        }
+
+    #like_post a {
     }
 
-    #like a{
-        margin-right: 0.7em;
+    #like_post {
+        width: 100%;
+        display: flex;
+        align-items: center;
+        p
+
+    {
+        padding-bottom: 0;
+        margin-left: 0.4em;
+    }
+
     }
 
     #comment {
         display: flex;
         justify-content: flex-end;
-        p {
-              margin-left:0.1em;
-              align-self: center;
-              padding-bottom: 0 !important;
-              line-height: normal;
-          }
+        p
+
+    {
+        margin-left: 0.1em;
+        align-self: center;
+        padding-bottom: 0 !important;
+        line-height: normal;
     }
-
-    
-
+    }
 </style>

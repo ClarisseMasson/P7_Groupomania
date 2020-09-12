@@ -13,6 +13,39 @@ exports.createPost = (req, res, next) => {
         .catch(error => res.status(400).json({ error }));
 };
 
+exports.getOnePost = (req, res, next) => {
+    //nous utilisons la méthode findOne() dans trouver un compte dans notre modèle sequelize, en excluant les mots de passe
+    models.post.findOne({
+        where: { id: req.params.id },
+        include: [
+            {
+                model: models.account,
+                attributes: ["id", "firstname", "name"]
+            }]
+    })
+        .then(post => {
+            res.status(200).json(post)
+        })
+        .catch(error => res.status(500).json({ error }));
+};
+
+exports.getAllPosts = (req, res, next) => {
+    //nous utilisons la méthode findAll() dans trouver tous les posts
+    models.post.findAll({
+        order: [['updatedAt', 'DESC']],
+        include: [
+            {
+                model: models.account,
+                attributes: ["id", "firstname", "name"]
+            }
+        ]
+    })
+        .then(post => {
+            res.status(200).json(post)
+        })
+        .catch(error => res.status(500).json({ error }));
+};
+
 exports.modifyPost = (req, res, next) => {
     models.post.findOne({ where: { id: req.params.id } })
         .then(postInDB => {
@@ -29,6 +62,7 @@ exports.modifyPost = (req, res, next) => {
         .catch(error => res.status(500).json({ error }));
 };
 
+
 exports.deletePost = (req, res, next) => {
     models.post.findOne({ where: { id: req.params.id } })
         .then(post => {
@@ -37,42 +71,16 @@ exports.deletePost = (req, res, next) => {
                 const filename = post.fileUrl.split('/images/')[1];
                 //...on supprime le fichier du dossier images
                 fs.unlink(`images/${filename}`, () => {
-                    //puis deleteOne pour supprimer aussi l'objet de la base de la donnée
-                    post.destroy()
+                    //puis destroy pour supprimer aussi l'objet de la base de la donnée + ses données associées (likes et comments)
+                    post.destroy({ cascade: true })
                         .then(() => res.status(200).json({ message: 'Objet supprimé !' }))
                         .catch(error => res.status(404).json({ error }));
                 })
             } else {
-                post.destroy()
+                post.destroy({ cascade: true })
                     .then(() => res.status(200).json({ message: 'Objet supprimé !' }))
                     .catch(error => res.status(404).json({ error }));
             }
-        })
-        .catch(error => res.status(500).json({ error }));
-};
-
-
-exports.getOnePost = (req, res, next) => {
-    //nous utilisons la méthode findOne() dans trouver un compte dans notre modèle sequelize, en excluant les mots de passe
-    models.post.findOne({ where: { id: req.params.id } })
-        .then(post => {
-            res.status(200).json(post)
-        })
-        .catch(error => res.status(500).json({ error }));
-};
-
-exports.getAllPosts = (req, res, next) => {
-    //nous utilisons la méthode findAll() dans trouver tous les posts
-    models.post.findAll({
-        order: [['updatedAt', 'DESC']],
-        include: [
-            {
-                model: models.account,
-                attributes: ["id", "firstname", "name"]              
-            }
-        ] })
-        .then(post => {
-            res.status(200).json(post)
         })
         .catch(error => res.status(500).json({ error }));
 };
@@ -98,3 +106,34 @@ function getPostObjectFromRequest(req) {
     }
     return postObject;
 }
+
+
+
+//on ajoute un like au post
+exports.addLike = (req, res, next) => {
+    const like = models.like.build({ accountId: req.body.accountId, postId: req.params.id })
+    like.save()
+        .then(() => res.status(201).json({ message: 'like enregistré !' }))
+        .catch(error => res.status(400).json({ error }));
+};
+
+
+exports.getAllLikes = (req, res, next) => {
+    //nous utilisons la méthode findAll() dans trouver tous les likes
+    models.like.findAll({ where: { postId: req.params.id } })
+        .then(post => {
+            res.status(200).json(post)
+        })
+        .catch(error => res.status(500).json({ error }));
+};
+
+exports.removeLike = (req, res, next) => {
+    models.like.findOne({ where: { accountId: req.body.accountId, postId: req.params.id } })
+        .then(like => {
+            like.destroy()
+                .then(() => res.status(200).json({ message: 'like annulé !' }))
+                .catch(error => res.status(404).json({ error }));
+        })
+
+        .catch(error => res.status(500).json({ error }));
+};

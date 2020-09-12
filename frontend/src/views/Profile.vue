@@ -75,8 +75,7 @@
         },
 
         mounted() {
-            const accountId = this.$route.params.id;
-            //const accountId = sessionStorage.getItem('accountId');
+            const accountId = this.$route.params.accountid;
             axios
                 .get('http://localhost:3000/api/account/profile/' + accountId)
                 .then(response => (this.account = response.data))

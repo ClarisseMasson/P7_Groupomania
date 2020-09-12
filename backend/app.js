@@ -10,6 +10,7 @@ const sauceRoutes = require('./routes/sauce');
 const accountRoutes = require('./routes/account');
 const postRoutes = require('./routes/post');
 const commentRoutes = require('./routes/comment');
+const topFiveRoutes = require('./routes/topfive');
 
 
 
@@ -51,6 +52,8 @@ app.use('/api/sauces', sauceRoutes);
 app.use('/api/account', accountRoutes);
 app.use('/api/post', postRoutes);
 app.use('/api/post/:postId/comment', commentRoutes);
+app.use('/api/topfive', topFiveRoutes);
+
 
 
 

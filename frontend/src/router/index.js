@@ -4,6 +4,7 @@ import Home from '../views/Home.vue'
 import Login from '../views/Login.vue'
 import SignUp from '../views/SignUp.vue'
 import Profile from '../views/Profile.vue'
+import Comments from '../views/Comments.vue'
 
 
 
@@ -26,10 +27,16 @@ const routes = [
         component: SignUp
     },
     {
-        path: '/profile/:id',
+        path: '/profile/:accountid',
         name: 'Profile',
         props: true,
         component: Profile
+    },
+    {
+        path: '/post/:postid/comments',
+        name: 'Comments',
+        props: true,
+        component: Comments
     }
 ]
 

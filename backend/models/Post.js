@@ -8,15 +8,16 @@ module.exports = (sequelize) => {
 			allowNull: false,
 			autoIncrement: true,
 			primaryKey: true,
-			type: DataTypes.INTEGER
+			type: DataTypes.INTEGER,
 		},
 		title: {
 			allowNull: false,
-			type: DataTypes.STRING
+			type: DataTypes.STRING(70)
 		},
 		description: {
 			allowNull: true,
-			type: DataTypes.STRING
+			//on met le type en texte pour supporter les messages de plus de 255 caractères
+			type: DataTypes.TEXT
 		},
 		fileUrl: {
 			allowNull: true,
