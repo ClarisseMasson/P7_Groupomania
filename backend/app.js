@@ -1,33 +1,16 @@
 const express = require('express');
 const bodyParser = require('body-parser');
-const mongoose = require('mongoose');
 const path = require('path');
 const expressip = require('express-ip');
 const helmet = require('helmet');
 
 //on importe les routes
-const sauceRoutes = require('./routes/sauce');
 const accountRoutes = require('./routes/account');
 const postRoutes = require('./routes/post');
 const commentRoutes = require('./routes/comment');
 const topFiveRoutes = require('./routes/topfive');
 
-
-
-
-//on récupère le mot de passe depuis les variables d'environnement système (données stockées localement sur mon ordinateur)
-const mongoPassword = process.env.MONGO_PASSWORD;
-
-mongoose.connect(`mongodb+srv://sauceUser:${mongoPassword}@cluster0.isjgy.mongodb.net/principal?retryWrites=true&w=majority`,
-    {
-        useNewUrlParser: true,
-        useUnifiedTopology: true
-    })
-    .then(() => console.log('Connexion à MongoDB réussie !'))
-    .catch(() => console.log('Connexion à MongoDB échouée !'));
-
 const app = express();
-
 
 app.use((req, res, next) => {
     //on autorise que la communication entre le frontend et le backend
@@ -48,7 +31,6 @@ app.use(bodyParser.json());
 app.use('/images', express.static(path.join(__dirname, 'images')));
 
 //pour enregistrer les routes
-app.use('/api/sauces', sauceRoutes);
 app.use('/api/account', accountRoutes);
 app.use('/api/post', postRoutes);
 app.use('/api/post/:postId/comment', commentRoutes);

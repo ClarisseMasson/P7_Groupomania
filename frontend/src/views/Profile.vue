@@ -50,7 +50,7 @@
                         </a>
                     </div>
                 </div>
-                <img src="../assets/images/photo_profile.jpg" alt="photo de profil" id="photo_profile"/>
+                <img src="../assets/images/photo_profile.jpg" alt="photo de profil" id="photo_profile" />
             </div>
         </article>
     </ConnectedPage>
@@ -146,7 +146,6 @@
         border-radius: 0.4rem;
         padding: 1%;
         background-color: $white;
-
     }
 
     h1 {
@@ -163,17 +162,19 @@
         color: $dark-blue;
         letter-spacing: 0.1em;
         line-height: 1.2em;
+        span
 
-        span {
-            text-transform: uppercase;         
-        }
-
-        input {
-            font-family: 'Fjalla One', sans-serif;
-            font-size: 1em;
-            color: $dark-blue;
-            letter-spacing: 0.1em;
+    {
+        text-transform: uppercase;
     }
+
+    input {
+        font-family: 'Fjalla One', sans-serif;
+        font-size: 1em;
+        color: $dark-blue;
+        letter-spacing: 0.1em;
+    }
+
     }
 
     h3 {
@@ -210,11 +211,13 @@
         align-items: center;
         margin-top: 3.2em;
         margin-bottom: 2.5em;
+        img
 
-        img{
-            height: 1.8em;
-            margin-right: 12.5em;
-        }
+    {
+        height: 1.8em;
+        margin-right: 12.5em;
+    }
+
     }
 
     #container_profile {
@@ -226,12 +229,13 @@
         background-color: $white;
         border-radius: 0.2em;
         box-shadow: 0em 0em 0.4em 0.1em rgba($medium-blue, 0.2);
+        img
 
-        img {
-            width: 100%;
-            border-top-left-radius: 0.2em;
-            border-top-right-radius: 0.2em;
-        }
+    {
+        width: 100%;
+        border-top-left-radius: 0.2em;
+        border-top-right-radius: 0.2em;
+    }
 
     }
 
@@ -249,20 +253,22 @@
         display: flex;
         justify-content: space-between;
         align-items: flex-start;
-        img {
-            width: 1.5em;
-            margin-left: 0.7em;
-        }
+        img
 
-        div {
-            display: 50%;
-        }
+    {
+        width: 1.5em;
+        margin-left: 0.7em;
+    }
 
-        a {
-            cursor: pointer;
-        }
+    div {
+        display: 50%;
+    }
 
-        button {
+    a {
+        cursor: pointer;
+    }
+
+    button {
         cursor: pointer;
         width: auto;
         font-size: 1em;
@@ -278,7 +284,8 @@
     {
         opacity: 1;
     }
-        }
+
+    }
     }
 
     #photo_profile {
@@ -303,11 +310,13 @@
         font-style: normal;
         padding-top: 1em;
         padding-bottom: 1em;
+        .address-composent
 
-        .address-composent{
-            width: 100%;
-            padding: 0.5em 1.5em 0.5em 1.5em;
-        }
+    {
+        width: 100%;
+        padding: 0.5em 1.5em 0.5em 1.5em;
+    }
+
     }
 
     button {
@@ -331,6 +340,4 @@
         transform: scale(0.995);
     }
     }
-
-
 </style>

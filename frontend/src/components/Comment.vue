@@ -14,7 +14,7 @@
                 </a>
             </div>
         </section>
-        <section>
+        <section id="body_comment">
             <p>{{description}}</p>
             <img :src="fileUrl" v-if="showImage" />
             <video controls v-if="showVideo"><source :src="fileUrl" :type="fileType" /></video>
@@ -127,7 +127,6 @@
     p {
         font-size: 1em;
         color: $text-grey;
-        /*text-align: justify;*/
         line-height: 1.5em;
     }
 
@@ -136,7 +135,18 @@
         color: $text-sub-grey;
     }
 
-    #top_part, h1, p, #bottom_part {
+    .comment {
+        width: 100%;
+        display: flex;
+        flex-wrap: wrap;
+        justify-content: flex-end;
+        padding-bottom: 1em;
+
+    }
+
+
+    #top_part {
+        width: 100%;
         padding-left: 2%;
         padding-right: 2%;
         padding-bottom: 0.5rem;
@@ -197,44 +207,8 @@
         width: 100%;
     }
 
-    #bottom_part {
-        display: flex;
-        justify-content: space-between;
-        align-items: flex-start;
-        margin-top: 0.8rem;
-        padding-bottom: 0.8em;
-    }
-
-        #bottom_part img {
-            width: 1.5em;
-        }
-
-    #like_post a {
-    }
-
-    #like_post {
-        width: 100%;
-        display: flex;
-        align-items: center;
-        p
-
-    {
-        padding-bottom: 0;
-        margin-left: 0.4em;
-    }
-
-    }
-
-    #comment {
-        display: flex;
-        justify-content: flex-end;
-        p
-
-    {
-        margin-left: 0.1em;
-        align-self: center;
-        padding-bottom: 0 !important;
-        line-height: normal;
-    }
+    #body_comment {
+        width: 88%;
+        margin-right: 2%;
     }
 </style>

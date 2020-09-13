@@ -55,6 +55,7 @@ exports.modifyPost = (req, res, next) => {
             //pensez à supprimer l'image si elle est mise à jour
             postInDB.fileUrl = postInReq.fileUrl;
             postInDB.fileType = postInReq.fileType;
+            console.log(postInDB);
             postInDB.save()
                 .then(() => res.status(200).json({ message: 'Post modifié !' }))
                 .catch(error => res.status(400).json({ error }));

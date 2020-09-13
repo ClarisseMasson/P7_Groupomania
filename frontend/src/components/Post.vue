@@ -9,9 +9,12 @@
                 </div>
             </router-link>
             <div id="edit_post">
-                <a id="modify_post" v-if="showModify" v-on:click="modifyPost">
+                <a id="modify_post" v-if="showModify" @click="showModal = true">
                     <img src="../assets/images/icon_modify.svg" alt="icon pour modifier son post" id="modify_post" />
                 </a>
+                <Lightbox boxTitle="Modifier mon POST" v-if="showModal" @close="showModal = false">
+                   <CreatePost :post="postForUpdate"></CreatePost>            
+                </Lightbox>
                 <a id="delete_post" v-if="showDelete" v-on:click="deletePost">
                     <img src="../assets/images/icon_delete.svg" alt="icon pour supprimer son post" id="delete_post" />
                 </a>
@@ -43,11 +46,14 @@
     const axios = require('axios');
 
     import moment from 'moment'
+    import Lightbox from '@/components/Lightbox.vue'
+    import CreatePost from '@/components/CreatePost.vue'
 
     export default {
         name: 'Post.vue',
         components: {
-
+            Lightbox,
+            CreatePost
         },
         props: {
             author: {
@@ -64,10 +70,20 @@
             return {
                 isDeleted: false,
                 isModified: false,
-                likes: []
+                likes: [],
+                showModal: false
             };
         },
         computed: {
+            postForUpdate() {
+                return {
+                    id: this.id,
+                    title: this.title,
+                    description: this.description,
+                    fileUrl: this.fileUrl,
+                    fileType: this.fileType
+                };
+            },
             pathToProfile() {
                 if (this.author) {
                     return "/profile/" + this.author.id;
@@ -140,12 +156,6 @@
                 axios.delete('http://localhost:3000/api/post/' + this.id)
                     .then(() => {
                         this.isDeleted = true;
-                    })
-            },
-            modifyPost() {
-                axios.put('http://localhost:3000/api/post/' + this.id)
-                    .then(() => {
-                        this.isModified = true;
                     })
             },
             toggleLike() {

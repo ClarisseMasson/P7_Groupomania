@@ -4,13 +4,13 @@
     "\\backend",
     "\\backend\\controllers",
     "\\backend\\middleware",
+    "\\backend\\models",
+    "\\backend\\routes",
     "\\frontend",
     "\\frontend\\src",
     "\\frontend\\src\\assets",
-    "\\frontend\\src\\components",
-    "\\frontend\\src\\router",
-    "\\frontend\\src\\views"
+    "\\frontend\\src\\assets\\images"
   ],
-  "SelectedNode": "\\backend\\controllers\\topfive.js",
-  "PreviewInSolutionExplorer": false
+  "SelectedNode": "\\backend\\models\\Post.js",
+  "PreviewInSolutionExplorer": true
 }
