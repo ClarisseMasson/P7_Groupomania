@@ -1,12 +1,16 @@
 {
   "ExpandedNodes": [
     "",
+    "\\backend",
+    "\\backend\\controllers",
+    "\\backend\\middleware",
+    "\\backend\\models",
+    "\\backend\\routes",
     "\\frontend",
-    "\\frontend\\public",
     "\\frontend\\src",
     "\\frontend\\src\\assets",
     "\\frontend\\src\\assets\\images"
   ],
-  "SelectedNode": "\\frontend\\src\\assets",
+  "SelectedNode": "\\backend\\app.js",
   "PreviewInSolutionExplorer": true
 }

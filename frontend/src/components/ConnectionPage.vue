@@ -36,7 +36,7 @@
 
 <style scoped lang="scss">
 
-    /*J'importe ma palette de couleur définie dans sass*/
+    /*J'importe ma palette de couleur dï¿½finie dans sass*/
     @import "../assets/colors.scss";
 
     a:link 
@@ -45,7 +45,7 @@
     } 
     
     #page {
-        /*ici on met vh pour lui dire que le pourcentage se fait par rapport au viewport et non par rapport à l'element parent*/
+        /*ici on met vh pour lui dire que le pourcentage se fait par rapport au viewport et non par rapport ï¿½ l'element parent*/
         min-height: 100vh;
         background-image: url(../assets/images/photo_fond.jpg);
         background-attachment: fixed;
@@ -53,12 +53,13 @@
         flex-direction: row;
         justify-content: flex-end;
     }
+
     #fond_bleu {
         display: flex;
         flex-direction: column;
         align-items: center;
         min-height: 100vh;
-        width : 50%;
+        width: 50%;
         background-color: $dark-blue;
     }
 
@@ -103,4 +104,61 @@
     #connection_content {
     width: 70%;
     }
+
+    
+/*
+    +---------------------+
+    | RESPONSIVE_Tablette |
+    +---------------------+
+*/
+
+@media screen and (min-width: 767px) and (max-width : 1367px) {
+
+    #fond_bleu {
+        width: 80%;
+    }
+    
+    span {
+        display: block;
+        margin-bottom :1.5em;
+    }
+}
+
+/*
+    +-----------------------+
+    | RESPONSIVE_smartphone |
+    +-----------------------+
+*/
+
+@media screen and (max-width: 767px) {
+
+    h1 {
+        font-size: 2.5em;
+
+    }
+
+    p, span, span a {
+        font-size: 1em;
+        width: 100%;
+    }
+    
+    #icon_groupomania {
+        width: 2.2em;
+        margin-right: 1.5em;
+    }
+
+    #connection_content {
+        width: 85%;
+    }
+    
+    #fond_bleu {
+        width: 100%;
+    }
+
+    span {
+        display: block;
+        margin-bottom :1.5em;
+    }
+
+}
 </style>

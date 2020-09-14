@@ -84,7 +84,7 @@
         mounted() {
             const accountId = this.$route.params.accountid;
             axios
-                .get('http://localhost:3000/api/account/profile/' + accountId, this.getHeader())
+                .get('http://192.168.0.29:3000/api/account/profile/' + accountId, this.getHeader())
                 .then(response => (this.account = response.data))
         },
         computed: {
@@ -94,7 +94,7 @@
         },
         methods: {
             deleteProfile() {
-                axios.delete('http://localhost:3000/api/account/profile/' + this.account.id, this.getHeader())
+                axios.delete('http://192.168.0.29:3000/api/account/profile/' + this.account.id, this.getHeader())
                     .then(() => {
                         this.returnToLogin();
                     })
@@ -112,7 +112,7 @@
             },
             updateProfile() {
                 if (this.updateFormIsValid()) {
-                    axios.put('http://localhost:3000/api/account/profile/' + this.account.id, this.accountUpdate, this.getHeader())
+                    axios.put('http://192.168.0.29:3000/api/account/profile/' + this.account.id, this.accountUpdate, this.getHeader())
                         .then(() => {
                             this.isModifying = false;
                             this.$router.go();
@@ -304,6 +304,8 @@
         border-radius: 50%;
         border: 0.5em solid $white;
         margin-top: 3em;
+        margin-bottom: 22em;
+
     }
 
     #nom_prenom_poste {
@@ -333,7 +335,7 @@
     button {
         outline-style: none;
         border: 0;
-        width: 47%;
+        width: 27%;
         border-radius: 0.5em;
         padding: 0.5em 2em 0.5em 2em;
         font-size: 1.1em;
@@ -351,4 +353,135 @@
         transform: scale(0.995);
     }
     }
+
+/*
+    +-----------------------------+
+    | RESPONSIVE_Tablette_paysage |
+    +-----------------------------+
+*/
+
+@media screen and (min-width: 767px) and (max-width : 1367px) and (orientation: landscape) {
+
+    #page_profile {
+        width: 60%;
+    }
+
+    button {
+        width: 50%;
+        font-size: 1em;
+    }
+}
+
+/*
+    +-----------------------------+
+    | RESPONSIVE_Tablette_paysage |
+    +-----------------------------+
+*/
+
+@media screen and (min-width: 767px) and (max-width : 1367px) and (orientation: portrait) {
+
+    #page_profile {
+        width: 80%;
+    }
+
+    button {
+        width: 50%;
+        font-size: 1em;
+    }
+
+}
+/*
+    +-----------------------+
+    | RESPONSIVE_smartphone |
+    +-----------------------+
+*/
+
+@media screen and (max-width: 767px) {
+
+    h1 {
+        font-size: 1.3em;
+        margin-right: 1.3em;
+    }
+
+    h2 {
+        text-align: center;
+    }
+
+
+    #top_part {
+        margin-top: 1.3em;
+        margin-bottom: 1.3em;
+
+        img{
+        height: 1.4em;
+        }
+    }
+
+    #page_profile {
+        width: 90%;
+    }
+
+    button {
+        width: 80%;
+        font-size: 1em;
+    }
+    
+    #nom_prenom_poste {
+    flex-wrap: wrap;
+    padding-left: 0.5em;
+    padding-right: 0.5em;
+    padding-bottom: 1em;
+    }
+
+    #photo_profile{
+        width: 7em;
+        margin-top: 1.5em;       
+    }
+
+}
+
+@media screen and (max-width: 767px) and (orientation: landscape){
+
+    h1 {
+        font-size: 1.3em;
+        margin-right: 1.3em;
+    }
+
+    h2 {
+        text-align: center;
+    }
+
+
+    #top_part {
+        margin-top: 1.3em;
+        margin-bottom: 1.3em;
+
+        img{
+        height: 1.4em;
+        }
+    }
+
+    #page_profile {
+        width: 90%;
+    }
+
+    button {
+        width: 80%;
+        font-size: 1em;
+    }
+    
+    #nom_prenom_poste {
+    flex-wrap: wrap;
+    padding-top: 5em;
+    padding-left: 0.5em;
+    padding-right: 0.5em;
+    padding-bottom: 1em;
+    }
+
+    #photo_profile{
+        width: 12em;
+        margin-top: 4em;       
+    }
+
+}
 </style>

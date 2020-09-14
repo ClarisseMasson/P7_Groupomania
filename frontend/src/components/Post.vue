@@ -29,7 +29,7 @@
                 <a id="like_post" v-on:click="toggleLike()">
                     <img src="../assets/images/icon_like.svg" alt="liker le post" v-if="!isLiked" />
                     <img src="../assets/images/icon_liked.svg" alt="le post est liké" v-if="isLiked" />
-                    <p>{{likes.length}} {{likeMessage}}</p>
+                    <p>{{likes.length}} <span>{{likeMessage}}</span></p>
                 </a>
                 <router-link :to="pathToComments" id="comment">
                     <img src="../assets/images/icon_comment.svg" alt="icon pour supprimer son post" id="delete_post" />
@@ -146,7 +146,7 @@
             }
         },
         created() {
-            axios.get('http://localhost:3000/api/post/' + this.id + '/like', this.getHeader()
+            axios.get('http://192.168.0.29:3000/api/post/' + this.id + '/like', this.getHeader()
 )
                 .then(resp => {
                     this.likes = resp.data;
@@ -154,7 +154,7 @@
         },
         methods: {
             deletePost() {
-                axios.delete('http://localhost:3000/api/post/' + this.id, this.getHeader())
+                axios.delete('http://192.168.0.29:3000/api/post/' + this.id, this.getHeader())
                     .then(() => {
                         this.isDeleted = true;
                     })
@@ -163,7 +163,7 @@
                 let myAccountId = sessionStorage.getItem('accountId');
                 if (this.isLiked == false) {
 
-                    axios.post('http://localhost:3000/api/post/' + this.id + '/like',  {
+                    axios.post('http://192.168.0.29:3000/api/post/' + this.id + '/like',  {
                         accountId: myAccountId
                     }, this.getHeader())
                         .then(() => {
@@ -171,7 +171,7 @@
                         })
 
                 } else {
-                    axios.put('http://localhost:3000/api/post/' + this.id + '/like', {
+                    axios.put('http://192.168.0.29:3000/api/post/' + this.id + '/like', {
                         accountId: myAccountId
                     }, this.getHeader())
                         .then(() => {
@@ -289,38 +289,39 @@
         align-items: flex-start;
         margin-top: 0.8rem;
         padding-bottom: 0.8em;
-    }
-
-        #bottom_part img {
+        img {
             width: 1.5em;
         }
-
-    #like_post a {
     }
 
     #like_post {
         width: 100%;
         display: flex;
         align-items: center;
-        p
 
-    {
+        p
+        {
         padding-bottom: 0;
         margin-left: 0.4em;
-    }
-
+        }
     }
 
     #comment {
         display: flex;
         justify-content: flex-end;
-        p
 
-    {
+        p{
         margin-left: 0.1em;
         align-self: center;
         padding-bottom: 0 !important;
         line-height: normal;
+        }
     }
+
+@media screen and (max-width: 767px) {
+
+    #like_post span {
+        display: none;
     }
+}
 </style>

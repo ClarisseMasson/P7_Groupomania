@@ -86,7 +86,7 @@
             height: 0;
             border-style: solid;
             position: absolute;
-            margin: 12px;
+            margin: 15px;
             z-index: 1;
             border-color: $pink;
             border-width: 0 8px 8px 8px;
@@ -98,4 +98,29 @@
             margin-top: 0;
             margin-bottom: 0;
         }
+/*
+    +---------------------+
+    | RESPONSIVE_Tablette |
+    +---------------------+
+*/
+
+@media screen and (min-width: 767px) and (max-width : 1367px) {
+
+    #account_menu a {
+        padding: 0.55em 1.1em 0.55em 1.3em;
+    }
+}
+/*
+    +-----------------------+
+    | RESPONSIVE_smartphone |
+    +-----------------------+
+*/
+
+@media screen and (max-width: 767px) {
+
+    #account_menu a {
+        padding: 0.55em 1.1em 0.55em 1.3em;
+    }
+
+}
 </style>

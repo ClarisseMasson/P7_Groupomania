@@ -10,11 +10,11 @@
             </div>
             <div>
                 <label for="mot de passe">Mot de passe :</label>
-                <input v-model="password" type="password" id="password" name="user_password" placeholder="Veuillez entrer votre mot de passe" required>
+                <input v-model="password" type="password" id="password" name="user_password" placeholder="Votre mot de passe" required>
             </div>
             <div>
                 <label for="confirmation mot de passe">Confirmation Mot de passe :</label>
-                <input v-model="confirmationPassword" type="password" id="confirmation_password" name="confirmation_user_password" placeholder="Confirmer votre mot de passe" required>
+                <input v-model="confirmationPassword" type="password" id="confirmation_password" name="confirmation_user_password" placeholder="Votre mot de passe" required>
             </div>
             <div id="name_firstname">
                 <div>
@@ -63,7 +63,7 @@
                 console.log(email, password, confirmationPassword, firstname, name)
                 if (this.verificationFormulaire(email, password, confirmationPassword)) {
                     //on utilise Axios pour envoyer les informations de création de compte
-                    axios.post('http://localhost:3000/api/account/signup', {
+                    axios.post('http://192.168.0.29:3000/api/account/signup', {
                         email: email,
                         password: password,
                         confirmationPassword: confirmationPassword,
@@ -72,7 +72,7 @@
                     })
                         .then(() => {
                             //lorsque le compte est créé on se connecte automatiquement pour renvoyer l'utilisateur sur la page home authentifié
-                            axios.post('http://localhost:3000/api/account/login', {
+                            axios.post('http://192.168.0.29:3000/api/account/login', {
                                 email: email,
                                 password: password
                             })
@@ -179,7 +179,7 @@
     button, #login_button {
         border-radius: 0.5em;
         outline-style: none;
-        width: 27%;
+        width: 10em;
         padding: 0.5em 2em 0.5em 2em;
         font-size: 1.1em;
         font-family: 'Poppins', sans-serif;
@@ -192,14 +192,11 @@
         background-color: $pink;
         margin-right: 1em;
         transition: 0.1s ease-in;
-        &:hover
-
-    {
+        &:hover{
         background-color: darken($pink, 4%);
         box-shadow: 1px 1px 3px 2px darken($pink,10%) inset;
         transform: scale(0.995);
-    }
-
+        }
     }
 
 
@@ -208,12 +205,9 @@
         color: $white;
         transition: 0.1s ease-in;
         opacity: 0.8;
-        &:hover
-
-    {
+        &:hover{
         opacity: 1;
-    }
-
+        }
     }
 
 
@@ -240,4 +234,61 @@
     #firstname, #name {
         width: 18.2em;
     }
+/*
+    +---------------------+
+    | RESPONSIVE_Tablette |
+    +---------------------+
+*/
+
+@media screen and (min-width: 767px) and (max-width : 1367px) {
+
+    #name_firstname {
+        flex-wrap: wrap;
+    }
+
+    #name_firstname div {
+        width: 100%;
+    }
+
+    #firstname, #name {
+        width: 100%;
+    }
+}
+/*
+    +-----------------------+
+    | RESPONSIVE_smartphone |
+    +-----------------------+
+*/
+
+@media screen and (max-width: 767px) {
+
+    form {
+        margin-top: 1.8em;
+        margin-bottom: 0.4em;
+    }
+
+    #buttons {
+        font-size: 1em;
+        margin-bottom: 0.4em;
+     
+    }
+
+    button, #login_button {
+        width: 11em;
+        margin-bottom: 1em;;
+    }
+
+    #name_firstname {
+        flex-wrap: wrap;
+    }
+
+    
+    #name_firstname div {
+        width: 100%;
+    }
+
+    #firstname, #name {
+        width: 100%;
+    }
+}
 </style>

@@ -1,6 +1,7 @@
 ﻿<template>
     <menu id="navbar" ref="container">
         <img src="../assets/images/icon_logo.svg" alt="logo Groupomania" id="logo" />
+        <img src="../assets/images/icon_groupomania_white.svg" alt="icone groupomania" id="logo_responsive" />
         <div id="menu">
             <router-link to="/home"><img src="../assets/images/icon_home.svg" alt="icone pour aller à la page d'accueil" id="home" /></router-link>
             <v-popover   offset="15">
@@ -67,11 +68,14 @@
         padding-left:3em;
         padding-top: 0.7em;
         padding-bottom: 0.7em;
-
     }
 
     #logo {
         height:2em;
+    }
+
+    #logo_responsive {
+        display: none;
     }
 
     #menu {
@@ -104,4 +108,43 @@
         letter-spacing:0.02em;
         color: $white;
     }
+
+    /*
+    +---------------------+
+    | RESPONSIVE_Tablette |
+    +---------------------+
+*/
+
+@media screen and (min-width: 767px) and (max-width : 1367px) {
+
+   #navbar {
+        padding-right:1em;
+        padding-left:1em;
+    }
+
+ }
+
+/*
+    +-----------------------+
+    | RESPONSIVE_smartphone |
+    +-----------------------+
+*/
+
+@media screen and (max-width: 767px) {
+
+   #navbar {
+        padding-right:1em;
+        padding-left:1em;
+    }
+    
+    #logo {
+        display: none;
+    }
+
+    #logo_responsive {
+        display: block;
+        height:2em;
+    }
+ 
+}
 </style>

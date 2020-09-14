@@ -7,11 +7,11 @@
             <form>
                 <div>
                     <label for="email">Identifiant :</label>
-                    <input v-model="email" type="email" id="email" name="user_mail" placeholder="Votre identifiant" required>
+                    <input v-model="email" type="email" id="email" name="user_mail" placeholder="Votre email" required>
                 </div>
                 <div>
                     <label for="mot de passe">Mot de passe :</label>
-                    <input v-model="password" type="password" id="password" name="user_password" placeholder="Veuillez entrer votre mot de passe" required>
+                    <input v-model="password" type="password" id="password" name="user_password" placeholder="Votre mot de passe" required>
                 </div>
             </form>
             <div id="buttons">
@@ -45,7 +45,7 @@
             login(email, password) {
                 console.log(email, password)
                 //on utilise Axios pour envoyer les informations de connexion en lui indiquant sa route
-                axios.post('http://localhost:3000/api/account/login', {
+                axios.post('http://192.168.0.29:3000/api/account/login', {
                     email: email,
                     password: password
                   })
@@ -120,7 +120,7 @@
     button, #signup_button {
         border-radius: 0.5em;
         outline-style: none;
-        width: 27%;
+        width: 10em;
         padding: 0.5em 2em 0.5em 2em;
         font-size: 1.1em;
         font-family: 'Poppins', sans-serif;
@@ -168,4 +168,28 @@
         color: $text-light-grey;
     }
 
+/*
+    +-----------------------+
+    | RESPONSIVE_smartphone |
+    +-----------------------+
+*/
+
+@media screen and (max-width: 767px) {
+
+    form {
+        margin-top: 1.8em;
+        margin-bottom: 0.4em;
+    }
+
+    #buttons {
+        font-size: 1em;
+        margin-bottom: 0.4em;
+     
+    }
+
+    button, #signup_button {
+        width: 11em;
+        margin-bottom: 1em;;
+    }
+}
 </style>

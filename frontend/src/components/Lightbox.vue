@@ -78,13 +78,58 @@
         align-items: center;
         background-color: rgba($dark-blue, 0.9);
         z-index: 10;
+     overflow: scroll;       
+
     }
 
     #container_lightbox {
         width: 23%;
+        min-height: 50%;
         background-color: $white;
         border-radius: 0.5rem;
         margin-bottom: 1rem;
     }
+/*
+    +-----------------------------+
+    | RESPONSIVE_Tablette_paysage |
+    +-----------------------------+
+*/
 
+@media screen and (min-width: 767px) and (max-width : 1367px) and (orientation: landscape) {
+
+    #container_lightbox  {
+        width: 50%;
+    }
+}
+
+/*
+    +------------------------------+
+    | RESPONSIVE_Tablette_portrait |
+    +------------------------------+
+*/
+
+@media screen and (min-width: 767px) and (max-width : 1367px) and (orientation: portrait) {
+
+    #container_lightbox {
+        width: 60%;
+    }
+}
+/*
+    +-----------------------+
+    | RESPONSIVE_smartphone |
+    +-----------------------+
+*/
+
+@media screen and (max-width: 767px) {
+
+    #container_lightbox {
+        width: 80%;
+        margin-top: 1em;
+    }
+
+    #shortcut_buttons {
+        display: none;
+    }
+
+}
 </style>

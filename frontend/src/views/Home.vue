@@ -46,7 +46,7 @@
         },
         mounted() {
             axios
-                .get('http://localhost:3000/api/post/', this.getHeader())
+                .get('http://192.168.0.29:3000/api/post/', this.getHeader())
                 .then(response => (this.posts = response.data))
         },
         computed: {
@@ -117,4 +117,48 @@
         margin-bottom: 1em;
         box-shadow: 0em 0em 0.4em 0.1em rgba($medium-blue, 0.2);
     }
+
+/*
+    +-----------------------------+
+    | RESPONSIVE_Tablette_paysage |
+    +-----------------------------+
+*/
+
+@media screen and (min-width: 767px) and (max-width : 1367px) and (orientation: landscape) {
+
+    #container_post {
+        width: 60%;
+    }
+}
+
+/*
+    +------------------------------+
+    | RESPONSIVE_Tablette_portrait |
+    +------------------------------+
+*/
+
+@media screen and (min-width: 767px) and (max-width : 1367px) and (orientation: portrait) {
+
+    #container_post {
+        width: 80%;
+    }
+}
+/*
+    +-----------------------+
+    | RESPONSIVE_smartphone |
+    +-----------------------+
+*/
+
+@media screen and (max-width: 767px) {
+
+    #container_post {
+        width: 90%;
+        margin-top: 1em;
+    }
+
+    #shortcut_buttons {
+        display: none;
+    }
+
+}
 </style>

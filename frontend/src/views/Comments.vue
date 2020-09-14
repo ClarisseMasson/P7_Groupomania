@@ -2,7 +2,7 @@
     <ConnectedPage>
         <article id="page_comments">
             <section id="top_page">
-                <router-link to="/home" id="return_home"><img src="../assets/images/icon_return.svg" alt="retour à la page Home" /></router-link>
+                <router-link to="/home" id="return_home"><img src="../assets/images/icon_return.svg" alt="retour ï¿½ la page Home" /></router-link>
                 <h1>Commentaires</h1>
             </section>
             <Post :author="post.account"
@@ -84,10 +84,10 @@
         mounted() {
             const postId = this.$route.params.postid;
             axios
-                .get('http://localhost:3000/api/post/' + postId, this.getHeader())
+                .get('http://192.168.0.29:3000/api/post/' + postId, this.getHeader())
                 .then(response => (this.post = response.data));
             axios
-                .get('http://localhost:3000/api/post/' + postId + '/comment', this.getHeader())
+                .get('http://192.168.0.29:3000/api/post/' + postId + '/comment', this.getHeader())
                 .then(response => (this.comments = response.data))
         },
         computed: {
@@ -105,7 +105,7 @@
                 formData.append("file", this.fileToUpload);
 
 
-                axios.post('http://localhost:3000/api/post/' + postId + '/comment', formData, {
+                axios.post('http://192.168.0.29:3000/api/post/' + postId + '/comment', formData, {
                     headers: {
                         ...this.getHeader().headers,
                         'Content-Type': 'multipart/form-data'
@@ -186,12 +186,10 @@
         align-items: center;
         margin-top: 3.2em;
         margin-bottom: 2.5em;
-        img
 
-    {
+        img{
         height: 1.8em;
-    }
-
+        }
     }
 
     #create_comment {
@@ -202,8 +200,8 @@
         justify-content: space-between;
 
         #photo_profile {
-                width: 7%;
-                height: 7%;
+            width: 7%;
+            height: 7%;
             }
     }
 
@@ -214,15 +212,11 @@
         background-color: white;
         padding: 0.3em;
         
-        
-        &:focus-within
-    {
+        &:focus-within{
         outline: 0.1em solid $dark-blue;
-    }
+        }
 
-        textarea
-
-    {
+        textarea{
         width: 100%;
         flex-grow: 100;
         resize: vertical;
@@ -230,8 +224,7 @@
         border: none;
         /*border: 0.1em solid $pink;*/
         font-size: 1em;
-
-    }
+        }
     }
 
 
@@ -261,7 +254,7 @@
     button {
         cursor: pointer;
         border: none;
-        width: 20%;
+        width: 8em;
         margin-top: 0.7em;
         border-radius: 0.5em;
         padding: 0.15em 1em 0.15em 1em;
@@ -271,13 +264,77 @@
         text-align: center;
         background-color: $pink;
 
-         &:hover
-
-    {
+         &:hover{
         background-color: darken($pink, 4%);
         box-shadow: 1px 1px 3px 2px darken($pink,10%) inset;
         transform: scale(0.995);
+        }
     }
+
+/*
+    +-----------------------------+
+    | RESPONSIVE_Tablette_paysage |
+    +-----------------------------+
+*/
+
+@media screen and (min-width: 767px) and (max-width : 1367px) and (orientation: landscape) {
+
+    #page_comments {
+        width: 60%;
     }
+
+    textarea {
+        min-height: 2em;
+    }
+}
+
+/*
+    +-----------------------------+
+    | RESPONSIVE_Tablette_paysage |
+    +-----------------------------+
+*/
+
+@media screen and (min-width: 767px) and (max-width : 1367px) and (orientation: portrait) {
+
+    #page_comments {
+        width: 80%;
+    }
+}
+/*
+    +-----------------------+
+    | RESPONSIVE_smartphone |
+    +-----------------------+
+*/
+
+@media screen and (max-width: 767px) {
+
+    h1 {
+        font-size: 1.3em;
+        margin-right: 1.3em;
+    }
+
+
+    #top_page {
+        margin-top: 1.3em;
+        margin-bottom: 1.3em;
+
+        img{
+        height: 1.4em;
+        }
+    }
+
+    #page_comments {
+        width: 90%;
+    }
+
+    #shortcut_buttons {
+        display: none;
+    }
+
+    button {
+        font-size: 1em;
+    }
+
+}
 
 </style>

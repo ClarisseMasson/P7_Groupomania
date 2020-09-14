@@ -42,7 +42,7 @@
          methods: {
              updateProfile() {
                 if (this.updateFormIsValid()) {
-                    axios.put('http://localhost:3000/api/account/profile/' + this.account.id, this.account, this.getHeader())
+                    axios.put('http://192.168.0.29:3000/api/account/profile/' + this.account.id, this.account, this.getHeader())
                         .then(() => {
                             this.isModifying = false;
                             this.$router.go();
