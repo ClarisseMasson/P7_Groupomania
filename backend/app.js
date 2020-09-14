@@ -8,7 +8,6 @@ const helmet = require('helmet');
 const accountRoutes = require('./routes/account');
 const postRoutes = require('./routes/post');
 const commentRoutes = require('./routes/comment');
-const topFiveRoutes = require('./routes/topfive');
 
 const app = express();
 
@@ -34,8 +33,6 @@ app.use('/images', express.static(path.join(__dirname, 'images')));
 app.use('/api/account', accountRoutes);
 app.use('/api/post', postRoutes);
 app.use('/api/post/:postId/comment', commentRoutes);
-app.use('/api/topfive', topFiveRoutes);
-
 
 
 

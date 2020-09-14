@@ -115,7 +115,6 @@
                     })
             },
             modifyPost() {
-                console.log("ici connard");
                 console.log(JSON.stringify(this.post));
                 var formData = new FormData();
                 formData.append("post", JSON.stringify(this.post));
@@ -236,10 +235,11 @@
 
     h2 {
         width: 100%;
-        font-size: 1rem;
-        font-family: 'Poppins', sans-serif;
-        color: $dark-blue;
+        font-size: 1.2rem;
+        font-family: 'Fjalla One', sans-serif;
+        color: $medium-blue;
         margin-bottom: 0.3em;
+        letter-spacing: 0.05em;
     }
 
     label p {
@@ -281,14 +281,12 @@
 
 
 
-        #title_input input::placeholder, textarea::placeholder {
-            font-weight: 200;
-        }
-
-    textarea::placeholder {
+    #title_input input::placeholder, textarea::placeholder {
         font-weight: 200;
-        color: $text-grey;
+                color: $text-grey;
+
     }
+
 
     #title_input input:-webkit-autofill,
     #title_input input:-webkit-autofill:hover,

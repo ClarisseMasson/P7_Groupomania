@@ -3,7 +3,6 @@
         <img src="../assets/images/icon_logo.svg" alt="logo Groupomania" id="logo" />
         <div id="menu">
             <router-link to="/home"><img src="../assets/images/icon_home.svg" alt="icone pour aller à la page d'accueil" id="home" /></router-link>
-            <router-link to="/favorite"><img src="../assets/images/icon_favorite.svg" alt="icone pour accéder à ses favoris" id="favorite" /></router-link>
             <v-popover   offset="15">
                 <img src="../assets/images/icon_profile.svg" alt="lien pour ses favoris" id="profile" />
                 <AccountMenu slot="popover"/>
@@ -93,7 +92,6 @@
     }
         
     #creation {
-        margin-left: 0.22em;
         display:flex;
         flex-direction: row;
     }

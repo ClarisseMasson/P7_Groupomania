@@ -5,6 +5,7 @@
                 <router-link to="/home" id="return_home"><img src="../assets/images/icon_return.svg" alt="retour à la page Home" /></router-link>
                 <h1><span v-if="isMyAccount()">Mon </span>profil</h1>
             </section>
+            <Lightbox v-if="showModal" @close="showModal = false" boxTitle="Modifier mon PROFIL"><ModifyProfile :account="account"></ModifyProfile></Lightbox>
             <div id="container_profile">
                 <img src="../assets/images/profile_fond.jpg" alt="image de fond" />
                 <div id="nom_prenom_poste">
@@ -39,10 +40,10 @@
             <div id="profile">
                 <div id="edit_profile">
                     <div>
-                        <button v-if="isModifying" v-on:click="updateProfile">Sauvegarder</button>
+                        <button v-if="isModifying" >Sauvegarder</button>
                     </div>
                     <div v-if="isMyAccount()">
-                        <a id="modify_profile" v-on:click="toggleFormProfile">
+                        <a id="modify_profile" v-on:click="showModal = true">
                             <img src="../assets/images/icon_modify_white.svg" alt="modifier son profil" />
                         </a>
                         <a id="logout_profile" v-on:click="logoutProfile">
@@ -61,20 +62,25 @@
 
     // @ is an alias to /src
     import ConnectedPage from '@/components/ConnectedPage.vue'
+    import Lightbox from '@/components/Lightbox.vue'
+    import ModifyProfile from '@/components/ModifyProfile.vue'
+
 
     export default {
         name: 'Profile',
         components: {
-            ConnectedPage
+            ConnectedPage,
+            Lightbox,
+            ModifyProfile
         },
         data() {
             return {
                 account: {},
                 accountUpdate: {},
-                isModifying: false
+                isModifying: false,
+                showModal: false
             };
         },
-
         mounted() {
             const accountId = this.$route.params.accountid;
             axios
