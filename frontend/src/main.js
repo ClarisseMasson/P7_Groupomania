@@ -13,6 +13,20 @@ Vue.directive('focus', {
     }
 })
 
+Vue.mixin({
+    methods: {
+        getHeader: function () {
+            return {
+                headers: {
+                    'Authorization': "Bearer " + sessionStorage.getItem('token'),
+                    'X-AccountId': sessionStorage.getItem('accountId')
+                }
+            }
+        }
+    }
+})
+
+
 import VTooltip from 'v-tooltip'
 import moment from 'moment'
 moment.locale('fr');
@@ -21,6 +35,6 @@ Vue.use(VTooltip)
 Vue.use(VueTextareaAutosize);
 
 new Vue({
-  router,
-  render: h => h(App)
+    router,
+    render: h => h(App)
 }).$mount('#app')

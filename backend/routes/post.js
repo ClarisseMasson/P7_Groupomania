@@ -3,7 +3,7 @@ const express = require('express');
 
 //fonction router de express
 const router = express.Router();
-
+const auth = require('../middleware/auth');
 const multer = require('../middleware/multer-config');
 
 
@@ -11,15 +11,15 @@ const multer = require('../middleware/multer-config');
 const postCtrl = require('../controllers/post');
 
 //N'oubliez pas que le segment de route indiqué ici est uniquement le segment final, car le reste de l'adresse de la route sera déclaré dans notre application Express.
-router.post('/', multer, postCtrl.createPost);
-router.get('/:id', postCtrl.getOnePost);
-router.get('/', postCtrl.getAllPosts);
-router.put('/:id', multer, postCtrl.modifyPost);
-router.delete('/:id', postCtrl.deletePost);
+router.post('/', auth, multer, postCtrl.createPost);
+router.get('/:id', auth, postCtrl.getOnePost);
+router.get('/', auth, postCtrl.getAllPosts);
+router.put('/:id', auth, multer, postCtrl.modifyPost);
+router.delete('/:id', auth, postCtrl.deletePost);
 
-router.get('/:id/like', postCtrl.getAllLikes);
-router.post('/:id/like', postCtrl.addLike);
-router.put('/:id/like', postCtrl.removeLike);
+router.get('/:id/like', auth, postCtrl.getAllLikes);
+router.post('/:id/like', auth, postCtrl.addLike);
+router.put('/:id/like', auth, postCtrl.removeLike);
 
 //on exporte le router pour qu'on puisse l'importer dans app.js
 module.exports = router;

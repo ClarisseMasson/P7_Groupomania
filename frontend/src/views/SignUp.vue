@@ -6,7 +6,7 @@
         <form>
             <div>
                 <label for="email">Identifiant :</label>
-                <input v-model="email" type="email" id="email" name="user_mail" placeholder="Votre identifiant" v-on:keyup="verificationInputMail(email)" required>
+                <input v-model="email" type="email" id="email" name="user_mail" placeholder="Votre email" required>
             </div>
             <div>
                 <label for="mot de passe">Mot de passe :</label>
@@ -61,39 +61,70 @@
         methods: {
             signup(email, password, confirmationPassword, firstname, name) {
                 console.log(email, password, confirmationPassword, firstname, name)
-                //on utilise Axios pour envoyer les informations de création de compte
-                axios.post('http://localhost:3000/api/account/signup', {
-                    email: email,
-                    password: password,
-                    confirmationPassword: confirmationPassword,
-                    firstname: firstname,
-                    name: name
-                })
-                    .then(() => {
-                        //lorsque le compte est créé on se connecte automatiquement pour renvoyer l'utilisateur sur la page home authentifié 
-                        axios.post('http://localhost:3000/api/account/login', {
-                            email: email,
-                            password: password
-                        })
-                        .then(response => {
-                            //on lui renvoie bien l'accountId, le token et si il est administrateur
-                            sessionStorage.setItem("accountId", response.data.accountId);
-                            sessionStorage.setItem("token", response.data.token);
-                            sessionStorage.setItem("isAdmin", response.data.isAdmin);
-                            this.$router.push('/profile/' + response.data.accountId)
-                        })
+                if (this.verificationFormulaire(email, password, confirmationPassword)) {
+                    //on utilise Axios pour envoyer les informations de création de compte
+                    axios.post('http://localhost:3000/api/account/signup', {
+                        email: email,
+                        password: password,
+                        confirmationPassword: confirmationPassword,
+                        firstname: firstname,
+                        name: name
                     })
-                    .catch(error => {
-                        //si la confirmation de mot de passe est différente du mot de passe
-                        if (password != confirmationPassword) {
-                            console.log(error);
-                            this.errorMessage = "*Mot de passe non identique";
-                        }
-                        //sinon en cas d'autres erreurs comme erreur réseau...
-                        else {
-                            this.errorMessage = "Une erreur s'est produite";
-                        }
-                    });
+                        .then(() => {
+                            //lorsque le compte est créé on se connecte automatiquement pour renvoyer l'utilisateur sur la page home authentifié
+                            axios.post('http://localhost:3000/api/account/login', {
+                                email: email,
+                                password: password
+                            })
+                                .then(response => {
+                                    //on lui renvoie bien l'accountId, le token et si il est administrateur
+                                    sessionStorage.setItem("accountId", response.data.accountId);
+                                    sessionStorage.setItem("token", response.data.token);
+                                    sessionStorage.setItem("isAdmin", response.data.isAdmin);
+                                    this.$router.push('/profile/' + response.data.accountId)
+                                })
+                        })
+                        .catch(() => {
+                                this.errorMessage = "*Une erreur s'est produite";
+                        });
+                }
+
+            },
+            verificationFormulaire(email, password, confirmationPassword) {
+                const regex = /^[a-zA-Z0-9._-]+@[a-z0-9._-]{2,}\.[a-z]{2,4}$/;
+
+                if (!regex.test(email) || !this.passwordValidation(password) || password != confirmationPassword || !this.checkInputFields()) {
+                    if (!regex.test(email)) {
+                        this.errorMessage = "*Email invalide";
+                    }
+                    else if (password != confirmationPassword) {
+                        this.errorMessage = "*Mot de passe non identique";
+                    }
+                    return false;
+                }
+                else {
+                    return true;
+                }
+
+            },
+            checkInputFields() {
+                const inputs = document.getElementsByTagName("input");
+                for (let input of inputs) {
+                    if (input.value.length <= 2) {
+                        this.errorMessage = "*Remplir le champ : " + input.getAttribute('placeholder');
+                        return false;
+                    }
+                }
+                return true;
+            },
+            passwordValidation(password) {
+                if (password.length >= 8 && password != password.toLowerCase() && /\d/.test(password)) {
+                    return true;
+                }
+                else {
+                    this.errorMessage = "*Mot de passe d'au moins 8 caractères contenant au moins 1 chiffre et 1 majuscule";
+                    return false;
+                }
             }
         }
     }

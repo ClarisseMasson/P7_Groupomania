@@ -20,15 +20,14 @@
 </template>
 
 <script>
+    const axios = require('axios');
+
     // @ is an alias to /src
     import Vue from 'vue'
     import ConnectedPage from '@/components/ConnectedPage.vue'
     import Post from '@/components/Post.vue'
     import Lightbox from '@/components/Lightbox.vue'
     import CreatePost from '@/components/CreatePost.vue'
-
-
-    const axios = require('axios');
 
     export default {
         name: 'Home',
@@ -47,7 +46,7 @@
         },
         mounted() {
             axios
-                .get('http://localhost:3000/api/post/')
+                .get('http://localhost:3000/api/post/', this.getHeader())
                 .then(response => (this.posts = response.data))
         },
         computed: {

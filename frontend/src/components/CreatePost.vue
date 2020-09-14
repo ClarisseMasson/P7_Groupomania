@@ -106,6 +106,7 @@
 
                 axios.post('http://localhost:3000/api/post', formData, {
                     headers: {
+                        ...this.getHeader().headers,
                         'Content-Type': 'multipart/form-data'
                     }
                 })
@@ -125,6 +126,7 @@
 
                 axios.put('http://localhost:3000/api/post/' + this.post.id, formData, {
                     headers: {
+                        ...this.getHeader().headers,
                         'Content-Type': 'multipart/form-data'
                     }
                 })

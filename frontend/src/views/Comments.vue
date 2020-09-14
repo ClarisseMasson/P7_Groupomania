@@ -54,6 +54,7 @@
 </template>
 
 <script>
+    const axios = require('axios');
 
     import ConnectedPage from '@/components/ConnectedPage.vue'
     import Post from '@/components/Post.vue'
@@ -62,9 +63,6 @@
     import photoClicked from "../assets/images/icon_photo_clicked.svg"
     import gif from "../assets/images/icon_gif.svg"
     import gifClicked from "../assets/images/icon_gif_clicked.svg"
-
-
-    const axios = require('axios');
 
     export default {
         name: 'Comments',
@@ -86,10 +84,10 @@
         mounted() {
             const postId = this.$route.params.postid;
             axios
-                .get('http://localhost:3000/api/post/' + postId)
+                .get('http://localhost:3000/api/post/' + postId, this.getHeader())
                 .then(response => (this.post = response.data));
             axios
-                .get('http://localhost:3000/api/post/' + postId + '/comment')
+                .get('http://localhost:3000/api/post/' + postId + '/comment', this.getHeader())
                 .then(response => (this.comments = response.data))
         },
         computed: {
@@ -109,6 +107,7 @@
 
                 axios.post('http://localhost:3000/api/post/' + postId + '/comment', formData, {
                     headers: {
+                        ...this.getHeader().headers,
                         'Content-Type': 'multipart/form-data'
                     }
                 })
@@ -152,11 +151,15 @@
     @import "../assets/colors.scss";
 
     h1 {
+        width: 100%;
         font-family: 'Fjalla One', sans-serif;
         font-size: 1.5em;
         color: $medium-blue;
         letter-spacing: 0.18em;
         text-transform: uppercase;
+        text-align: center;
+        flex-grow: 100;
+        margin-right: 1.5em;
     }
 
     hr {
@@ -187,7 +190,6 @@
 
     {
         height: 1.8em;
-        margin-right: 12.5em;
     }
 
     }

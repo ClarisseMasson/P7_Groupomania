@@ -146,14 +146,15 @@
             }
         },
         created() {
-            axios.get('http://localhost:3000/api/post/' + this.id + '/like')
+            axios.get('http://localhost:3000/api/post/' + this.id + '/like', this.getHeader()
+)
                 .then(resp => {
                     this.likes = resp.data;
                 })
         },
         methods: {
             deletePost() {
-                axios.delete('http://localhost:3000/api/post/' + this.id)
+                axios.delete('http://localhost:3000/api/post/' + this.id, this.getHeader())
                     .then(() => {
                         this.isDeleted = true;
                     })
@@ -162,9 +163,9 @@
                 let myAccountId = sessionStorage.getItem('accountId');
                 if (this.isLiked == false) {
 
-                    axios.post('http://localhost:3000/api/post/' + this.id + '/like', {
+                    axios.post('http://localhost:3000/api/post/' + this.id + '/like',  {
                         accountId: myAccountId
-                    })
+                    }, this.getHeader())
                         .then(() => {
                             this.likes.push({ accountId: myAccountId, postId: this.id });
                         })
@@ -172,7 +173,7 @@
                 } else {
                     axios.put('http://localhost:3000/api/post/' + this.id + '/like', {
                         accountId: myAccountId
-                    })
+                    }, this.getHeader())
                         .then(() => {
                             //je garde tout les likes qui ne sont pas les miens
                             this.likes = this.likes.filter(like => like.accountId != myAccountId);

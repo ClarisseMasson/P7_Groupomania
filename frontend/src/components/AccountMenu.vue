@@ -8,7 +8,7 @@
 
 <script>
     export default {
-        name: 'HelloWorld',
+        name: 'AccountMenu',
         methods: {
             logoutAccount() {
                 sessionStorage.clear();

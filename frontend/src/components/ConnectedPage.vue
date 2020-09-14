@@ -11,8 +11,6 @@
 
 <script>
     import Navbar from '@/components/Navbar.vue'
-    //on importe Axios pour l'utiliser
-    //const axios = require('axios');
 
     export default {
         name: 'ConnectedPage',

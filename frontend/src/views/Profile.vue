@@ -57,9 +57,10 @@
 </template>
 
 <script>
+    const axios = require('axios');
+
     // @ is an alias to /src
     import ConnectedPage from '@/components/ConnectedPage.vue'
-    const axios = require('axios');
 
     export default {
         name: 'Profile',
@@ -77,7 +78,7 @@
         mounted() {
             const accountId = this.$route.params.accountid;
             axios
-                .get('http://localhost:3000/api/account/profile/' + accountId)
+                .get('http://localhost:3000/api/account/profile/' + accountId, this.getHeader())
                 .then(response => (this.account = response.data))
         },
         computed: {
@@ -87,7 +88,7 @@
         },
         methods: {
             deleteProfile() {
-                axios.delete('http://localhost:3000/api/account/profile/' + this.account.id)
+                axios.delete('http://localhost:3000/api/account/profile/' + this.account.id, this.getHeader())
                     .then(() => {
                         this.returnToLogin();
                     })
@@ -105,7 +106,7 @@
             },
             updateProfile() {
                 if (this.updateFormIsValid()) {
-                    axios.put('http://localhost:3000/api/account/profile/' + this.account.id, this.accountUpdate)
+                    axios.put('http://localhost:3000/api/account/profile/' + this.account.id, this.accountUpdate, this.getHeader())
                         .then(() => {
                             this.isModifying = false;
                             this.$router.go();
@@ -149,11 +150,15 @@
     }
 
     h1 {
+        width: 100%;
         font-family: 'Fjalla One', sans-serif;
         font-size: 1.5em;
         color: $medium-blue;
+        text-align: center;
         letter-spacing: 0.18em;
         text-transform: uppercase;
+        flex-grow: 100%;
+        margin-right: 1.5em;
     }
 
     h2 {
@@ -162,6 +167,7 @@
         color: $dark-blue;
         letter-spacing: 0.1em;
         line-height: 1.2em;
+
         span
 
     {
@@ -215,7 +221,6 @@
 
     {
         height: 1.8em;
-        margin-right: 12.5em;
     }
 
     }
