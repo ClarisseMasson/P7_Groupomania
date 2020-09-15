@@ -66,38 +66,6 @@
             }
 
 
-        .tooltip {
-            &.popover {
-                margin-left: 4px;
-
-            .popover-inner {
-                background: white;
-                color: black;
-                padding: 0;
-                border-radius: 0.2em;
-                box-shadow: 0em 0em 0.4em 0.1em rgba($medium-blue, 0.2);
-            }
-
-        }
-        }
-
-        .popover-arrow, .tooltip-arrow {
-            width: 0;
-            height: 0;
-            border-style: solid;
-            position: absolute;
-            margin: 2px;
-            z-index: 1;
-            border-color: $pink;
-            border-width: 0 8px 8px 8px;
-            border-left-color: transparent !important;
-            border-right-color: transparent !important;
-            border-top-color: transparent !important;
-            top: -7px;
-            left: calc(50% - 7px);
-            margin-top: 0;
-            margin-bottom: 0;
-        }
 /*
     +---------------------+
     | RESPONSIVE_Tablette |

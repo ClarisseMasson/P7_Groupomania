@@ -3,13 +3,16 @@
         <img src="../assets/images/icon_logo.svg" alt="logo Groupomania" id="logo" />
         <img src="../assets/images/icon_groupomania_white.svg" alt="icone groupomania" id="logo_responsive" />
         <div id="menu">
-            <router-link to="/home"><img src="../assets/images/icon_home.svg" alt="icone pour aller à la page d'accueil" id="home" /></router-link>
-            <v-popover   offset="15">
-                <img src="../assets/images/icon_profile.svg" alt="lien pour ses favoris" id="profile" />
-                <AccountMenu slot="popover"/>
-            </v-popover>
+            <img src="../assets/images/icon_home.svg" alt="icone pour aller à la page d'accueil" id="home" />
+
+            <a v-popover:profile><img src="../assets/images/icon_profile.svg" alt="lien pour ses favoris" id="profile" /></a>
+            <popover name="profile">
+                <AccountMenu />
+            </popover>
+
             <a id="creation" @click="showModal = true"><img src="../assets/images/icon_plus.svg" alt="lien pour créer un post" id="plus" />Créer!</a>
             <Lightbox v-if="showModal" @close="showModal = false"><CreatePost></CreatePost></Lightbox>
+            <tooltip />
         </div>
  
     </menu>
@@ -52,6 +55,16 @@
     /*J'importe ma palette de couleur définie dans sass*/
     @import "../assets/colors.scss";
 
+    [data-popover='profile'] {
+        padding: 0;
+        margin-top: 0.4em;
+    }
+
+    .vue-popover.dropdown-position-bottom:before {
+        border-bottom-color: $pink;
+
+    }
+
     #profile {
         cursor: pointer;
     }
@@ -87,7 +100,8 @@
     #menu img{
         display: block;
         height : 1.7rem;
-        margin-left: 0.5em;
+        margin-left: 0.2em;
+        margin-right: 0.2em;
         align-self:center;
     }
 
@@ -130,21 +144,20 @@
     +-----------------------+
 */
 
-@media screen and (max-width: 767px) {
+    @media screen and (max-width: 767px) {
 
-   #navbar {
-        padding-right:1em;
-        padding-left:1em;
-    }
-    
-    #logo {
-        display: none;
-    }
+        #navbar {
+            padding-right: 1em;
+            padding-left: 1em;
+        }
 
-    #logo_responsive {
-        display: block;
-        height:2em;
+        #logo {
+            display: none;
+        }
+
+        #logo_responsive {
+            display: block;
+            height: 2em;
+        }
     }
- 
-}
 </style>

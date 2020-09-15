@@ -3,6 +3,7 @@ import App from './App.vue'
 import router from './router'
 //ce composant gère automatiquement la taille verticale de mes textareas
 import VueTextareaAutosize from "vue-textarea-autosize";
+import VPopover from 'vue-js-popover'
 
 Vue.config.productionTip = false
 
@@ -26,12 +27,11 @@ Vue.mixin({
     }
 })
 
+Vue.use(VPopover, { tooltip: true })
 
-import VTooltip from 'v-tooltip'
 import moment from 'moment'
 moment.locale('fr');
 
-Vue.use(VTooltip)
 Vue.use(VueTextareaAutosize);
 
 new Vue({
