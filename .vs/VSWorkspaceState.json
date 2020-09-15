@@ -2,15 +2,15 @@
   "ExpandedNodes": [
     "",
     "\\backend",
-    "\\backend\\controllers",
-    "\\backend\\models",
+    "\\backend\\middleware",
     "\\backend\\routes",
     "\\frontend",
+    "\\frontend\\public",
     "\\frontend\\src",
     "\\frontend\\src\\assets",
     "\\frontend\\src\\components",
     "\\frontend\\src\\views"
   ],
-  "SelectedNode": "\\frontend\\src\\main.js",
+  "SelectedNode": "\\frontend\\src\\components\\Lightbox.vue",
   "PreviewInSolutionExplorer": true
 }

@@ -3,14 +3,14 @@
         <img src="../assets/images/icon_logo.svg" alt="logo Groupomania" id="logo" />
         <img src="../assets/images/icon_groupomania_white.svg" alt="icone groupomania" id="logo_responsive" />
         <div id="menu">
-            <img src="../assets/images/icon_home.svg" alt="icone pour aller à la page d'accueil" id="home" />
+            <router-link to="/home"><img src="../assets/images/icon_home.svg" alt="icone pour aller à la page d'accueil" id="home" /></router-link>
 
-            <a v-popover:profile><img src="../assets/images/icon_profile.svg" alt="lien pour ses favoris" id="profile" /></a>
+            <a v-popover:profile tabindex="0"><img src="../assets/images/icon_profile.svg" alt="lien pour ses favoris" id="profile" /></a>
             <popover name="profile">
                 <AccountMenu />
             </popover>
 
-            <a id="creation" @click="showModal = true"><img src="../assets/images/icon_plus.svg" alt="lien pour créer un post" id="plus" />Créer!</a>
+            <a id="creation" @click="showModal = true" tabindex="0" @keyup.enter="showModal = true"><img src="../assets/images/icon_plus.svg" alt="lien pour créer un post" id="plus"  />Créer!</a>
             <Lightbox v-if="showModal" @close="showModal = false"><CreatePost></CreatePost></Lightbox>
             <tooltip />
         </div>

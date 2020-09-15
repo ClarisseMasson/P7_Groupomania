@@ -1,7 +1,7 @@
 ﻿<template>
     <div id="account_menu">
         <router-link :to="pathToMyProfile" id="account_profile">Mon compte</router-link>
-        <a id="account_logout" v-on:click="logoutAccount"><img src="../assets/images/icon_logout.svg" alt="icone pour se déconnecter" id="home" />Déconnexion</a>
+        <a id="account_logout" v-on:click="logoutAccount" tabindex="0" @keyup.enter="logoutAccount"><img src="../assets/images/icon_logout.svg" alt="icone pour se déconnecter" id="home" />Déconnexion</a>
 
     </div>
 </template>

@@ -21,16 +21,29 @@
 }
 
 /*Je redifinie ici mes boutons et mes inputs pour tous mes documents*/
-button, a {
+button {
+    display: block;
     cursor: pointer;
+    border: 0;
+    background : none;
+    text-decoration: none;
+    &:focus {
+        /*outline: none;*/                    
+            }
 }
 
-input {
-    border: 0;
-    outline-style: none;
-    font-family: 'Poppins', sans-serif;
-    font-weight: 500;
+a {
+    text-decoration: none;
+    cursor: pointer;
+    border: none;
 }
+
+    input {
+        border: 0;
+        outline-style: none;
+        font-family: 'Poppins', sans-serif;
+        font-weight: 500;
+    }
 
     /* je redéfinie la couleur de mes placeholder pour chrome, opéra et safari */
     ::-webkit-input-placeholder {

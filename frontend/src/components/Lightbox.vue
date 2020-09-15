@@ -5,7 +5,7 @@
                 <h1>
                     {{boxTitle}}
                 </h1>
-                <img src="../assets/images/icon_delete.svg" alt="sortir de créer" @click="$emit('close')" id="exit" />
+                <img src="../assets/images/icon_delete.svg" alt="sortir de créer" @click="$emit('close')" id="exit" tabindex="0" @keyup.enter="$emit('close')"/>
             </section>
             <slot></slot>
         </div>
@@ -17,7 +17,7 @@
     export default {
         name: 'Lightbox',
         components: {
-        },
+        },      
         props: {
             boxTitle: {
                 type: String,

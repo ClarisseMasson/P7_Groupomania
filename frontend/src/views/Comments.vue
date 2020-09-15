@@ -21,11 +21,11 @@
                             <TextareaAutosize id="description_newcomment" name="description_newcomment" placeholder="Votre commentaire..." v-model="newComment.description"/>
 
                             <div class="add_files">
-                                <label for="image_post">
+                                <label for="image_post" tabindex="0">
                                     <img v-bind:src="iconPhoto" alt="ajouter une photo" class="icon_form" />
                                 </label>
                                 <input type="file" id="image_post" name="image_post" accept="image/png, image/jpeg, image/jpg" @change="imageIsUploaded()">
-                                <label for="gif_post">
+                                <label for="gif_post" tabindex="0">
                                     <img v-bind:src="iconGif" alt="ajouter un gif" class="icon_form" />
                                 </label>
                                 <input type="file" id="gif_post" name="gif_post" accept="image/gif" @change="gifIsUploaded()">

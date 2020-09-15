@@ -3,7 +3,7 @@
         <div id="container_post">
             <div id="shortcut_buttons">
                 <router-link :to="pathToMyProfile" id="my_profile"><img src="../assets/images/icon_profile.svg" alt="lien direct à son profil" id="plus" />Mon Profil</router-link>
-                <a id="my_creation" @click="showModal = true"><img src="../assets/images/icon_plus.svg" alt="lien direct créer un post" id="plus" />Je veux créer un POST !</a>
+                <a id="my_creation" @click="showModal = true" tabindex="0" @keyup.enter="showModal = true"><img src="../assets/images/icon_plus.svg" alt="lien direct créer un post" id="plus" />Je veux créer un POST !</a>
                 <Lightbox v-if="showModal" @close="showModal = false"><CreatePost></CreatePost></Lightbox>
             </div>
             <Post v-for="post in posts"

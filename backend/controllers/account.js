@@ -1,14 +1,14 @@
-//on installe bcrypt pour crypter notre mot de passe avec "npm install--save bcrypt" en ligne de commmande
+ï»¿//on installe bcrypt pour crypter notre mot de passe avec "npm install--save bcrypt" en ligne de commmande
 const bcrypt = require('bcrypt');
 //on installe jsonwebtoken pour renvoyer notre token
 const jwt = require('jsonwebtoken');
-//on installe la fonction ip d'express pour vérifier l'ip de notre utilisateur
+//on installe la fonction ip d'express pour vÃ©rifier l'ip de notre utilisateur
 const expressip = require('express-ip');
 
-//pour récuperer le schema
+//pour rÃ©cuperer le schema
 const { models } = require('../models');
 
-//2 fonctions, une pour s'inscrire, une pour se connecter avec un compte déjà existant
+//2 fonctions, une pour s'inscrire, une pour se connecter avec un compte dÃ©jÃ  existant
 
 
 //10 tours dans le hachoir
@@ -16,18 +16,18 @@ const { models } = require('../models');
 exports.signup = (req, res, next) => {
     bcrypt.hash(req.body.password, 10)
         .then(hash => {
-            //je vérifie si l'email correspond bien à un format email pour éviter l'authentification malveillante
+            //je vÃ©rifie si l'email correspond bien Ã  un format email pour Ã©viter l'authentification malveillante
             const regex = /^[a-zA-Z0-9._-]+@[a-z0-9._-]{2,}\.[a-z]{2,4}$/;
             if (!regex.test(req.body.email)) {
                 res.status(400).json({ message: 'email invalide' });
             }
             else {
-                //je vérifie si le mot de passe a au moins 8 caractères une majuscule et un nombre
+                //je vÃ©rifie si le mot de passe a au moins 8 caractÃ¨res une majuscule et un nombre
                 if (!passwordValidation(req.body.password)) {
-                    res.status(400).json({ message: 'mot de passe pas assez fort, vous devez avoir au moins 8 caractères, 1 majuscule et un nombre' });
+                    res.status(400).json({ message: 'mot de passe pas assez fort, vous devez avoir au moins 8 caractÃ¨res, 1 majuscule et un nombre' });
                 }
                 else {
-                    //on va saler le mot de passe pour éviter les attaques utilisant des rainbow tables,
+                    //on va saler le mot de passe pour Ã©viter les attaques utilisant des rainbow tables,
                     //les attaques par dictionnaire et les attaques par force brute.
                     const newAccount = models.account.build({
                         email: req.body.email,
@@ -42,7 +42,7 @@ exports.signup = (req, res, next) => {
                     });
                     console.log(newAccount);
                     newAccount.save()
-                        .then(() => res.status(201).json({ message : 'Utilisateur créé !'}))
+                        .then(() => res.status(201).json({ message : 'Utilisateur crÃ©Ã© !'}))
                         .catch(error => res.status(400).json({ error }));
                 }
             }
@@ -51,34 +51,34 @@ exports.signup = (req, res, next) => {
 };
 
 
-//On récupère l'adresse mail de l'adresse rentré
-//si elle est bonne alors on compare le mot de passe "haché" avec celui entré
-//si il est bon on va renvoyé un objet json avec son account._id et token
+//On rÃ©cupÃ¨re l'adresse mail de l'adresse rentrÃ©
+//si elle est bonne alors on compare le mot de passe "hachÃ©" avec celui entrÃ©
+//si il est bon on va renvoyÃ© un objet json avec son account._id et token
 exports.login = (req, res, next) => {
     models.account.findOne({ where: { email: req.body.email } })
         .then(account => {
             if (!account) {
-                return res.status(401).json({ error: 'Utilisateur non trouvé !' });
+                return res.status(401).json({ error: 'Utilisateur non trouvÃ© !' });
             }
             else if (account.loginAttempt > 3) {
-                return res.status(401).json({ error: 'Trop de tentatives de connexion, votre compte a été bloqué !' });
+                return res.status(401).json({ error: 'Trop de tentatives de connexion, votre compte a Ã©tÃ© bloquÃ© !' });
             }
             else {
                 bcrypt.compare(req.body.password, account.password)
                     .then(valid => {
                         if (!valid) {
-                            //on ajoute 1 à la tentative de connexion
+                            //on ajoute 1 Ã  la tentative de connexion
                             account.loginAttempt += 1;
-                            //on met à jour le nombre de connexion dans account
+                            //on met Ã  jour le nombre de connexion dans account
                             account.save()
                                 .then(() => res.status(401).json({ message: 'Mot de passe incorrect !' }))
                                 .catch(error => res.status(500).json({ error }));
                         }
                         else {
                             console.log("ici");
-                            //on remet à 0 la tentative de connexion
+                            //on remet Ã  0 la tentative de connexion
                             account.loginAttempt = 0;
-                            //on met à jour le nombre de connexion dans account
+                            //on met Ã  jour le nombre de connexion dans account
                             account.save()
                                 .then(() => {
                                     res.status(200).json({
@@ -118,13 +118,23 @@ exports.updateProfile = (req, res, next) => {
 
 
 exports.deleteProfile = (req, res, next) => {
-    models.account.findOne({ where: { id: req.params.id } })
-        .then(account => {
-            account.destroy()
-                .then(() => res.status(200).json({ message: 'Compte supprimé !' }))
-                .catch(error => res.status(404).json({ error }));
+
+    models.account.findOne({ where: { id: req.header('X-AccountId') } })
+        .then(requester => {
+            if (requester.id == req.params.id || requester.isAdmin) {
+                models.account.findOne({ where: { id: req.params.id } })
+                    .then(account => {
+                        account.destroy()
+                            .then(() => res.status(200).json({ message: 'Compte supprimÃ© !' }))
+                            .catch(error => res.status(404).json({ error }));
+                    })
+                    .catch(error => res.status(500).json({ error }));
+            } else {
+                res.status(403).json({ message: 'Seul un administrateur ou le propriÃ¨taire du compte peut le supprimer !' });
+            }
         })
-        .catch(error => res.status(500).json({ error }));
+
+
 };
 
 function passwordValidation(password) {
@@ -137,7 +147,7 @@ function passwordValidation(password) {
 };
 
 exports.getOneProfile = (req, res, next) => {
-    //nous utilisons la méthode findOne() dans trouver un compte dans notre modèle sequelize, en excluant les mots de passe
+    //nous utilisons la mÃ©thode findOne() dans trouver un compte dans notre modÃ¨le sequelize, en excluant les mots de passe
     models.account.findOne({ where: { id: req.params.id }, attributes: {exclude: ["password","loginAttempt"]} })
         .then(account => {
             res.status(200).json(account)

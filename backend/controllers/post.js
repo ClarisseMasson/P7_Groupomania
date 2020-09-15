@@ -65,6 +65,7 @@ exports.modifyPost = (req, res, next) => {
 
 
 exports.deletePost = (req, res, next) => {
+    
     models.post.findOne({ where: { id: req.params.id } })
         .then(post => {
             if (post.fileUrl) {

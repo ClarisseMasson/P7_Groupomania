@@ -28,14 +28,14 @@
                     </div>
                 </address>
                 <!-- On affiche le bouton pour supprimer le profil seulement si on est le propriètaire du compte ou l'admin -->
-                <button v-if="showDelete" v-on:click="deleteProfile">Supprimer mon compte</button>
+                <button v-if="showDelete" v-on:click="deleteProfile" >Supprimer mon compte</button>
 
                 <div id="edit_profile">
                     <div v-if="isMyAccount()">
-                        <a id="modify_profile" v-on:click="showModal = true">
+                        <a id="modify_profile" v-on:click="showModal = true" tabindex="0" @keyup.enter="showModal = true">
                             <img src="../assets/images/icon_modify_white.svg" alt="modifier son profil" />
                         </a>
-                        <a id="logout_profile" v-on:click="logoutProfile">
+                        <a id="logout_profile" v-on:click="logoutProfile" tabindex="0" @keyup.enter="logoutProfile">
                             <img src="../assets/images/icon_logout_white.svg" alt="supprimer son profil" />
                         </a>
                     </div>
@@ -77,7 +77,9 @@
         computed: {
             showDelete() {
                 //On vérifie si 
-                return (this.isMyAccount() || sessionStorage.getItem("isAdmin") == "true") && !this.isModifying;
+                return true;
+
+                //return (this.isMyAccount() || sessionStorage.getItem("isAdmin") == "true") && !this.isModifying;
             }
         },
         methods: {
@@ -248,7 +250,7 @@
     }
 
     button {
-        outline-style: none;
+        /*outline-style: none;*/
         border: 0;
         width: 20em;
         border-radius: 0.5em;

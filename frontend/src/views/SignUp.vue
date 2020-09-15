@@ -188,7 +188,6 @@
     /*je définie les paramètres communs de mes 2 boutons*/
     button, #login_button {
         border-radius: 0.5em;
-        outline-style: none;
         width: 10em;
         padding: 0.5em 2em 0.5em 2em;
         font-size: 1.1em;

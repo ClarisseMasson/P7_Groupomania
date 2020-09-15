@@ -18,17 +18,17 @@
                 </div>
                 <div class="add_files" v-if="!hasFile">
                     <h2>Ajouter un fichier :</h2>
-                    <label for="image_post">
+                    <label for="image_post" tabindex="0">
                         <img v-bind:src="iconPhoto" alt="ajouter une photo" class="icon_form" />
                         <p>Image</p>
                     </label>
                     <input type="file" id="image_post" name="image_post" accept="image/png, image/jpeg, image/jpg" @change="imageIsUploaded()">
-                    <label for="gif_post">
+                    <label for="gif_post" tabindex="0">
                         <img v-bind:src="iconGif" alt="ajouter un gif" class="icon_form" />
                         <p>Gif</p>
                     </label>
                     <input type="file" id="gif_post" name="gif_post" accept="image/gif" @change="gifIsUploaded()">
-                    <label for="video_post">
+                    <label for="video_post" tabindex="0">
                         <img v-bind:src="iconVideo" alt="ajouter un gif" class="icon_form" />
                         <p>Vidéo</p>
                     </label>

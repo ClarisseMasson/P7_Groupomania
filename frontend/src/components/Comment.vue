@@ -9,7 +9,7 @@
                 </div>
             </router-link>
             <div id="edit_post">
-                <a id="delete_post" v-if="showDelete" v-on:click="deleteComment">
+                <a id="delete_post" v-if="showDelete" v-on:click="deleteComment" tabindex="0" @keyup.enter="deleteComment">
                     <img src="../assets/images/icon_delete.svg" alt="icon pour supprimer son post" id="delete_post" />
                 </a>
             </div>
@@ -132,7 +132,7 @@
 
     sub {
         font-size: 0.9em;
-        color: $text-sub-grey;
+        color: $text-grey;
     }
 
     .comment {

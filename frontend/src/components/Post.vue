@@ -1,7 +1,7 @@
 ﻿<template>
     <div class="post" v-if="!isDeleted">
         <section id="top_part">
-            <router-link :to="pathToProfile" id="author">
+            <router-link :to="pathToProfile" id="author" tabindex="0" >
                 <img src="../assets/images/photo_profile.jpg" alt="photo profil" id="photo_profile" />
                 <div id="author_description">
                     <p>{{name}} {{firstname}}</p>
@@ -9,13 +9,13 @@
                 </div>
             </router-link>
             <div id="edit_post">
-                <a id="modify_post" v-if="showModify" @click="showModal = true">
+                <a id="modify_post" v-if="showModify" @click="showModal = true" tabindex="0" @keyup.enter="showModal = true">
                     <img src="../assets/images/icon_modify.svg" alt="icon pour modifier son post" id="modify_post" />
                 </a>
                 <Lightbox boxTitle="Modifier mon POST" v-if="showModal" @close="showModal = false">
                    <CreatePost :post="postForUpdate"></CreatePost>            
                 </Lightbox>
-                <a id="delete_post" v-if="showDelete" v-on:click="deletePost">
+                <a id="delete_post" v-if="showDelete" v-on:click="deletePost" tabindex="0" @keyup.enter="showModal = true">
                     <img src="../assets/images/icon_delete.svg" alt="icon pour supprimer son post" id="delete_post" />
                 </a>
             </div>
@@ -25,8 +25,8 @@
         <img :src="fileUrl" v-if="showImage" />
         <video controls v-if="showVideo"><source :src="fileUrl" :type="fileType" /></video>
         <slot>
-            <section id="bottom_part">
-                <a id="like_post" v-on:click="toggleLike()">
+            <section id="bottom_part">      
+                <a href="#" id="like_post" v-on:click="toggleLike()">
                     <img src="../assets/images/icon_like.svg" alt="liker le post" v-if="!isLiked" />
                     <img src="../assets/images/icon_liked.svg" alt="le post est liké" v-if="isLiked" />
                     <p>{{likes.length}} <span>{{likeMessage}}</span></p>
@@ -218,7 +218,7 @@
 
     sub {
         font-size: 0.9em;
-        color: $text-sub-grey;
+        color: $text-grey;
     }
 
     #top_part, h1, p, #bottom_part {
