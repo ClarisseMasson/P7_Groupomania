@@ -86,7 +86,7 @@
             height: 0;
             border-style: solid;
             position: absolute;
-            margin: 15px;
+            margin: 2px;
             z-index: 1;
             border-color: $pink;
             border-width: 0 8px 8px 8px;

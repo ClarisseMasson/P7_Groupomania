@@ -8,6 +8,11 @@
             <Lightbox v-if="showModal" @close="showModal = false" boxTitle="Modifier mon PROFIL"><ModifyProfile :account="account"></ModifyProfile></Lightbox>
             <div id="container_profile">
                 <img src="../assets/images/profile_fond.jpg" alt="image de fond" />
+                <div id="relative_photo">
+                    <div id="photo_profile">
+                        <img src="../assets/images/photo_profile.jpg" alt="photo de profil" />
+                    </div>
+                </div>
                 <div id="nom_prenom_poste">
                     <h2>{{account.firstname}}<span> {{account.name}}</span></h2>
                     <h3>{{account.job}}</h3>
@@ -24,8 +29,7 @@
                 </address>
                 <!-- On affiche le bouton pour supprimer le profil seulement si on est le propriètaire du compte ou l'admin -->
                 <button v-if="showDelete" v-on:click="deleteProfile">Supprimer mon compte</button>
-            </div>
-            <div id="profile">
+
                 <div id="edit_profile">
                     <div v-if="isMyAccount()">
                         <a id="modify_profile" v-on:click="showModal = true">
@@ -36,7 +40,7 @@
                         </a>
                     </div>
                 </div>
-                <img src="../assets/images/photo_profile.jpg" alt="photo de profil" id="photo_profile" />
+
             </div>
         </article>
     </ConnectedPage>
@@ -178,7 +182,6 @@
 
     /*Page définissant la largeur d'affichage de mes éléments*/
     #page_profile {
-        position: relative;
         width: 32%;
     }
 
@@ -269,20 +272,13 @@
     | CONTENU_AU_DESSUS_DU_BLOC_PRINCIPAL |
     +-------------------------------------+
 */
- 
-    /*Contenu au dessus du principal avec boutons et image de profil ronde*/
-    #profile {
-        position: absolute;
-        display: flex;
-        flex-direction: column;
-        align-items: center;
-        padding: 2%;
-    }
 
     /*boutons de modification et de déconnection*/
     #edit_profile {
+        top: 1em;
+        right: 1em;
+        position: absolute;
         width: 100%;
-        min-height: 3em;
         display: flex;
         justify-content: flex-end;
         align-items: flex-start;
@@ -297,12 +293,42 @@
 
     /*Image de profil ronde*/
     #photo_profile {
-        width: 35%;
-        border-radius: 50%;
-        border: 0.5em solid $white;
-        margin-top: 3em;
+        top: 50%;
+        left: 50%;
+        position: absolute;
+        transform: translate(-50%, -70%);
+
+        img {
+            border-radius: 50%;
+            border: 0.5em solid $white;
+        }
     }
 
+    #relative_photo {
+        position: relative;
+        width: 25em;
+        height: auto;
+        align-content: center;
+    }
+
+/*
+    +------------------------------+
+    | RESPONSIVE_Tablette_Ipad Pro |
+    +------------------------------+
+*/
+
+@media screen and (min-width: 1000px) and (max-width : 1367px) {
+
+    #page_profile {
+        width: 60%;
+    }
+
+    button {
+        width: 50%;
+        font-size: 1em;
+    }
+
+}
 
 
 /*
@@ -311,7 +337,7 @@
     +-----------------------------+
 */
 
-@media screen and (min-width: 767px) and (max-width : 1367px) and (orientation: landscape) {
+@media screen and (min-width: 767px) and (max-width : 1365px) and (orientation: landscape) {
 
     #page_profile {
         width: 60%;
@@ -329,7 +355,7 @@
     +-----------------------------+
 */
 
-@media screen and (min-width: 767px) and (max-width : 1367px) and (orientation: portrait) {
+@media screen and (min-width: 767px) and (max-width : 1024px) and (orientation: portrait) {
 
     #page_profile {
         width: 80%;
@@ -384,10 +410,11 @@
     padding-bottom: 1em;
     }
 
-    #photo_profile{
-        width: 7em;
-        margin-top: 1.5em;       
+    
+    #relative_photo {
+        width: 18em;
     }
+
 
 }
 
@@ -429,10 +456,6 @@
     padding-bottom: 1em;
     }
 
-    #photo_profile{
-        width: 12em;
-        margin-top: 4em;       
-    }
-
+     
 }
 </style>
