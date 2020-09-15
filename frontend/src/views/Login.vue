@@ -97,15 +97,11 @@
     }
 
     input {
-        border: 0;
-        outline-style:none;
         width: 100%;
         padding: 0.8em;
         margin-top:0.4em;
         margin-bottom: 2em;
         font-size: 1.1em;
-        font-family: 'Poppins', sans-serif;
-        font-weight: 500;
         color: $dark-blue;
         box-shadow: -2px -7px 0px -2px $pink inset;
     }

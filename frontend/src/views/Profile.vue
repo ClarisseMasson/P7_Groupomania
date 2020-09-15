@@ -9,39 +9,24 @@
             <div id="container_profile">
                 <img src="../assets/images/profile_fond.jpg" alt="image de fond" />
                 <div id="nom_prenom_poste">
-                    <h2 v-if="!isModifying">
-                        {{account.firstname}}
-                        <span>{{account.name}}</span>
-                    </h2>
-                    <h2 v-if="isModifying">
-                        <input v-model="accountUpdate.firstname" />
-                        <input v-model="accountUpdate.name" />
-                    </h2>
-
-                    <h3 v-if="!isModifying">{{account.job}}</h3>
-                    <h3 v-if="isModifying">
-                        Job : <input v-model="accountUpdate.job" />
-                    </h3>
+                    <h2>{{account.firstname}}<span> {{account.name}}</span></h2>
+                    <h3>{{account.job}}</h3>
                 </div>
                 <address>
-                    <div class="address-composent">
+                    <div class="address-composant">
                         <h4>Email :</h4>
-                        <p v-if="!isModifying">{{account.email}}</p>
-                        <input v-if="isModifying" v-model="accountUpdate.email" />
+                        <p>{{account.email}}</p>
                     </div>
-                    <div class="address-composent">
+                    <div class="address-composant">
                         <h4>Telephone :</h4>
-                        <p v-if="!isModifying">{{account.phone}}</p>
-                        <input v-if="isModifying" v-model="accountUpdate.phone" />
+                        <p>{{account.phone}}</p>
                     </div>
                 </address>
+                <!-- On affiche le bouton pour supprimer le profil seulement si on est le propriètaire du compte ou l'admin -->
                 <button v-if="showDelete" v-on:click="deleteProfile">Supprimer mon compte</button>
             </div>
             <div id="profile">
                 <div id="edit_profile">
-                    <div>
-                        <button v-if="isModifying" >Sauvegarder</button>
-                    </div>
                     <div v-if="isMyAccount()">
                         <a id="modify_profile" v-on:click="showModal = true">
                             <img src="../assets/images/icon_modify_white.svg" alt="modifier son profil" />
@@ -60,7 +45,6 @@
 <script>
     const axios = require('axios');
 
-    // @ is an alias to /src
     import ConnectedPage from '@/components/ConnectedPage.vue'
     import Lightbox from '@/components/Lightbox.vue'
     import ModifyProfile from '@/components/ModifyProfile.vue'
@@ -77,7 +61,6 @@
             return {
                 account: {},
                 accountUpdate: {},
-                isModifying: false,
                 showModal: false
             };
         },
@@ -89,28 +72,20 @@
         },
         computed: {
             showDelete() {
+                //On vérifie si 
                 return (this.isMyAccount() || sessionStorage.getItem("isAdmin") == "true") && !this.isModifying;
             }
         },
         methods: {
+            //on supprime le profil dans la base de données et on renvoie vers la page login
             deleteProfile() {
                 axios.delete('http://192.168.0.29:3000/api/account/profile/' + this.account.id, this.getHeader())
                     .then(() => {
                         this.returnToLogin();
                     })
             },
-            toggleFormProfile() {
-
-                this.isModifying = !this.isModifying;
-                this.accountUpdate.id = this.account.id;
-                this.accountUpdate.firstname = this.account.firstname;
-                this.accountUpdate.name = this.account.name;
-                this.accountUpdate.job = this.account.job;
-                this.accountUpdate.email = this.account.email;
-                this.accountUpdate.phone = this.account.phone;
-
-            },
             updateProfile() {
+                //on envoie la mise à jour (soit l'objet contenu dans accountUpdate) si le formulaire est valide 
                 if (this.updateFormIsValid()) {
                     axios.put('http://192.168.0.29:3000/api/account/profile/' + this.account.id, this.accountUpdate, this.getHeader())
                         .then(() => {
@@ -126,16 +101,21 @@
                 this.returnToLogin();
             },
             returnToLogin() {
+                //on se déconnecte et on est renvoyé vers la page login
                 sessionStorage.clear();
                 this.$router.push('/login');
             },
             updateFormIsValid() {
+                // return true si le mail correspond au regex
+                //et que le nom a plus d'1 caractère
+                //et que le prénom a également plus d'1 caractère
                 const regex = /^[a-zA-Z0-9._-]+@[a-z0-9._-]{2,}\.[a-z]{2,4}$/;
                 return regex.test(this.accountUpdate.email)
                     && this.accountUpdate.name.length > 1
                     && this.accountUpdate.firstname.length > 1;
             },
             isMyAccount() {
+                //renvoie true quand le compte affcihé est le même que celui stocké dans le sessionStorage(soit celui qui est connecté)
                 return this.account.id == sessionStorage.getItem("accountId");
             }
         }
@@ -146,14 +126,6 @@
 
     @import "../assets/colors.scss";
 
-    input {
-        max-width: 30%;
-        border: none;
-        border: 0.1rem solid $text-light-grey;
-        border-radius: 0.4rem;
-        padding: 1%;
-        background-color: $white;
-    }
 
     h1 {
         width: 100%;
@@ -180,13 +152,6 @@
         text-transform: uppercase;
     }
 
-    input {
-        font-family: 'Fjalla One', sans-serif;
-        font-size: 1em;
-        color: $dark-blue;
-        letter-spacing: 0.1em;
-    }
-
     }
 
     h3 {
@@ -211,12 +176,13 @@
         color: $text-grey;
     }
 
-
+    /*Page définissant la largeur d'affichage de mes éléments*/
     #page_profile {
         position: relative;
         width: 32%;
     }
 
+    /*<= mon profil*/
     #top_part {
         display: flex;
         flex-direction: row;
@@ -231,8 +197,15 @@
 
     }
 
+/*
+    +-------------------+
+    | CONTENU_PRINCIPAL |
+    +-------------------+
+*/
+
+    /*Conteneur principal*/
     #container_profile {
-        position: absolute;
+        position: relative;
         width: 100%;
         display: flex;
         flex-wrap: wrap;
@@ -247,64 +220,6 @@
         border-top-left-radius: 0.2em;
         border-top-right-radius: 0.2em;
     }
-
-    }
-
-    #profile {
-        position: relative;
-        display: flex;
-        flex-direction: column;
-        align-items: center;
-        padding: 2%;
-    }
-
-    #edit_profile {
-        width: 100%;
-        min-height: 3em;
-        display: flex;
-        justify-content: space-between;
-        align-items: flex-start;
-        img
-
-    {
-        width: 1.5em;
-        margin-left: 0.7em;
-    }
-
-    div {
-        display: 50%;
-    }
-
-    a {
-        cursor: pointer;
-    }
-
-    button {
-        cursor: pointer;
-        width: auto;
-        font-size: 1em;
-        align-self: flex-start;
-        background-color: transparent;
-        border: 0.15em solid $white;
-        color: $white;
-        margin-bottom: 0;
-        transition: 0.1s ease-in;
-        opacity: 0.8;
-        &:hover
-
-    {
-        opacity: 1;
-    }
-
-    }
-    }
-
-    #photo_profile {
-        width: 35%;
-        border-radius: 50%;
-        border: 0.5em solid $white;
-        margin-top: 3em;
-        margin-bottom: 22em;
 
     }
 
@@ -323,19 +238,16 @@
         font-style: normal;
         padding-top: 1em;
         padding-bottom: 1em;
-        .address-composent
-
-    {
+        .address-composant{
         width: 100%;
         padding: 0.5em 1.5em 0.5em 1.5em;
-    }
-
+        }
     }
 
     button {
         outline-style: none;
         border: 0;
-        width: 27%;
+        width: 20em;
         border-radius: 0.5em;
         padding: 0.5em 2em 0.5em 2em;
         font-size: 1.1em;
@@ -345,14 +257,53 @@
         background-color: $pink;
         transition: 0.1s ease-in;
         margin-bottom: 1.5em;
-        &:hover
-
-    {
+        &:hover{
         background-color: darken($pink, 4%);
         box-shadow: 1px 1px 3px 2px darken($pink,10%) inset;
         transform: scale(0.995);
+        }
     }
+
+/*
+    +-------------------------------------+
+    | CONTENU_AU_DESSUS_DU_BLOC_PRINCIPAL |
+    +-------------------------------------+
+*/
+ 
+    /*Contenu au dessus du principal avec boutons et image de profil ronde*/
+    #profile {
+        position: absolute;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        padding: 2%;
     }
+
+    /*boutons de modification et de déconnection*/
+    #edit_profile {
+        width: 100%;
+        min-height: 3em;
+        display: flex;
+        justify-content: flex-end;
+        align-items: flex-start;
+        img{
+        width: 1.5em;
+        margin-left: 0.7em;
+        }
+        a {
+        cursor: pointer;
+        }
+    }
+
+    /*Image de profil ronde*/
+    #photo_profile {
+        width: 35%;
+        border-radius: 50%;
+        border: 0.5em solid $white;
+        margin-top: 3em;
+    }
+
+
 
 /*
     +-----------------------------+

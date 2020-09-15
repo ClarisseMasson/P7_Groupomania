@@ -32,12 +32,9 @@
     @import "../assets/colors.scss";
 
     a, #exit {
-        cursor: pointer;
-        &:hover
-
-    {
+        &:hover{
         filter: brightness(0.60);
-    }
+        }
     }
 
 
@@ -78,8 +75,7 @@
         align-items: center;
         background-color: rgba($dark-blue, 0.9);
         z-index: 10;
-     overflow: scroll;       
-
+        overflow: scroll;       
     }
 
     #container_lightbox {

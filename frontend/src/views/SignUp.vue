@@ -92,7 +92,8 @@
             },
             verificationFormulaire(email, password, confirmationPassword) {
                 const regex = /^[a-zA-Z0-9._-]+@[a-z0-9._-]{2,}\.[a-z]{2,4}$/;
-
+                ////on verifie si le mail correspond à la regex, puis si le mot de passe est bien "fort",
+                //si la confirmation du mot de passe est bien identique au mot de passe et enfin que tout les champs sont remplis
                 if (!regex.test(email) || !this.passwordValidation(password) || password != confirmationPassword || !this.checkInputFields()) {
                     if (!regex.test(email)) {
                         this.errorMessage = "*Email invalide";
@@ -109,6 +110,8 @@
             },
             checkInputFields() {
                 const inputs = document.getElementsByTagName("input");
+                //on utilise une boucle pour vérifier que tout les champs font plus de 2 caractères
+                //on précise le message d'erreur associé
                 for (let input of inputs) {
                     if (input.value.length <= 2) {
                         this.errorMessage = "*Remplir le champ : " + input.getAttribute('placeholder');
@@ -118,10 +121,13 @@
                 return true;
             },
             passwordValidation(password) {
+                //on vérifie si le mot de passe est d'au moins 8 caractères, a au moins 1 majuscule et 1 chiffre
+                //comme ce qu'on a demandé dans le backend
                 if (password.length >= 8 && password != password.toLowerCase() && /\d/.test(password)) {
                     return true;
                 }
                 else {
+                    //on précise le message d'erreur associé
                     this.errorMessage = "*Mot de passe d'au moins 8 caractères contenant au moins 1 chiffre et 1 majuscule";
                     return false;
                 }
@@ -135,10 +141,11 @@
     /*J'importe ma palette de couleur définie dans sass*/
     @import "../assets/colors.scss";
 
-    button {
-        cursor: pointer;
-    }
-
+/*
+    +----------------+
+    | MON FORMULAIRE |
+    +----------------+
+*/
     form {
         margin-top: 2.5em;
         display: flex;
@@ -156,19 +163,21 @@
     }
 
     input {
-        border: 0;
-        outline-style: none;
         width: 100%;
         padding: 0.8em;
         margin-top: 0.4em;
         margin-bottom: 1.1em;
         font-size: 1.1em;
-        font-family: 'Poppins', sans-serif;
-        font-weight: 500;
         color: $dark-blue;
         box-shadow: -2px -7px 0px -2px $pink inset;
     }
 
+/*
+    +-------------+
+    | MES BOUTONS |
+    +-------------+
+*/
+    /*je définie mon block enveloppant mes deux boutons*/
     #buttons {
         display: flex;
         flex-direction: row;
@@ -176,6 +185,7 @@
         margin-bottom: 2em;
     }
 
+    /*je définie les paramètres communs de mes 2 boutons*/
     button, #login_button {
         border-radius: 0.5em;
         outline-style: none;
@@ -187,6 +197,7 @@
         text-align: center;
     }
 
+    /*je définie mon bouton principal*/
     button {
         border: 0;
         background-color: $pink;
@@ -199,7 +210,7 @@
         }
     }
 
-
+    /*je définie mon bouton secondaire*/
     #login_button {
         border: 0.15em solid $white;
         color: $white;
@@ -210,20 +221,13 @@
         }
     }
 
-
+    /*je définie ma phrase en cas d'erreur formulaire*/
     #message_error {
         width: 100%;
         margin-top: 1em;
     }
 
-    ::-webkit-input-placeholder {
-        color: $text-light-grey;
-    }
-
-    ::-moz-placeholder {
-        color: $text-light-grey;
-    }
-
+    /*je définie mon block enveloppant le nom et le prénom*/
     #name_firstname {
         width: 100%;
         display: flex;

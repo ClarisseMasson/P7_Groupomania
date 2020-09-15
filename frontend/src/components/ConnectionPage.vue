@@ -36,7 +36,7 @@
 
 <style scoped lang="scss">
 
-    /*J'importe ma palette de couleur dï¿½finie dans sass*/
+    /*J'importe ma palette de couleur définie dans sass*/
     @import "../assets/colors.scss";
 
     a:link 
@@ -45,8 +45,7 @@
     } 
     
     #page {
-        /*ici on met vh pour lui dire que le pourcentage se fait par rapport au viewport et non par rapport ï¿½ l'element parent*/
-        min-height: 100vh;
+        min-height: 100%;
         background-image: url(../assets/images/photo_fond.jpg);
         background-attachment: fixed;
         display: flex;

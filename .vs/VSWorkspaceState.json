@@ -3,14 +3,14 @@
     "",
     "\\backend",
     "\\backend\\controllers",
-    "\\backend\\middleware",
     "\\backend\\models",
     "\\backend\\routes",
     "\\frontend",
     "\\frontend\\src",
     "\\frontend\\src\\assets",
-    "\\frontend\\src\\assets\\images"
+    "\\frontend\\src\\components",
+    "\\frontend\\src\\views"
   ],
-  "SelectedNode": "\\backend\\app.js",
+  "SelectedNode": "\\frontend\\src\\components\\Lightbox.vue",
   "PreviewInSolutionExplorer": true
 }
