@@ -1,7 +1,6 @@
 const express = require('express');
 const bodyParser = require('body-parser');
 const path = require('path');
-const expressip = require('express-ip');
 const helmet = require('helmet');
 
 //on importe les routes
@@ -21,8 +20,6 @@ app.use((req, res, next) => {
 
 //on utilise helmet pour éviter certaines failles XSS mais aussi pour cacher des informations sur le serveur qu'on utilise
 app.use(helmet());
-
-app.use(expressip().getIpInfoMiddleware);
 
 app.use(bodyParser.json());
 

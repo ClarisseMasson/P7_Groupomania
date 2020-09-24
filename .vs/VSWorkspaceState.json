@@ -2,8 +2,8 @@
   "ExpandedNodes": [
     "",
     "\\backend",
-    "\\backend\\middleware",
-    "\\backend\\routes",
+    "\\backend\\controllers",
+    "\\backend\\models",
     "\\frontend",
     "\\frontend\\public",
     "\\frontend\\src",
@@ -11,6 +11,6 @@
     "\\frontend\\src\\components",
     "\\frontend\\src\\views"
   ],
-  "SelectedNode": "\\frontend\\src\\components\\Lightbox.vue",
+  "SelectedNode": "\\frontend\\package.json",
   "PreviewInSolutionExplorer": true
 }

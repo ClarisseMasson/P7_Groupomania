@@ -283,7 +283,7 @@
 
     #title_input input::placeholder, textarea::placeholder {
         font-weight: 200;
-                color: $text-grey;
+        color: $text-grey;
 
     }
 

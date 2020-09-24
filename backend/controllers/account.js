@@ -2,8 +2,7 @@
 const bcrypt = require('bcrypt');
 //on installe jsonwebtoken pour renvoyer notre token
 const jwt = require('jsonwebtoken');
-//on installe la fonction ip d'express pour vérifier l'ip de notre utilisateur
-const expressip = require('express-ip');
+
 
 //pour récuperer le schema
 const { models } = require('../models');

@@ -98,17 +98,16 @@
         width: 100%;
         font-size: 1rem;
         font-family: 'Poppins', sans-serif;
-        font-weight: normal;
-        color: $text-grey;
+        color: $dark-blue;
         margin-bottom: 1rem;
-        border-bottom: 0.1em solid $text-light-grey;
+        border-bottom: 0.1em solid $text-grey;
 
 
     }
 
     .container_input input::placeholder, textarea::placeholder {
-        font-weight: 200;
-        color: $text-light-grey;
+        font-weight: lighter;
+        color: $text-grey;
 
     }
 
