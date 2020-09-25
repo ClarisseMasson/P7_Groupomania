@@ -81,6 +81,7 @@
     #container_lightbox {
         width: 23%;
         min-height: 50%;
+        max-height: 90vh;
         background-color: $white;
         border-radius: 0.5rem;
         margin-bottom: 1rem;
@@ -95,6 +96,8 @@
 
     #container_lightbox  {
         width: 50%;
+        overflow-y: scroll;
+
     }
 }
 
@@ -108,6 +111,7 @@
 
     #container_lightbox {
         width: 60%;
+
     }
 }
 /*
@@ -119,8 +123,10 @@
 @media screen and (max-width: 767px) {
 
     #container_lightbox {
-        width: 80%;
+        width: 90%;
         margin-top: 1em;
+        overflow-y: scroll;
+
     }
 
     #shortcut_buttons {
