@@ -3,12 +3,8 @@ const bcrypt = require('bcrypt');
 //on installe jsonwebtoken pour renvoyer notre token
 const jwt = require('jsonwebtoken');
 
-
 //pour récuperer le schema
 const { models } = require('../models');
-
-//2 fonctions, une pour s'inscrire, une pour se connecter avec un compte déjà existant
-
 
 //10 tours dans le hachoir
 //fonction asynchrone
@@ -39,7 +35,6 @@ exports.signup = (req, res, next) => {
                         isAdmin: false
 
                     });
-                    console.log(newAccount);
                     newAccount.save()
                         .then(() => res.status(201).json({ message : 'Utilisateur créé !'}))
                         .catch(error => res.status(400).json({ error }));
@@ -49,10 +44,10 @@ exports.signup = (req, res, next) => {
         .catch(error => res.status(500).json({error}));
 };
 
-
 //On récupère l'adresse mail de l'adresse rentré
-//si elle est bonne alors on compare le mot de passe "haché" avec celui entré
-//si il est bon on va renvoyé un objet json avec son account._id et token
+//on vérifie le nombre de tentatives de connexion
+//si c'est bien un mail qui existe et qu'il n'y a pas eu trop de tentative alors on compare le mot de passe "haché" avec celui entré
+//si il est bon on va renvoyé un objet json avec son account.id, le fait qu'il est admin ou non et son token
 exports.login = (req, res, next) => {
     models.account.findOne({ where: { email: req.body.email } })
         .then(account => {
@@ -99,6 +94,7 @@ exports.login = (req, res, next) => {
         .catch(error => res.status(500).json({ error }));
 };
 
+//on receptionne toutes les données du frontend et on le ré-enregistre
 exports.updateProfile = (req, res, next) => {
     models.account.findOne({ where: { id: req.params.id } })
         .then(accountInDB => {
@@ -115,7 +111,9 @@ exports.updateProfile = (req, res, next) => {
         .catch(error => res.status(500).json({ error }));
 };
 
-
+//on va récupérer un compte qui a le méme id que le X-AccountId stocké dans le header par le frontend
+//si les ids correspondent ou que le compte est administrateur on peut supprimer l'account avec l'id correspondant dans la base de données
+//sinon on renvoie un message erreur forbidden
 exports.deleteProfile = (req, res, next) => {
 
     models.account.findOne({ where: { id: req.header('X-AccountId') } })
@@ -132,10 +130,9 @@ exports.deleteProfile = (req, res, next) => {
                 res.status(403).json({ message: 'Seul un administrateur ou le propriètaire du compte peut le supprimer !' });
             }
         })
-
-
 };
 
+//vérification que le mot de passe est fort : au moins 8 caractères, 1 majuscule et un chiffre
 function passwordValidation(password) {
     if (password.length >= 8 && password != password.toLowerCase() && /\d/.test(password)) {
         return true;
@@ -146,7 +143,8 @@ function passwordValidation(password) {
 };
 
 exports.getOneProfile = (req, res, next) => {
-    //nous utilisons la méthode findOne() dans trouver un compte dans notre modèle sequelize, en excluant les mots de passe
+    //nous utilisons la méthode findOne() pour trouver un compte dans notre modèle sequelize, en excluant les mots de passe et les loginattempt
+    // on ne veut pas renvoyer ces deux dernières informations par sécurité
     models.account.findOne({ where: { id: req.params.id }, attributes: {exclude: ["password","loginAttempt"]} })
         .then(account => {
             res.status(200).json(account)

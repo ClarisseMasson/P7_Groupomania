@@ -6,6 +6,7 @@ const { models } = require('../models');
 
 exports.createPost = (req, res, next) => {
     const postObject = getPostObjectFromRequest(req);
+    //si un id existe (ce qui normalement ne peut pas être le cas) on le supprime
     delete postObject.id;
     const post = models.post.build(postObject);
     post.save()
@@ -14,9 +15,10 @@ exports.createPost = (req, res, next) => {
 };
 
 exports.getOnePost = (req, res, next) => {
-    //nous utilisons la méthode findOne() dans trouver un compte dans notre modèle sequelize, en excluant les mots de passe
+    //nous utilisons la méthode findOne() pour trouver un compte dans notre modèle sequelize, en ne renvoyant que les infos utiles
     models.post.findOne({
         where: { id: req.params.id },
+        //ça correspondrait en sql : LEFT OUTER JOIN`accounts` AS`account` ON`post`.`accountId` = `account`.`id`
         include: [
             {
                 model: models.account,
@@ -31,8 +33,10 @@ exports.getOnePost = (req, res, next) => {
 
 exports.getAllPosts = (req, res, next) => {
     //nous utilisons la méthode findAll() dans trouver tous les posts
+    //en lui définissant l'order pour afficher par ordre du plus récent au plus anciens
     models.post.findAll({
         order: [['updatedAt', 'DESC']],
+        //ça correspondrait en sql : LEFT OUTER JOIN`accounts` AS`account` ON`post`.`accountId` = `account`.`id`
         include: [
             {
                 model: models.account,
@@ -46,13 +50,15 @@ exports.getAllPosts = (req, res, next) => {
         .catch(error => res.status(500).json({ error }));
 };
 
+//on récupère le post par rapport à l'url
+//on redéfinie chaque élements envoyés par le formulaire comme nouveaux élements de la base de données
+//on re-sauvegarde ces informations
 exports.modifyPost = (req, res, next) => {
     models.post.findOne({ where: { id: req.params.id } })
         .then(postInDB => {
             let postInReq = getPostObjectFromRequest(req);
             postInDB.title = postInReq.title;
             postInDB.description = postInReq.description;
-            //pensez à supprimer l'image si elle est mise à jour
             postInDB.fileUrl = postInReq.fileUrl;
             postInDB.fileType = postInReq.fileType;
             console.log(postInDB);
@@ -87,30 +93,6 @@ exports.deletePost = (req, res, next) => {
         .catch(error => res.status(500).json({ error }));
 };
 
-function getPostObjectFromRequest(req) {
-    let postObject;
-    //si on trouve un fichier...
-    if (req.file) {
-        console.log(req.file.mimetype);
-        //...alors on parse tout ce qu'il y a dans le post, on établie l'url, et on va chercher l'accountId(ce qui nous permet de savoir qui l'a fait)
-        postObject = {
-            ...JSON.parse(req.body.post),
-            fileUrl: `${req.protocol}://${req.get('host')}/images/${req.file.filename}`,
-            fileType: req.file.mimetype,
-            accountId: req.body.accountId
-        }
-        //...sinon on importe tout et pareil pour l'accountId
-    } else {
-        postObject = {
-            ...JSON.parse(req.body.post),
-            accountId: req.body.accountId
-        }
-    }
-    return postObject;
-}
-
-
-
 //on ajoute un like au post
 exports.addLike = (req, res, next) => {
     const like = models.like.build({ accountId: req.body.accountId, postId: req.params.id })
@@ -139,3 +121,26 @@ exports.removeLike = (req, res, next) => {
 
         .catch(error => res.status(500).json({ error }));
 };
+
+function getPostObjectFromRequest(req) {
+    let postObject;
+    //si on trouve un fichier...
+    if (req.file) {
+        console.log(req.file.mimetype);
+        //...alors on parse tout ce qu'il y a dans le post, on établie l'url, et on va chercher l'accountId(ce qui nous permet de savoir qui l'a fait)
+        //on a besoin de renvoyer le fileType pour le Frontend
+        postObject = {
+            ...JSON.parse(req.body.post),
+            fileUrl: `${req.protocol}://${req.get('host')}/images/${req.file.filename}`,
+            fileType: req.file.mimetype,
+            accountId: req.body.accountId
+        }
+        //...sinon on importe tout et pareil pour l'accountId
+    } else {
+        postObject = {
+            ...JSON.parse(req.body.post),
+            accountId: req.body.accountId
+        }
+    }
+    return postObject;
+}

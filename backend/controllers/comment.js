@@ -6,6 +6,7 @@ const { models } = require('../models');
 
 exports.createComment = (req, res, next) => {
     const commentObject = getCommentObjectFromRequest(req);
+    //si un id existe (ce qui normalement ne peut pas être le cas) on le supprime
     delete commentObject.id;
     const comment = models.comment.build(commentObject);
     comment.save()
@@ -45,10 +46,14 @@ exports.getOneComment = (req, res, next) => {
         .catch(error => res.status(500).json({ error }));
 };
 
+//on récupère tout les commentaire d'un post en particulier soit celui de l'url
 exports.getAllComments = (req, res, next) => {
     models.comment.findAll({
         where: { postId: req.params.postId },
+        //on définie l'ordre
         order: [['updatedAt', 'ASC']],
+        //on récupère l'id, le nom et prénom de l'auteur du commentaire pour l'afficher
+        //ça correspondrait en sql : LEFT OUTER JOIN`accounts` AS`account` ON`comment`.`accountId` = `account`.`id`
         include: [
             {
                 model: models.account,
@@ -68,6 +73,7 @@ function getCommentObjectFromRequest(req) {
     if (req.file) {
         console.log(req.file.mimetype);
         //...alors on parse tout ce qu'il y a dans le commentaire, on établie l'url, et on va chercher l'accountId(ce qui nous permet de savoir qui l'a fait) et le postId
+        //accountId et postId sont les clés étrangères nous permettant de relier ce commentaire à un post et à l'auteur du commentaire
         commentObject = {
             ...JSON.parse(req.body.comment),
             fileUrl: `${req.protocol}://${req.get('host')}/images/${req.file.filename}`,

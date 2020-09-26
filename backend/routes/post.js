@@ -17,8 +17,8 @@ router.get('/', auth, postCtrl.getAllPosts);
 router.put('/:id', auth, multer, postCtrl.modifyPost);
 router.delete('/:id', auth, postCtrl.deletePost);
 
-router.get('/:id/like', auth, postCtrl.getAllLikes);
 router.post('/:id/like', auth, postCtrl.addLike);
+router.get('/:id/like', auth, postCtrl.getAllLikes);
 router.put('/:id/like', auth, postCtrl.removeLike);
 
 //on exporte le router pour qu'on puisse l'importer dans app.js

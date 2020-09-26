@@ -20,14 +20,14 @@ function applyExtraSetup(sequelize) {
 	comment.belongsTo(account);
 
 	//definie relation entre likes, posts et accounts
+	//on cascade nous sert à supprimer les commentaires et les likes quand on supprime un post
 	like.belongsTo(post, {
 		onDelete: 'cascade'
 	});
 	like.belongsTo(account);
 	account.hasMany(like);
 	post.hasMany(like, {
-		onDelete: 'cascade',
-		hooks: true
+		onDelete: 'cascade'
 	});
 	
 }

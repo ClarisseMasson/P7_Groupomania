@@ -6,8 +6,7 @@ const MIME_TYPES = {
     'image/jpeg': 'jpeg',
     'image/png': 'png',
     'image/gif': 'gif',
-    'video/mp4': 'mp4',
-
+    'video/mp4': 'mp4'
 };
 
 

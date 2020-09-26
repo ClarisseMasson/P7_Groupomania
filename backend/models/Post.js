@@ -11,6 +11,7 @@ module.exports = (sequelize) => {
 			type: DataTypes.INTEGER,
 		},
 		title: {
+			//on limite les titres à 70 caractères
 			allowNull: false,
 			type: DataTypes.STRING(70)
 		},
