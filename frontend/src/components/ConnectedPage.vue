@@ -2,7 +2,7 @@
     <div id="page">
         <!--ici notre barre de navigation pour toutes les pages lorsque nous sommes connectï¿½s-->
         <Navbar></Navbar>
-        <!--ici le contenu dynamique des pages lorsque nous sommes connectï¿½s-->
+        <!--ici le contenu dynamique des pages lorsque nous sommes connectés-->
         <div id="container_page">
             <slot></slot>
         </div>

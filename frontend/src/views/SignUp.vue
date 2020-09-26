@@ -48,36 +48,32 @@
         },
         data() {
             return {
-                errorMessage: "",
+                errorMessage: "",//rempli avec l'erreur rencontrée
                 email: "",
                 password: "",
-                errorMail: "",
                 confirmationPassword: "",
                 firstname: "",
-                name: "",
-
+                name: ""
             }
         },
         methods: {
             signup(email, password, confirmationPassword, firstname, name) {
-                console.log(email, password, confirmationPassword, firstname, name)
                 if (this.verificationFormulaire(email, password, confirmationPassword)) {
                     //on utilise Axios pour envoyer les informations de création de compte
                     axios.post('http://192.168.0.29:3000/api/account/signup', {
                         email: email,
                         password: password,
-                        confirmationPassword: confirmationPassword,
                         firstname: firstname,
                         name: name
                     })
                         .then(() => {
-                            //lorsque le compte est créé on se connecte automatiquement pour renvoyer l'utilisateur sur la page home authentifié
+                            //lorsque le compte est créé on se connecte automatiquement pour renvoyer l'utilisateur sur la page profil authentifié
                             axios.post('http://192.168.0.29:3000/api/account/login', {
                                 email: email,
                                 password: password
                             })
                                 .then(response => {
-                                    //on lui renvoie bien l'accountId, le token et si il est administrateur
+                                    //on stocke l'accountId, le token et si il est administrateur dans sessionStorage
                                     sessionStorage.setItem("accountId", response.data.accountId);
                                     sessionStorage.setItem("token", response.data.token);
                                     sessionStorage.setItem("isAdmin", response.data.isAdmin);
@@ -177,6 +173,7 @@
     | MES BOUTONS |
     +-------------+
 */
+
     /*je définie mon block enveloppant mes deux boutons*/
     #buttons {
         display: flex;
@@ -237,6 +234,7 @@
     #firstname, #name {
         width: 18.2em;
     }
+
 /*
     +---------------------+
     | RESPONSIVE_Tablette |
@@ -257,6 +255,7 @@
         width: 100%;
     }
 }
+
 /*
     +-----------------------+
     | RESPONSIVE_smartphone |
@@ -272,8 +271,7 @@
 
     #buttons {
         font-size: 1em;
-        margin-bottom: 0.4em;
-     
+        margin-bottom: 0.4em; 
     }
 
     button, #login_button {
@@ -284,7 +282,6 @@
     #name_firstname {
         flex-wrap: wrap;
     }
-
     
     #name_firstname div {
         width: 100%;

@@ -27,9 +27,7 @@
                         <p>{{account.phone}}</p>
                     </div>
                 </address>
-                <!-- On affiche le bouton pour supprimer le profil seulement si on est le propriètaire du compte ou l'admin -->
                 <button v-if="showDelete" v-on:click="deleteProfile" >Supprimer mon compte</button>
-
                 <div id="edit_profile">
                     <div v-if="isMyAccount()">
                         <a id="modify_profile" v-on:click="showModal = true" tabindex="0" @keyup.enter="showModal = true">
@@ -64,10 +62,10 @@
         data() {
             return {
                 account: {},
-                accountUpdate: {},
                 showModal: false
             };
         },
+        //dès que le composant est ajouté on appelle le serveur
         mounted() {
             const accountId = this.$route.params.accountid;
             axios
@@ -75,11 +73,9 @@
                 .then(response => (this.account = response.data))
         },
         computed: {
+            //montre le bouton "supprimer mon compte" seulement si c'est le sien ou si il est admin
             showDelete() {
-                //On vérifie si 
-                return true;
-
-                //return (this.isMyAccount() || sessionStorage.getItem("isAdmin") == "true") && !this.isModifying;
+                return (this.isMyAccount() || sessionStorage.getItem("isAdmin") == "true");
             }
         },
         methods: {
@@ -90,38 +86,16 @@
                         this.returnToLogin();
                     })
             },
-            updateProfile() {
-                //on envoie la mise à jour (soit l'objet contenu dans accountUpdate) si le formulaire est valide 
-                if (this.updateFormIsValid()) {
-                    axios.put('http://192.168.0.29:3000/api/account/profile/' + this.account.id, this.accountUpdate, this.getHeader())
-                        .then(() => {
-                            this.isModifying = false;
-                            this.$router.go();
-                        })
-                }
-                else {
-                    window.alert("Le formulaire n'est pas valide");
-                }
-            },
             logoutProfile() {
                 this.returnToLogin();
             },
             returnToLogin() {
-                //on se déconnecte et on est renvoyé vers la page login
+                //on se déconnecte, on supprime les données contenu dans session storage et on est renvoyé vers la page login
                 sessionStorage.clear();
                 this.$router.push('/login');
             },
-            updateFormIsValid() {
-                // return true si le mail correspond au regex
-                //et que le nom a plus d'1 caractère
-                //et que le prénom a également plus d'1 caractère
-                const regex = /^[a-zA-Z0-9._-]+@[a-z0-9._-]{2,}\.[a-z]{2,4}$/;
-                return regex.test(this.accountUpdate.email)
-                    && this.accountUpdate.name.length > 1
-                    && this.accountUpdate.firstname.length > 1;
-            },
             isMyAccount() {
-                //renvoie true quand le compte affcihé est le même que celui stocké dans le sessionStorage(soit celui qui est connecté)
+                //renvoie true quand le compte affiché est le même que celui stocké dans le sessionStorage(soit celui qui est connecté)
                 return this.account.id == sessionStorage.getItem("accountId");
             }
         }
@@ -151,7 +125,8 @@
         color: $dark-blue;
         letter-spacing: 0.1em;
         line-height: 1.2em;
-
+        text-align: center;
+        
         span
 
     {
@@ -250,15 +225,12 @@
     }
 
     button {
-        /*outline-style: none;*/
-        border: 0;
         width: 20em;
         border-radius: 0.5em;
         padding: 0.5em 2em 0.5em 2em;
         font-size: 1.1em;
         font-family: 'Poppins', sans-serif;
         color: $white;
-        text-align: center;
         background-color: $pink;
         transition: 0.1s ease-in;
         margin-bottom: 1.5em;
@@ -314,26 +286,6 @@
     }
 
 /*
-    +------------------------------+
-    | RESPONSIVE_Tablette_Ipad Pro |
-    +------------------------------+
-*/
-
-@media screen and (min-width: 1000px) and (max-width : 1367px) {
-
-    #page_profile {
-        width: 60%;
-    }
-
-    button {
-        width: 50%;
-        font-size: 1em;
-    }
-
-}
-
-
-/*
     +-----------------------------+
     | RESPONSIVE_Tablette_paysage |
     +-----------------------------+
@@ -367,9 +319,8 @@
         width: 50%;
         font-size: 1em;
     }
-
 }
-/*
+    /*
     +-----------------------+
     | RESPONSIVE_smartphone |
     +-----------------------+
@@ -382,11 +333,6 @@
         margin-right: 1.3em;
     }
 
-    h2 {
-        text-align: center;
-    }
-
-
     #top_part {
         margin-top: 1.3em;
         margin-bottom: 1.3em;
@@ -405,59 +351,12 @@
         font-size: 1em;
     }
     
+    /*j'autorise le retour à la ligne*/
     #nom_prenom_poste {
     flex-wrap: wrap;
     padding-left: 0.5em;
     padding-right: 0.5em;
     padding-bottom: 1em;
     }
-
-    
-    #relative_photo {
-        width: 18em;
-    }
-
-
-}
-
-@media screen and (max-width: 767px) and (orientation: landscape){
-
-    h1 {
-        font-size: 1.3em;
-        margin-right: 1.3em;
-    }
-
-    h2 {
-        text-align: center;
-    }
-
-
-    #top_part {
-        margin-top: 1.3em;
-        margin-bottom: 1.3em;
-
-        img{
-        height: 1.4em;
-        }
-    }
-
-    #page_profile {
-        width: 90%;
-    }
-
-    button {
-        width: 80%;
-        font-size: 1em;
-    }
-    
-    #nom_prenom_poste {
-    flex-wrap: wrap;
-    padding-top: 5em;
-    padding-left: 0.5em;
-    padding-right: 0.5em;
-    padding-bottom: 1em;
-    }
-
-     
 }
 </style>

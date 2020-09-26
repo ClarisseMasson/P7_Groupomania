@@ -22,10 +22,9 @@
     </ConnectionPage>
 </template>
 
-<!--On importe le composant connectionpage-->
 <script>
     import ConnectionPage from '@/components/ConnectionPage.vue'
-    //on importe Axios pour l'utiliser
+
     const axios = require('axios');
 
     export default {
@@ -35,10 +34,9 @@
         },
         data() {
             return {
-                errorMessage: "",
+                errorMessage: "",//rempli selon le cas d'erreur
                 email: "",
-                password: "",
-                errorMail: "",
+                password: ""
             }
         },
         methods: {
@@ -50,12 +48,12 @@
                     password: password
                   })
                     .then(response => {
-                        //on lui renvoie bien l'accountId, le token et si il est administrateur
+                        //on stocke l'accountId, le token et si il est administrateur dans le sessionStorage
+                        //on renvoie sur la page home
                         sessionStorage.setItem("accountId", response.data.accountId);
                         sessionStorage.setItem("token", response.data.token);
                         sessionStorage.setItem("isAdmin", response.data.isAdmin);
                         this.$router.push('/home')
-
                   })
                     .catch(error => {
                          //si mauvaise authentification ou compte bloqué
@@ -77,10 +75,11 @@
     /*J'importe ma palette de couleur définie dans sass*/
     @import "../assets/colors.scss";
 
-    a, button {
-        cursor: pointer;
-    }
-
+/*
+    +----------------+
+    | MON FORMULAIRE |
+    +----------------+
+*/
 
     form {
         margin-top: 2.5em;
@@ -106,6 +105,13 @@
         box-shadow: -2px -7px 0px -2px $pink inset;
     }
 
+/*
+    +-------------+
+    | MES BOUTONS |
+    +-------------+
+*/
+
+    /*je définie mon block enveloppant mes deux boutons*/
     #buttons {
         display: flex;
         flex-direction: row;
@@ -113,6 +119,7 @@
         margin-bottom:2em;
     }
 
+    /*je définie les paramètres communs de mes 2 boutons*/
     button, #signup_button {
         border-radius: 0.5em;
         width: 10em;
@@ -123,6 +130,7 @@
         text-align: center;
     }
 
+    /*je définie mon bouton principal*/
     button {
         border: 0;
         background-color: $pink;
@@ -136,7 +144,7 @@
         }
     }
 
-
+    /*je définie mon bouton secondaire*/
     #signup_button {
         border: 0.15em solid $white;
         color: $white;
@@ -148,19 +156,11 @@
         }
     }
 
-    
+     /*je définie ma phrase en cas d'erreur formulaire*/
      #message_error {
         width: 100%;
         margin-top: 1em;
 
-    }
-
-    ::-webkit-input-placeholder{
-        color: $text-light-grey;
-    }
-
-    ::-moz-placeholder {
-        color: $text-light-grey;
     }
 
 /*

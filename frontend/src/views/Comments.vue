@@ -59,6 +59,7 @@
     import ConnectedPage from '@/components/ConnectedPage.vue'
     import Post from '@/components/Post.vue'
     import Comment from '@/components/Comment.vue'
+    //svg changeant en fonction de si c'est séléctionné ou pas
     import photo from "../assets/images/icon_photo.svg"
     import photoClicked from "../assets/images/icon_photo_clicked.svg"
     import gif from "../assets/images/icon_gif.svg"
@@ -81,6 +82,8 @@
                 fileToUpload: null
             }
         },
+        //on récupère le post et ses commentaires au chargement de la page
+        //les deux requetes sont lancées en parallèle
         mounted() {
             const postId = this.$route.params.postid;
             axios
@@ -96,34 +99,40 @@
             }
         },
         methods: {
+            //on utilise formData à cause du contenu multimédia
             createComment() {
                 const postId = this.$route.params.postid;
-                console.log(JSON.stringify(this.newComment));
                 var formData = new FormData();
                 formData.append("comment", JSON.stringify(this.newComment));
                 formData.append("accountId", sessionStorage.getItem("accountId"));
                 formData.append("file", this.fileToUpload);
 
-
+                //on lui reprécise le type de contenu soit multipart/form-data
                 axios.post('http://192.168.0.29:3000/api/post/' + postId + '/comment', formData, {
                     headers: {
                         ...this.getHeader().headers,
                         'Content-Type': 'multipart/form-data'
                     }
                 })
+                    //puis on rafraichie la page
                     .then(() => {
                         this.$router.go();
                     })
             },
+            //définie que le fichier uploadé est une image
             imageIsUploaded() {
                 const imageInputFile = document.getElementById('image_post');
 
                 if (imageInputFile.files.length == 1) {
+                    //on sélectionne image
                     this.iconPhoto = photoClicked;
+                    //pour ne pas avoir gif et image en même temps on déselectionne le gif
                     this.iconGif = gif;
+                    //on écrase le fichier à uploader
                     this.fileToUpload = imageInputFile.files[0];
 
                 } else {
+                    //si on annule, la photo est déselectionné et le fichier retourne à null
                     this.iconPhoto = photo;
                     this.fileToUpload = null;
 
@@ -133,13 +142,16 @@
                 const gifInputFile = document.getElementById('gif_post');
 
                 if (gifInputFile.files.length == 1) {
+                    //on sélectionne gif
                     this.iconGif = gifClicked;
+                    //pour ne pas avoir gif et image en même temps on déselectionne l'image
                     this.iconPhoto = photo;
+                    //on écrase le fichier à uploader
                     this.fileToUpload = gifInputFile.files[0];
                 } else {
+                    //si on annule, le gif est déselectionné et le fichier retourne à null
                     this.iconGif = gif; 
-                    this.fileToUpload = null;
-                    
+                    this.fileToUpload = null;                 
                 }
             }
         }
@@ -222,7 +234,6 @@
         resize: vertical;
         outline: none;
         border: none;
-        /*border: 0.1em solid $pink;*/
         font-size: 1em;
         }
     }

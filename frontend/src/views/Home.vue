@@ -6,6 +6,7 @@
                 <a id="my_creation" @click="showModal = true" tabindex="0" @keyup.enter="showModal = true"><img src="../assets/images/icon_plus.svg" alt="lien direct créer un post" id="plus" />Je veux créer un POST !</a>
                 <Lightbox v-if="showModal" @close="showModal = false"><CreatePost></CreatePost></Lightbox>
             </div>
+            <!-- on affiche tout les posts récupérés du backend avec cette boucle -->
             <Post v-for="post in posts"
                   :author="post.account"
                   :title="post.title"
@@ -22,8 +23,6 @@
 <script>
     const axios = require('axios');
 
-    // @ is an alias to /src
-    import Vue from 'vue'
     import ConnectedPage from '@/components/ConnectedPage.vue'
     import Post from '@/components/Post.vue'
     import Lightbox from '@/components/Lightbox.vue'
@@ -41,29 +40,23 @@
             return {
                 posts: [],
                 showModal: false
-
             }
         },
+        //on récupère les posts au chargement de la page
         mounted() {
             axios
                 .get('http://192.168.0.29:3000/api/post/', this.getHeader())
                 .then(response => (this.posts = response.data))
         },
+        //définie le chemin profil avec mon accoundId stocké dans sessionStorage
         computed: {
             pathToMyProfile() {
                 return "/profile/" + sessionStorage.getItem("accountId");
             }
-        },
-        methods: {
-            showCreateForm() {
-                var ComponentClass = Vue.extend(Lightbox)
-                var instance = new ComponentClass()
-                instance.$mount() // pass nothing
-                this.$refs.container.appendChild(instance.$el)
-            }
         }
     }
 </script>
+
 <style scoped lang="scss">
 
     @import "../assets/colors.scss";

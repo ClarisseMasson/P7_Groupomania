@@ -12,7 +12,6 @@
 
             <a id="creation" @click="showModal = true" tabindex="0" @keyup.enter="showModal = true"><img src="../assets/images/icon_plus.svg" alt="lien pour créer un post" id="plus"  />Créer!</a>
             <Lightbox v-if="showModal" @close="showModal = false"><CreatePost></CreatePost></Lightbox>
-            <tooltip />
         </div>
  
     </menu>
@@ -23,8 +22,6 @@
     import Lightbox from './Lightbox.vue'
     import AccountMenu from './AccountMenu.vue'
     import CreatePost from './CreatePost.vue'
-
-
 
     export default {
         name: 'Navbar',
