@@ -55,7 +55,6 @@
     import video from "../assets/images/icon_video.svg"
     import videoClicked from "../assets/images/icon_video_clicked.svg"
 
-
     export default {
         name: 'CreatePost',
         components: {
@@ -96,13 +95,13 @@
             },
         },
         methods: {
+            //on utilise formData pour le multipart puis on déclenche la création en backend
+            //c'est ici que le fichier à uploader est envoyé au serveur
             createPost() {
-                console.log(JSON.stringify(this.post));
                 var formData = new FormData();
                 formData.append("post", JSON.stringify(this.post));
                 formData.append("accountId", sessionStorage.getItem("accountId"));
                 formData.append("file", this.fileToUpload);
-
 
                 axios.post('http://192.168.0.29:3000/api/post', formData, {
                     headers: {
@@ -114,14 +113,13 @@
                         this.$router.go();
                     })
             },
+            //on utilise formData pour le multipart puis on déclenche la modification en backend en lui précisant son id
+            //c'est ici que le fichier à uploader est modifié ou supprime au niveau du serveur
             modifyPost() {
-                console.log(JSON.stringify(this.post));
                 var formData = new FormData();
                 formData.append("post", JSON.stringify(this.post));
                 formData.append("accountId", sessionStorage.getItem("accountId"));
                 formData.append("file", this.fileToUpload);
-
-                console.log(formData);
 
                 axios.put('http://192.168.0.29:3000/api/post/' + this.post.id, formData, {
                     headers: {
@@ -133,16 +131,10 @@
                         this.$router.go();
                     })
             },
-            fileIsUploaded(fileInputId) {
-                console.log(fileInputId);
-                for (let element of document.getElementsByClassName("fileIsUploaded")) {
-                    element.classList.remove("fileIsUploaded");
-                }
-                let fileInput = document.getElementById(fileInputId);
-                fileInput.classList.add("fileIsUploaded");
-                //on garde en mémoire le fichier qui doit être uploadé
-                this.fileToUpload = fileInput.files[0];
-            },
+            //si il y a 1 image de selectionné on désélectionne tout le reste
+            //on change d'icone pour qu'on voie que ça a bien été selectionné
+            //on met le fichier à uploader à jour (dans ce cas si une image)
+            // si on annule on déselectionne l'image,on met l'icone de base et on supprime l'image à uploader
             imageIsUploaded() {
                 const imageInputFile = document.getElementById('image_post');
                 const imageLabel = document.querySelector('label[for=image_post]');
@@ -161,13 +153,12 @@
                     this.fileToUpload = null;
 
                     imageLabel.classList.remove('file_selected');
-
                 }
             },
+            //pareil qu'imageIsUploaded() pour les gif
             gifIsUploaded() {
                 const gifInputFile = document.getElementById('gif_post');
                 const gifLabel = document.querySelector('label[for=gif_post]');
-
 
                 if (gifInputFile.files.length == 1) {
 
@@ -182,9 +173,9 @@
                     this.fileToUpload = null;
 
                     gifLabel.classList.remove('file_selected');
-
                 }
             },
+            //pareil qu'imageIsUploaded() pour les vidéos
             videoIsUploaded() {
                 const videoInputFile = document.getElementById('video_post');
                 const videoLabel = document.querySelector('label[for=video_post]');
@@ -202,10 +193,9 @@
                     this.fileToUpload = null;
 
                     videoLabel.classList.remove('file_selected');
-
-
                 }
             },
+            //ré-initialise tout les icones et les styles
             cleanFileSelected() {
                 const imageLabel = document.querySelector('label[for=image_post]');
                 const gifLabel = document.querySelector('label[for=gif_post]');
@@ -219,6 +209,7 @@
                 this.iconGif = gif;
                 this.iconVideo = video;
             },
+            //en cas de modification d'un post on supprime le fichier existant
             deleteFile() {
                 this.post.fileUrl = null;
                 this.post.fileType = null;
@@ -231,7 +222,6 @@
 <style scoped lang="scss">
 
     @import "../assets/colors.scss";
-
 
     h2 {
         width: 100%;
@@ -279,14 +269,11 @@
         margin-bottom: 0.7rem;
     }
 
-
-
     #title_input input::placeholder, textarea::placeholder {
         font-weight: 200;
         color: $text-grey;
 
     }
-
 
     #title_input input:-webkit-autofill,
     #title_input input:-webkit-autofill:hover,

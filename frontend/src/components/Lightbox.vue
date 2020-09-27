@@ -5,6 +5,7 @@
                 <h1>
                     {{boxTitle}}
                 </h1>
+                <!-- on met $emit(close) pour pouvoir fermer la lightbox -->
                 <img src="../assets/images/icon_delete.svg" alt="sortir de créer" @click="$emit('close')" id="exit" tabindex="0" @keyup.enter="$emit('close')"/>
             </section>
             <slot></slot>
@@ -21,7 +22,8 @@
         props: {
             boxTitle: {
                 type: String,
-            default: "Créer mon POST" }
+                default: "Créer mon POST"
+            }
         }
     }
 </script>
@@ -132,6 +134,5 @@
     #shortcut_buttons {
         display: none;
     }
-
 }
 </style>

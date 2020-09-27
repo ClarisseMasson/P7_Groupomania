@@ -39,11 +39,6 @@
     /*J'importe ma palette de couleur définie dans sass*/
     @import "../assets/colors.scss";
 
-    a:link 
-    { 
-     text-decoration:none; 
-    } 
-    
     #page {
         min-height: 100%;
         background-image: url(../assets/images/photo_fond.jpg);
@@ -62,7 +57,7 @@
         background-color: $dark-blue;
     }
 
-    #icon_groupomania{
+    #icon_groupomania {
         width: 3em;
         align-self: flex-end;
         margin: 1.5em 4em 1.5em 0em;
@@ -91,19 +86,18 @@
         color: $text-light-grey;
     }
 
-    p{
+    p {
         width:75%;
         margin-bottom: 1em;
     }
 
-    span a:hover{
+    span a:hover {
         color: $white;
     }
 
     #connection_content {
     width: 70%;
     }
-
     
 /*
     +---------------------+
@@ -113,6 +107,7 @@
 
 @media screen and (min-width: 767px) and (max-width : 1367px) {
 
+    /*on redéfinie la taille du fond bleu*/
     #fond_bleu {
         width: 80%;
     }
@@ -133,7 +128,6 @@
 
     h1 {
         font-size: 2.5em;
-
     }
 
     p, span, span a {
@@ -149,7 +143,8 @@
     #connection_content {
         width: 85%;
     }
-    
+
+    /*lefond bleu prend 100% et l'image disparait en dessous*/
     #fond_bleu {
         width: 100%;
     }
@@ -158,6 +153,5 @@
         display: block;
         margin-bottom :1.5em;
     }
-
 }
 </style>

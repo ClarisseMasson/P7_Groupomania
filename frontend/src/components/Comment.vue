@@ -9,9 +9,9 @@
                 </div>
             </router-link>
             <div id="edit_post">
-                <a id="delete_post" v-if="showDelete" v-on:click="deleteComment" tabindex="0" @keyup.enter="deleteComment">
+                <button id="delete_post" v-if="showDelete" v-on:click="deleteComment" tabindex="0" @keyup.enter="deleteComment">
                     <img src="../assets/images/icon_delete.svg" alt="icon pour supprimer son post" id="delete_post" />
-                </a>
+                </button>
             </div>
         </section>
         <section id="body_comment">
@@ -51,6 +51,8 @@
             };
         },
         computed: {
+            //chemin vers la page profil de l'auteur du commentaire
+            //si pas d'auteur ne retourne vers rien
             pathToProfile() {
                 if (this.author) {
                     return "/profile/" + this.author.id;
@@ -72,6 +74,7 @@
                 if (this.author && this.author.name) {
                     return this.author.name;
                 }
+                //si l'auteur n'a plus de compte alors on renvoie ce message à la place de son nom
                 else {
                     return 'Ancien employé';
                 }
@@ -84,6 +87,7 @@
                     return '';
                 }
             },
+            // on met en forme la date de mise à jour du post avec la dépendance Moment
             moment() {
                 return moment(this.date, "YYYY-MM-DD hh:mm:ssZ").calendar();
             },
@@ -108,16 +112,9 @@
         font-family: 'Poppins', sans-serif;
     }
 
-    a {
-        text-decoration: none;
-        cursor: pointer;
-        &:hover
-
-    {
+    button:hover, a:hover {
         filter: brightness(0.60);
-    }
-
-    }
+     }
 
     h1 {
         font-size: 1.8em;
@@ -146,30 +143,23 @@
 
 
     #top_part {
+        display: flex;
         width: 100%;
         padding-left: 2%;
         padding-right: 2%;
         padding-bottom: 0.5rem;
-    }
-
-        #top_part p {
-            font-weight: bold;
-            padding-left: 0;
-            padding-bottom: 0rem;
-        }
-
-    #top_part {
-        display: flex;
         justify-content: space-between;
         align-items: flex-start;
         padding-top: 1.5em;
+            p {
+            font-weight: bold;
+        }
     }
 
     #author {
         display: flex;
         width: 70%;
     }
-
 
     #author_description {
         width: 100%;
@@ -178,23 +168,15 @@
         justify-content: center;
     }
 
-
     #edit_post {
         display: flex;
         justify-content: flex-end;
-        img
-
-    {
-        width: 1.5em;
+        
+    button {
+        width: 1.5rem;
         margin-left: 0.7em;
     }
-
-    a {
-        cursor: pointer;
     }
-
-    }
-
 
     #photo_profile {
         width: 2.5em;

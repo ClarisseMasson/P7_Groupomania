@@ -3,7 +3,7 @@
         <div id="container_post">
             <div id="shortcut_buttons">
                 <router-link :to="pathToMyProfile" id="my_profile"><img src="../assets/images/icon_profile.svg" alt="lien direct à son profil" id="plus" />Mon Profil</router-link>
-                <a id="my_creation" @click="showModal = true" tabindex="0" @keyup.enter="showModal = true"><img src="../assets/images/icon_plus.svg" alt="lien direct créer un post" id="plus" />Je veux créer un POST !</a>
+                <button id="my_creation" @click="showModal = true" tabindex="0" @keyup.enter="showModal = true"><img src="../assets/images/icon_plus.svg" alt="lien direct créer un post" id="plus" />Je veux créer un POST !</button>
                 <Lightbox v-if="showModal" @close="showModal = false"><CreatePost></CreatePost></Lightbox>
             </div>
             <!-- on affiche tout les posts récupérés du backend avec cette boucle -->
@@ -82,7 +82,6 @@
         }
 
     #my_profile, #my_creation {
-        text-decoration: none;
         border-radius: 0.2em;
         display: flex;
         align-items: center;

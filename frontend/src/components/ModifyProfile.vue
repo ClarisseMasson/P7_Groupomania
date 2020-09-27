@@ -17,9 +17,6 @@
                 <label for="phone_account">Téléphone :</label>
                 <input type="text" name="phone_account" placeholder="Ajouter un téléphone" v-model="account.phone">
             </div>
-
-
-
         </form>
         <div id="button_part">
             <button v-on:click="updateProfile()">Modifier</button>
@@ -39,12 +36,13 @@
         props: {
             account: { type: Object }
         },
-         methods: {
+        methods: {
+             //on vérifie si le formulaire est valide
+            //si oui on déclenche la modification en transmettant le formulaire au backend 
              updateProfile() {
                 if (this.updateFormIsValid()) {
                     axios.put('http://192.168.0.29:3000/api/account/profile/' + this.account.id, this.account, this.getHeader())
                         .then(() => {
-                            this.isModifying = false;
                             this.$router.go();
                         })
                 }
@@ -52,11 +50,13 @@
                     window.alert("Le formulaire n'est pas valide");
                 }
              },
+             //on vérifie si le mail est un mail valide avec le regex
+             //on vérifie si le nom et le prénom on bien au moins 2 lettres
             updateFormIsValid() {
                 const regex = /^[a-zA-Z0-9._-]+@[a-z0-9._-]{2,}\.[a-z]{2,4}$/;
                 return regex.test(this.account.email)
-                    && this.account.name.length > 1
-                    && this.account.firstname.length > 1;
+                    && this.account.name.length >= 2
+                    && this.account.firstname.length >= 2;
             },
         }
     }
@@ -76,7 +76,6 @@
         align-items: flex-end;
         margin: 0.2rem 0rem 0.5rem 0em;
         margin-bottom: 1.5em;
-
     }
 
     label {
@@ -88,7 +87,6 @@
         text-transform: uppercase;
         border-left:  0.25em solid $pink;
         padding-left: 0.25em;
-
     }
 
     .container_input input{
@@ -101,14 +99,11 @@
         color: $dark-blue;
         margin-bottom: 1rem;
         border-bottom: 0.1em solid $text-grey;
-
-
     }
 
     .container_input input::placeholder, textarea::placeholder {
         font-weight: lighter;
         color: $text-grey;
-
     }
 
     #button_part {
@@ -137,7 +132,6 @@
         box-shadow: 1px 1px 3px 2px darken($pink,10%) inset;
         transform: scale(0.995);
     }
-
     }
  
 </style>

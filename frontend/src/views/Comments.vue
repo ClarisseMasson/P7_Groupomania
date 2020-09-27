@@ -13,23 +13,20 @@
                   :date="post.updatedAt"
                   :id="post.id"
                   :key="post.id" class="post_with_comments">
-
                 <div id="create_comment">
                     <img src="../assets/images/photo_profile.jpg" alt="photo profil" id="photo_profile" />
                     <form>
-                        
-                            <TextareaAutosize id="description_newcomment" name="description_newcomment" placeholder="Votre commentaire..." v-model="newComment.description"/>
-
-                            <div class="add_files">
-                                <label for="image_post" tabindex="0">
-                                    <img v-bind:src="iconPhoto" alt="ajouter une photo" class="icon_form" />
-                                </label>
-                                <input type="file" id="image_post" name="image_post" accept="image/png, image/jpeg, image/jpg" @change="imageIsUploaded()">
-                                <label for="gif_post" tabindex="0">
-                                    <img v-bind:src="iconGif" alt="ajouter un gif" class="icon_form" />
-                                </label>
-                                <input type="file" id="gif_post" name="gif_post" accept="image/gif" @change="gifIsUploaded()">
-                            </div>
+                        <TextareaAutosize id="description_newcomment" name="description_newcomment" placeholder="Votre commentaire..." v-model="newComment.description"/>
+                        <div class="add_files">
+                            <label for="image_post" tabindex="0">
+                                <img v-bind:src="iconPhoto" alt="ajouter une photo" class="icon_form" />
+                            </label>
+                            <input type="file" id="image_post" name="image_post" accept="image/png, image/jpeg, image/jpg" @change="imageIsUploaded()">
+                            <label for="gif_post" tabindex="0">
+                                <img v-bind:src="iconGif" alt="ajouter un gif" class="icon_form" />
+                            </label>
+                            <input type="file" id="gif_post" name="gif_post" accept="image/gif" @change="gifIsUploaded()">
+                        </div>
                     </form>
                     <div id="publish">
                         <button v-on:click="createComment()">Publier</button>
@@ -45,9 +42,7 @@
                          :id="comment.id"
                          :postid="comment.postId"
                          :key="comment.id" class="comment">
-
                 </Comment>
-
             </Post>
         </article>
     </ConnectedPage>
@@ -129,6 +124,7 @@
                     //pour ne pas avoir gif et image en même temps on déselectionne le gif
                     this.iconGif = gif;
                     //on écrase le fichier à uploader
+                    //je prends que le premier fichier sélectionné (sachant que l'input n'en autorise qu'un)
                     this.fileToUpload = imageInputFile.files[0];
 
                 } else {

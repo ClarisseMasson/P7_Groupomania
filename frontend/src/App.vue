@@ -27,6 +27,8 @@
         border: 0;
         background : none;
         text-decoration: none;
+        font: unset;
+        letter-spacing: unset;
     }
 
     a {

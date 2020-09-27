@@ -17,26 +17,22 @@
         components: {
             Navbar
         },
-        // Avant d'afficher la page vï¿½rifier si on est connectï¿½ et si on ne l'est pas on est renvoyï¿½ vers login
+        // Avant d'afficher la page vérifie si on est connecté et si on ne l'est pas on est renvoyé vers login
         beforeCreate() {
             if (sessionStorage.getItem("accountId") === null || sessionStorage.getItem("token") === null ) {
                 this.$router.push("/login");
             }
-        },
+        }
     }
 </script>
 
 <style scoped lang="scss">
 
-    /*J'importe ma palette de couleur dï¿½finie dans sass*/
+    /*J'importe ma palette de couleur définie dans sass*/
     @import "../assets/colors.scss";
 
-    a {
-        cursor: pointer;
-    }
-
     #page {
-        /*ici on met vh pour lui dire que le pourcentage se fait par rapport au viewport et non par rapport ï¿½ l'element parent*/
+        /*ici on met vh pour lui dire que le pourcentage se fait par rapport au viewport et non par rapport à l'element parent*/
         width: 100%;
         min-height: 100vh;
         display: flex;

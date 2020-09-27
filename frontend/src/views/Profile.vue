@@ -27,18 +27,15 @@
                         <p>{{account.phone}}</p>
                     </div>
                 </address>
-                <button v-if="showDelete" v-on:click="deleteProfile" >Supprimer mon compte</button>
-                <div id="edit_profile">
-                    <div v-if="isMyAccount()">
-                        <a id="modify_profile" v-on:click="showModal = true" tabindex="0" @keyup.enter="showModal = true">
+                <button id="button_delete" v-if="showDelete" v-on:click="deleteProfile" >Supprimer mon compte</button> 
+                    <div id="edit_profile" v-if="isMyAccount()">
+                        <button id="modify_profile" v-on:click="showModal = true" @keyup.enter="showModal = true">
                             <img src="../assets/images/icon_modify_white.svg" alt="modifier son profil" />
-                        </a>
-                        <a id="logout_profile" v-on:click="logoutProfile" tabindex="0" @keyup.enter="logoutProfile">
+                        </button>
+                        <button id="logout_profile" v-on:click="logoutProfile" @keyup.enter="logoutProfile">
                             <img src="../assets/images/icon_logout_white.svg" alt="supprimer son profil" />
-                        </a>
+                        </button>
                     </div>
-                </div>
-
             </div>
         </article>
     </ConnectedPage>
@@ -224,7 +221,7 @@
         }
     }
 
-    button {
+    #button_delete {
         width: 20em;
         border-radius: 0.5em;
         padding: 0.5em 2em 0.5em 2em;
@@ -257,12 +254,14 @@
         justify-content: flex-end;
         align-items: flex-start;
         img{
-        width: 1.5em;
-        margin-left: 0.7em;
+        width: 1.5rem;
+        margin-left: 1em;
         }
-        a {
-        cursor: pointer;
-        }
+
+    }
+
+    #edit_profile div {
+
     }
 
     /*Image de profil ronde*/
@@ -297,7 +296,7 @@
         width: 60%;
     }
 
-    button {
+    #button_delete {
         width: 50%;
         font-size: 1em;
     }
@@ -315,7 +314,7 @@
         width: 80%;
     }
 
-    button {
+    #button_delete {
         width: 50%;
         font-size: 1em;
     }
@@ -346,7 +345,7 @@
         width: 90%;
     }
 
-    button {
+    #button_delete {
         width: 80%;
         font-size: 1em;
     }

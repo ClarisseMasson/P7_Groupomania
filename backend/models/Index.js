@@ -5,7 +5,7 @@ const { applyExtraSetup } = require('./extra-setup');
 const sqlPassword = process.env.SQL_PASSWORD;
 
 //notre connexion sql
-const sequelize = new Sequelize('groupomania', 'root', sqlPassword, {
+const sequelize = new Sequelize('groupomania', 'groupomaniauser', sqlPassword, {
 	dialect: 'mysql',
 	host: 'localhost',
 	logQueryParameters: true

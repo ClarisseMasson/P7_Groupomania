@@ -4,21 +4,17 @@
         <img src="../assets/images/icon_groupomania_white.svg" alt="icone groupomania" id="logo_responsive" />
         <div id="menu">
             <router-link to="/home"><img src="../assets/images/icon_home.svg" alt="icone pour aller à la page d'accueil" id="home" /></router-link>
-
-            <a v-popover:profile tabindex="0"><img src="../assets/images/icon_profile.svg" alt="lien pour ses favoris" id="profile" /></a>
+            <button v-popover:profile tabindex="0"><img src="../assets/images/icon_profile.svg" alt="lien pour ses favoris" id="profile" /></button>
             <popover name="profile">
                 <AccountMenu />
             </popover>
-
-            <a id="creation" @click="showModal = true" tabindex="0" @keyup.enter="showModal = true"><img src="../assets/images/icon_plus.svg" alt="lien pour créer un post" id="plus"  />Créer!</a>
+            <button id="creation" @click="showModal = true" tabindex="0" @keyup.enter="showModal = true"><img src="../assets/images/icon_plus.svg" alt="lien pour créer un post" id="plus"  />Créer!</button>
             <Lightbox v-if="showModal" @close="showModal = false"><CreatePost></CreatePost></Lightbox>
         </div>
- 
-    </menu>
+     </menu>
 </template>
 
 <script>
-    import Vue from 'vue'
     import Lightbox from './Lightbox.vue'
     import AccountMenu from './AccountMenu.vue'
     import CreatePost from './CreatePost.vue'
@@ -29,20 +25,11 @@
             Lightbox,
             AccountMenu,
             CreatePost
-          
         },
         data() {
             return {
                 showModal: false,
             }        
-        },
-        methods: {
-            showCreateForm() {
-            var ComponentClass = Vue.extend(Lightbox)
-            var instance = new ComponentClass()
-            instance.$mount() // pass nothing
-            this.$refs.container.appendChild(instance.$el)
-            }
         }
     }
 </script>
@@ -111,9 +98,7 @@
         flex-direction: row;
     }
 
-    a {
-        cursor: pointer;
-        text-decoration: none;
+    button {
         font-size: 1.5em;
         font-family: 'Fjalla One', sans-serif;
         letter-spacing:0.02em;
