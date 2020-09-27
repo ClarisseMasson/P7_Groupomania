@@ -1,6 +1,6 @@
 # P7_Groupomania
 
-Ce projet spécialement développé pour Groupomania dans le cadre de la formation OpenClassrooms.
+Ce projet spécialement a été développé pour Groupomania dans le cadre de la formation OpenClassrooms.
 C'est un réseau social d'entreprise qui a pour but de favoriser les échanges entre les différents services.
 Il permet notamment de:
 * Créer, mettre à jour ou supprimer son profil utilisateur
@@ -23,17 +23,18 @@ Le projet s'appuie sur:
 
 ### Base de données MySQL
 
-Pour installer la base de données MySQL veuillez vous reporter au site de MySQL: https://dev.mysql.com/downloads/mysql/
+Pour installer la base de données MySQL veuillez vous reporter au site de MySQL: https://dev.mysql.com/downloads/mysql/  
 Ce projet a été développé et testé avec la version 8.
 
 ### NodeJS
 
-Pour installer NodeJS, veuillez vous reporter au site de NodeJS: https://nodejs.org/en/
+Pour installer NodeJS, veuillez vous reporter au site de NodeJS: https://nodejs.org/en/  
 Ce projet a été développé et testé avec la version v12.17.0.
 
 ## Frontend
 Pour initialiser le projet
 ```
+cd frontend
 npm install
 ```
 
@@ -42,13 +43,14 @@ Pour démarrer le serveur frontend
 npm run serve
 ```
 
-La commande ci-dessous devrait vous indiquer à quelle adresse le site est accessible.
+La commande ci-dessous devrait vous indiquer à quelle adresse le site est accessible.  
 Par défaut: http://localhost:8080/
 
 ## backend
 
 Pour initialiser le projet
 ```
+cd backend
 npm install
 ```
 
