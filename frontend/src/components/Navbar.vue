@@ -54,7 +54,8 @@
     }
 
     #navbar {
-        /*ici on met vh pour lui dire que le pourcentage se fait par rapport au viewport et non par rapport à l'element parent*/
+        position: sticky;
+        top: 0;
         width: 100%;
         display: flex;
         flex-direction: row;

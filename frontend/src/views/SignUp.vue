@@ -231,8 +231,8 @@
         justify-content: space-between;
     }
 
-    #firstname, #name {
-        width: 18.2em;
+    #name_firstname div {
+        width: 48%;
     }
 
 /*
