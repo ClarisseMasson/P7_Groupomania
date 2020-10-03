@@ -9,9 +9,17 @@
                 </div>
             </router-link>
             <div id="edit_post">
-                <button id="delete_post" v-if="showDelete" v-on:click="deleteComment" tabindex="0" @keyup.enter="deleteComment">
+                <button id="delete_post" v-if="showDelete" v-on:click="showModalDelete = true">
                     <img src="../assets/images/icon_delete.svg" alt="icon pour supprimer son post" id="delete_post" />
                 </button>
+                <Lightbox v-if="showModalDelete"
+                          @close="showModalDelete = false"
+                          boxTitle="Supprimer ce commentaire">
+                    <ConfirmationForm action="supprimer ce commentaire"
+                                      @no="showModalDelete = false"
+                                      @yes="deleteComment">
+                    </ConfirmationForm>
+                </Lightbox>
             </div>
         </section>
         <section id="body_comment">
@@ -28,11 +36,16 @@
     const axios = require('axios');
 
     import moment from 'moment'
+    import ConfirmationForm from '@/components/ConfirmationForm.vue'
+    import Lightbox from '@/components/Lightbox.vue'
+
+
 
     export default {
         name: 'Comment',
         components: {
-
+            ConfirmationForm,
+            Lightbox
         },
         props: {
             author: {
@@ -47,7 +60,8 @@
         },
         data() {
             return {
-                isDeleted: false
+                isDeleted: false,
+                showModalDelete: false
             };
         },
         computed: {

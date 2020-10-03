@@ -13,11 +13,19 @@
                     <img src="../assets/images/icon_modify.svg" alt="icon pour modifier son post" id="modify_post" />
                 </button>
                 <Lightbox boxTitle="Modifier mon POST" v-if="showModal" @close="showModal = false">
-                   <CreatePost :post="postForUpdate"></CreatePost>            
+                    <CreatePost :post="postForUpdate"></CreatePost>
                 </Lightbox>
-                <button id="delete_post" v-if="showDelete" v-on:click="deletePost" @keyup.enter="showModal = true">
+                <button id="delete_post" v-if="showDelete" v-on:click="showModalDelete = true">
                     <img src="../assets/images/icon_delete.svg" alt="icon pour supprimer son post" id="delete_post" />
                 </button>
+                <Lightbox v-if="showModalDelete"
+                          @close="showModalDelete = false"
+                          boxTitle="Supprimer ce post">
+                    <ConfirmationForm action="supprimer ce post"
+                                      @no="showModalDelete = false"
+                                      @yes="deletePost">
+                    </ConfirmationForm>
+                </Lightbox>
             </div>
         </section>
         <h1>{{title}}</h1>
@@ -48,12 +56,14 @@
     import moment from 'moment'
     import Lightbox from '@/components/Lightbox.vue'
     import CreatePost from '@/components/CreatePost.vue'
+    import ConfirmationForm from '@/components/ConfirmationForm.vue'
 
     export default {
         name: 'Post.vue',
         components: {
             Lightbox,
-            CreatePost
+            CreatePost,
+            ConfirmationForm
         },
         props: {
             author: {
@@ -71,7 +81,8 @@
                 isDeleted: false,
                 isModified: false,
                 likes: [],
-                showModal: false
+                showModal: false,
+                showModalDelete: false
             };
         },
         computed: {

@@ -27,15 +27,33 @@
                         <p>{{account.phone}}</p>
                     </div>
                 </address>
-                <button id="button_delete" v-if="showDelete" v-on:click="deleteProfile" >Supprimer mon compte</button> 
-                    <div id="edit_profile" v-if="isMyAccount()">
-                        <button id="modify_profile" v-on:click="showModal = true" @keyup.enter="showModal = true">
-                            <img src="../assets/images/icon_modify_white.svg" alt="modifier son profil" />
-                        </button>
-                        <button id="logout_profile" v-on:click="logoutProfile" @keyup.enter="logoutProfile">
-                            <img src="../assets/images/icon_logout_white.svg" alt="supprimer son profil" />
-                        </button>
-                    </div>
+
+                <button id="button_delete" v-if="showDelete" v-on:click="showModalDelete = true">Supprimer mon compte</button>
+                <Lightbox v-if="showModalDelete"
+                          @close="showModalDelete = false"
+                          boxTitle="Supprimer le compte">
+                    <ConfirmationForm action="supprimer ce compte"
+                                      @no="showModalDelete = false"
+                                      @yes="deleteProfile">
+                    </ConfirmationForm>
+                </Lightbox>
+
+                <div id="edit_profile" v-if="isMyAccount()">
+                    <button id="modify_profile" v-on:click="showModal = true" @keyup.enter="showModal = true">
+                        <img src="../assets/images/icon_modify_white.svg" alt="modifier son profil" />
+                    </button>
+                    <button id="logout_profile" v-on:click="showModalLogout = true" @keyup.enter="showModalLogout = true">
+                        <img src="../assets/images/icon_logout_white.svg" alt="supprimer son profil" />
+                    </button>
+                    <Lightbox v-if="showModalLogout"
+                              @close="showModalLogout = false"
+                              boxTitle="Déconnection">
+                        <ConfirmationForm action="vous déconnecter"
+                                          @no="showModalLogout = false"
+                                          @yes="logoutProfile()">
+                        </ConfirmationForm>
+                    </Lightbox>
+                </div>
             </div>
         </article>
     </ConnectedPage>
@@ -47,6 +65,7 @@
     import ConnectedPage from '@/components/ConnectedPage.vue'
     import Lightbox from '@/components/Lightbox.vue'
     import ModifyProfile from '@/components/ModifyProfile.vue'
+    import ConfirmationForm from '@/components/ConfirmationForm.vue'
 
 
     export default {
@@ -54,12 +73,15 @@
         components: {
             ConnectedPage,
             Lightbox,
-            ModifyProfile
+            ModifyProfile,
+            ConfirmationForm
         },
         data() {
             return {
                 account: {},
-                showModal: false
+                showModal: false,
+                showModalLogout: false,
+                showModalDelete: false
             };
         },
         //dès que le composant est ajouté on appelle le serveur
