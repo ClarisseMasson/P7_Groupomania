@@ -103,7 +103,7 @@
                 formData.append("accountId", sessionStorage.getItem("accountId"));
                 formData.append("file", this.fileToUpload);
 
-                axios.post('http://192.168.0.29:3000/api/post', formData, {
+                axios.post('http://localhost:3000/api/post', formData, {
                     headers: {
                         ...this.getHeader().headers,
                         'Content-Type': 'multipart/form-data'
@@ -121,7 +121,7 @@
                 formData.append("accountId", sessionStorage.getItem("accountId"));
                 formData.append("file", this.fileToUpload);
 
-                axios.put('http://192.168.0.29:3000/api/post/' + this.post.id, formData, {
+                axios.put('http://localhost:3000/api/post/' + this.post.id, formData, {
                     headers: {
                         ...this.getHeader().headers,
                         'Content-Type': 'multipart/form-data'

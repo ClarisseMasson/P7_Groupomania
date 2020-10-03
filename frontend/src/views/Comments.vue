@@ -54,7 +54,7 @@
     import ConnectedPage from '@/components/ConnectedPage.vue'
     import Post from '@/components/Post.vue'
     import Comment from '@/components/Comment.vue'
-    //svg changeant en fonction de si c'est séléctionné ou pas
+    //svg changeant en fonction de si c'est sï¿½lï¿½ctionnï¿½ ou pas
     import photo from "../assets/images/icon_photo.svg"
     import photoClicked from "../assets/images/icon_photo_clicked.svg"
     import gif from "../assets/images/icon_gif.svg"
@@ -77,15 +77,15 @@
                 fileToUpload: null
             }
         },
-        //on récupère le post et ses commentaires au chargement de la page
-        //les deux requetes sont lancées en parallèle
+        //on rï¿½cupï¿½re le post et ses commentaires au chargement de la page
+        //les deux requetes sont lancï¿½es en parallï¿½le
         mounted() {
             const postId = this.$route.params.postid;
             axios
-                .get('http://192.168.0.29:3000/api/post/' + postId, this.getHeader())
+                .get('http://localhost:3000/api/post/' + postId, this.getHeader())
                 .then(response => (this.post = response.data));
             axios
-                .get('http://192.168.0.29:3000/api/post/' + postId + '/comment', this.getHeader())
+                .get('http://localhost:3000/api/post/' + postId + '/comment', this.getHeader())
                 .then(response => (this.comments = response.data))
         },
         computed: {
@@ -94,7 +94,7 @@
             }
         },
         methods: {
-            //on utilise formData à cause du contenu multimédia
+            //on utilise formData ï¿½ cause du contenu multimï¿½dia
             createComment() {
                 const postId = this.$route.params.postid;
                 var formData = new FormData();
@@ -102,8 +102,8 @@
                 formData.append("accountId", sessionStorage.getItem("accountId"));
                 formData.append("file", this.fileToUpload);
 
-                //on lui reprécise le type de contenu soit multipart/form-data
-                axios.post('http://192.168.0.29:3000/api/post/' + postId + '/comment', formData, {
+                //on lui reprï¿½cise le type de contenu soit multipart/form-data
+                axios.post('http://localhost:3000/api/post/' + postId + '/comment', formData, {
                     headers: {
                         ...this.getHeader().headers,
                         'Content-Type': 'multipart/form-data'
@@ -114,21 +114,21 @@
                         this.$router.go();
                     })
             },
-            //définie que le fichier uploadé est une image
+            //dï¿½finie que le fichier uploadï¿½ est une image
             imageIsUploaded() {
                 const imageInputFile = document.getElementById('image_post');
 
                 if (imageInputFile.files.length == 1) {
-                    //on sélectionne image
+                    //on sï¿½lectionne image
                     this.iconPhoto = photoClicked;
-                    //pour ne pas avoir gif et image en même temps on déselectionne le gif
+                    //pour ne pas avoir gif et image en mï¿½me temps on dï¿½selectionne le gif
                     this.iconGif = gif;
-                    //on écrase le fichier à uploader
-                    //je prends que le premier fichier sélectionné (sachant que l'input n'en autorise qu'un)
+                    //on ï¿½crase le fichier ï¿½ uploader
+                    //je prends que le premier fichier sï¿½lectionnï¿½ (sachant que l'input n'en autorise qu'un)
                     this.fileToUpload = imageInputFile.files[0];
 
                 } else {
-                    //si on annule, la photo est déselectionné et le fichier retourne à null
+                    //si on annule, la photo est dï¿½selectionnï¿½ et le fichier retourne ï¿½ null
                     this.iconPhoto = photo;
                     this.fileToUpload = null;
 
@@ -138,14 +138,14 @@
                 const gifInputFile = document.getElementById('gif_post');
 
                 if (gifInputFile.files.length == 1) {
-                    //on sélectionne gif
+                    //on sï¿½lectionne gif
                     this.iconGif = gifClicked;
-                    //pour ne pas avoir gif et image en même temps on déselectionne l'image
+                    //pour ne pas avoir gif et image en mï¿½me temps on dï¿½selectionne l'image
                     this.iconPhoto = photo;
-                    //on écrase le fichier à uploader
+                    //on ï¿½crase le fichier ï¿½ uploader
                     this.fileToUpload = gifInputFile.files[0];
                 } else {
-                    //si on annule, le gif est déselectionné et le fichier retourne à null
+                    //si on annule, le gif est dï¿½selectionnï¿½ et le fichier retourne ï¿½ null
                     this.iconGif = gif; 
                     this.fileToUpload = null;                 
                 }

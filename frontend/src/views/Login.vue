@@ -43,7 +43,7 @@
             login(email, password) {
                 console.log(email, password)
                 //on utilise Axios pour envoyer les informations de connexion en lui indiquant sa route
-                axios.post('http://192.168.0.29:3000/api/account/login', {
+                axios.post('http://localhost:3000/api/account/login', {
                     email: email,
                     password: password
                   })

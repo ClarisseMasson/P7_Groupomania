@@ -88,7 +88,7 @@
         mounted() {
             const accountId = this.$route.params.accountid;
             axios
-                .get('http://192.168.0.29:3000/api/account/profile/' + accountId, this.getHeader())
+                .get('http://localhost:3000/api/account/profile/' + accountId, this.getHeader())
                 .then(response => (this.account = response.data))
         },
         computed: {
@@ -100,7 +100,7 @@
         methods: {
             //on supprime le profil dans la base de données
             deleteProfile() {
-                axios.delete('http://192.168.0.29:3000/api/account/profile/' + this.account.id, this.getHeader())
+                axios.delete('http://localhost:3000/api/account/profile/' + this.account.id, this.getHeader())
                     .then(() => {
 
                         if (this.isMyAccount()) {
@@ -195,12 +195,9 @@
         align-items: center;
         margin-top: 3.2em;
         margin-bottom: 2.5em;
-        img
-
-    {
+        img {
         height: 1.8em;
-    }
-
+        }
     }
 
 /*
@@ -219,14 +216,11 @@
         background-color: $white;
         border-radius: 0.2em;
         box-shadow: 0em 0em 0.4em 0.1em rgba($medium-blue, 0.2);
-        img
-
-    {
+        img {
         width: 100%;
         border-top-left-radius: 0.2em;
         border-top-right-radius: 0.2em;
-    }
-
+        }
     }
 
     #nom_prenom_poste {
@@ -286,11 +280,6 @@
         width: 1.5rem;
         margin-left: 1em;
         }
-
-    }
-
-    #edit_profile div {
-
     }
 
     /*Image de profil ronde*/
@@ -348,7 +337,8 @@
         font-size: 1em;
     }
 }
-    /*
+
+/*
     +-----------------------+
     | RESPONSIVE_smartphone |
     +-----------------------+

@@ -45,7 +45,7 @@
         //on récupère les posts au chargement de la page
         mounted() {
             axios
-                .get('http://192.168.0.29:3000/api/post/', this.getHeader())
+                .get('http://localhost:3000/api/post/', this.getHeader())
                 .then(response => (this.posts = response.data))
         },
         //définie le chemin profil avec mon accoundId stocké dans sessionStorage

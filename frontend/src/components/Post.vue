@@ -170,7 +170,7 @@
         },
         //on récupère les likes au chargement du post
         created() {
-            axios.get('http://192.168.0.29:3000/api/post/' + this.id + '/like', this.getHeader()
+            axios.get('http://localhost:3000/api/post/' + this.id + '/like', this.getHeader()
 )
                 .then(resp => {
                     this.likes = resp.data;
@@ -178,7 +178,7 @@
         },
         methods: {
             deletePost() {
-                axios.delete('http://192.168.0.29:3000/api/post/' + this.id, this.getHeader())
+                axios.delete('http://localhost:3000/api/post/' + this.id, this.getHeader())
                     .then(() => {
                         this.isDeleted = true;
                     })
@@ -190,7 +190,7 @@
                 let myAccountId = sessionStorage.getItem('accountId');
                 if (this.isLiked == false) {
 
-                    axios.post('http://192.168.0.29:3000/api/post/' + this.id + '/like',  {
+                    axios.post('http://localhost:3000/api/post/' + this.id + '/like',  {
                         accountId: myAccountId
                     }, this.getHeader())
                         .then(() => {
@@ -198,7 +198,7 @@
                         })
 
                 } else {
-                    axios.put('http://192.168.0.29:3000/api/post/' + this.id + '/like', {
+                    axios.put('http://localhost:3000/api/post/' + this.id + '/like', {
                         accountId: myAccountId
                     }, this.getHeader())
                         .then(() => {

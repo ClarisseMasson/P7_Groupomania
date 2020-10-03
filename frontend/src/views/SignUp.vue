@@ -60,7 +60,7 @@
             signup(email, password, confirmationPassword, firstname, name) {
                 if (this.verificationFormulaire(email, password, confirmationPassword)) {
                     //on utilise Axios pour envoyer les informations de création de compte
-                    axios.post('http://192.168.0.29:3000/api/account/signup', {
+                    axios.post('http://localhost:3000/api/account/signup', {
                         email: email,
                         password: password,
                         firstname: firstname,
@@ -68,7 +68,7 @@
                     })
                         .then(() => {
                             //lorsque le compte est créé on se connecte automatiquement pour renvoyer l'utilisateur sur la page profil authentifié
-                            axios.post('http://192.168.0.29:3000/api/account/login', {
+                            axios.post('http://localhost:3000/api/account/login', {
                                 email: email,
                                 password: password
                             })

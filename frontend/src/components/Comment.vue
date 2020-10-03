@@ -108,7 +108,7 @@
         },
         methods: {
             deleteComment() {
-                axios.delete('http://192.168.0.29:3000/api/post/' + this.postid + '/comment/' + this.id, this.getHeader())
+                axios.delete('http://localhost:3000/api/post/' + this.postid + '/comment/' + this.id, this.getHeader())
                     .then(() => {
                         this.isDeleted = true;
                     })
