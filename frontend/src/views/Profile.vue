@@ -98,11 +98,18 @@
             }
         },
         methods: {
-            //on supprime le profil dans la base de données et on renvoie vers la page login
+            //on supprime le profil dans la base de données
             deleteProfile() {
                 axios.delete('http://192.168.0.29:3000/api/account/profile/' + this.account.id, this.getHeader())
                     .then(() => {
-                        this.returnToLogin();
+
+                        if (this.isMyAccount()) {
+                            // quand on delete son profile, on retourne à la page login
+                            this.returnToLogin();
+                        } else {
+                            // quand on supprime un profile en tant qu'administrateur, on retourne sur la page home
+                            this.$router.push('/home');
+                        }
                     })
             },
             logoutProfile() {

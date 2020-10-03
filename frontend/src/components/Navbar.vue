@@ -1,18 +1,20 @@
 ﻿<template>
-    <div id="parent" :class="{ 'hidden-navbar': !showNavbar }">
-        <menu id="navbar" ref="container" >
-            <img src="../assets/images/icon_logo.svg" alt="logo Groupomania" id="logo" />
-            <img src="../assets/images/icon_groupomania_white.svg" alt="icone groupomania" id="logo_responsive" />
-            <div id="menu">
-                <router-link to="/home"><img src="../assets/images/icon_home.svg" alt="icone pour aller à la page d'accueil" id="home" /></router-link>
-                <button v-popover:profile tabindex="0"><img src="../assets/images/icon_profile.svg" alt="lien pour ses favoris" id="profile" /></button>
-                <button id="creation" @click="showModal = true" tabindex="0" @keyup.enter="showModal = true"><img src="../assets/images/icon_plus.svg" alt="lien pour créer un post" id="plus" />Créer!</button>
-                <Lightbox v-if="showModal" @close="showModal = false"><CreatePost></CreatePost></Lightbox>
-            </div>
-        </menu>
-        <popover name="profile">
-            <AccountMenu />
-        </popover>
+    <div id="sticky">
+        <Lightbox v-if="showModal" @close="showModal = false"><CreatePost></CreatePost></Lightbox>
+        <div id="parent" :class="{ 'hidden-navbar': !showNavbar }">
+            <menu id="navbar" ref="container">
+                <img src="../assets/images/icon_logo.svg" alt="logo Groupomania" id="logo" />
+                <img src="../assets/images/icon_groupomania_white.svg" alt="icone groupomania" id="logo_responsive" />
+                <div id="menu">
+                    <router-link to="/home"><img src="../assets/images/icon_home.svg" alt="icone pour aller à la page d'accueil" id="home" /></router-link>
+                    <button v-popover:profile><img src="../assets/images/icon_profile.svg" alt="lien pour ses favoris" id="profile" /></button>
+                    <button id="creation" @click="showModal = true" tabindex="0" @keyup.enter="showModal = true"><img src="../assets/images/icon_plus.svg" alt="lien pour créer un post" id="plus" />Créer!</button>
+                </div>
+            </menu>
+            <popover name="profile">
+                <AccountMenu />
+            </popover>
+        </div>
     </div>
 </template>
 
@@ -77,18 +79,17 @@
     /*J'importe ma palette de couleur définie dans sass*/
     @import "../assets/colors.scss";
 
+    #sticky {
+        position: sticky;
+        top: 0;
+    }
+
     #parent {
         position: sticky;
         top: 0;
         width: 100%;
         transform: translate3d(0, 0, 0);
         transition: 0.1s all ease-out;
-        z-index:2;
-    }
-        
-    #parent.hidden-navbar {
-      box-shadow: none;
-      transform: translate3d(0, -100%, 0);
     }
 
     [data-popover='profile'] {
@@ -118,7 +119,11 @@
         padding-left:3em;
         padding-top: 0.7em;
         padding-bottom: 0.7em;
-
+    }
+            
+    #parent.hidden-navbar {
+      box-shadow: none;
+      transform: translate3d(0, -100%, 0);
     }
 
     #logo {

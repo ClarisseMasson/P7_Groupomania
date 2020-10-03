@@ -31,7 +31,9 @@
         <h1>{{title}}</h1>
         <p>{{description}}</p>
         <img :src="fileUrl" v-if="showImage" />
-        <video controls v-if="showVideo"><source :src="fileUrl" :type="fileType" /></video>
+        <div id="video_container">
+            <video controls v-if="showVideo"><source :src="fileUrl" :type="fileType" /></video>
+        </div>
         <slot>
             <section id="bottom_part">      
                 <button href="#" id="like_post" v-on:click="toggleLike()">
@@ -294,6 +296,10 @@
         height: 2.5em;
         border-radius: 50%;
         margin-right: 0.5em;
+    }
+
+    #video_container {
+        z-index: 0;
     }
 
     video, img {

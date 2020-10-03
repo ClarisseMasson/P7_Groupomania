@@ -71,13 +71,12 @@
         top: 0;
         left: 0;
         width: 100%;
-        min-height: 100%;
+        min-height: 100vh;
         display: flex;
         justify-content: center;
         align-items: center;
         background-color: rgba($dark-blue, 0.9);
         z-index: 10;
-        overflow: scroll;       
     }
 
     #container_lightbox {
@@ -99,7 +98,6 @@
     #container_lightbox  {
         width: 50%;
         overflow-y: scroll;
-
     }
 }
 
@@ -113,7 +111,6 @@
 
     #container_lightbox {
         width: 60%;
-
     }
 }
 /*
@@ -128,7 +125,6 @@
         width: 90%;
         margin-top: 1em;
         overflow-y: scroll;
-
     }
 
     #shortcut_buttons {

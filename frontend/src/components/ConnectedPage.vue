@@ -1,7 +1,7 @@
 <template>
     <div id="page">
         <!--ici notre barre de navigation pour toutes les pages lorsque nous sommes connectï¿½s-->
-        <Navbar></Navbar>
+        <Navbar class="navbar_index"></Navbar>
         <!--ici le contenu dynamique des pages lorsque nous sommes connectés-->
         <div id="container_page">
             <slot></slot>
@@ -30,6 +30,11 @@
 
     /*J'importe ma palette de couleur définie dans sass*/
     @import "../assets/colors.scss";
+
+    .navbar_index {
+        width: 100%;
+        z-index: 15;
+    }
 
     #page {
         /*ici on met vh pour lui dire que le pourcentage se fait par rapport au viewport et non par rapport à l'element parent*/
