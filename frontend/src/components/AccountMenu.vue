@@ -29,6 +29,7 @@
         @import "../assets/colors.scss";
 
         #account_menu {
+        top: 0;
         background-color: $white;
         display: flex;
         flex-direction: column;
