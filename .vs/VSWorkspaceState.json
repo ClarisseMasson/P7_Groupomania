@@ -2,7 +2,7 @@
   "ExpandedNodes": [
     "",
     "\\backend",
-    "\\backend\\models",
+    "\\backend\\controllers",
     "\\frontend",
     "\\frontend\\public",
     "\\frontend\\src",
@@ -11,6 +11,6 @@
     "\\frontend\\src\\router",
     "\\frontend\\src\\views"
   ],
-  "SelectedNode": "\\frontend\\src\\components\\CreatePost.vue",
+  "SelectedNode": "\\backend\\controllers\\comment.js",
   "PreviewInSolutionExplorer": true
 }

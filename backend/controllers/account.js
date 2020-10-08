@@ -54,8 +54,9 @@ exports.login = (req, res, next) => {
             if (!account) {
                 return res.status(401).json({ error: 'Utilisateur non trouvé !' });
             }
-            else if (account.loginAttempt > 3) {
-                return res.status(401).json({ error: 'Trop de tentatives de connexion, votre compte a été bloqué !' });
+            else if (account.loginAttempt >= 3) {
+                return res.status(401).json(
+                    { error: 'Trop de tentatives de connexion, votre compte a été bloqué !' });
             }
             else {
                 bcrypt.compare(req.body.password, account.password)
@@ -69,7 +70,6 @@ exports.login = (req, res, next) => {
                                 .catch(error => res.status(500).json({ error }));
                         }
                         else {
-                            console.log("ici");
                             //on remet à 0 la tentative de connexion
                             account.loginAttempt = 0;
                             //on met à jour le nombre de connexion dans account
@@ -127,7 +127,9 @@ exports.deleteProfile = (req, res, next) => {
                     })
                     .catch(error => res.status(500).json({ error }));
             } else {
-                res.status(403).json({ message: 'Seul un administrateur ou le propriètaire du compte peut le supprimer !' });
+                res.status(403).json(
+                    { message: 'Seul un administrateur ou le propriètaire du compte peut le supprimer !' }
+                );
             }
         })
 };

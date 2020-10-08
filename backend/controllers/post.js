@@ -36,7 +36,8 @@ exports.getAllPosts = (req, res, next) => {
     //en lui définissant l'order pour afficher par ordre du plus récent au plus anciens
     models.post.findAll({
         order: [['updatedAt', 'DESC']],
-        //ça correspondrait en sql : LEFT OUTER JOIN`accounts` AS`account` ON`post`.`accountId` = `account`.`id`
+        //ça correspondrait en sql :
+        //LEFT OUTER JOIN`accounts` AS`account` ON`post`.`accountId` = `account`.`id`
         include: [
             {
                 model: models.account,

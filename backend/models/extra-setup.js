@@ -6,6 +6,10 @@ function applyExtraSetup(sequelize) {
 	account.hasMany(post);
 	post.belongsTo(account);
 
+	//definie relation entre commentaires et accounts
+	account.hasMany(comment);
+	comment.belongsTo(account);
+
 	//definie relation entre posts et commentaires
 	post.hasMany(comment, {
 		onDelete: 'cascade',
@@ -15,12 +19,8 @@ function applyExtraSetup(sequelize) {
 		onDelete: 'cascade',
 	});
 
-	//definie relation entre commentaires et accounts
-	account.hasMany(comment);
-	comment.belongsTo(account);
-
 	//definie relation entre likes, posts et accounts
-	//on cascade nous sert à supprimer les commentaires et les likes quand on supprime un post
+	//cascade nous sert à supprimer les commentaires et les likes quand on supprime un post
 	like.belongsTo(post, {
 		onDelete: 'cascade'
 	});

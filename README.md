@@ -52,14 +52,10 @@ Pour initialiser le projet
 ```
 cd backend
 npm install
+npm install -g nodemon
 ```
 
-Pour lancer le serveur 
-```
-ng serve
-```
-
-Pour lancer le serveur en mode développement (rechargement automatique)
+Pour lancer le serveur
 ```
 nodemon serve
 ```
